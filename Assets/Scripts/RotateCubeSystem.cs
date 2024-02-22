@@ -13,7 +13,6 @@ public partial struct RotateCubeSystem : ISystem
         state.RequireForUpdate<RotateSpeed>();
     }
 
-    
     void OnUpdate(ref SystemState state) {
         /*
         foreach ((RefRW<LocalTransform> localTransform, RefRO<RotateSpeed> rotateSpeed) in SystemAPI.Query<RefRW<LocalTransform>,RefRO<RotateSpeed>>())
@@ -30,6 +29,7 @@ public partial struct RotateCubeSystem : ISystem
         rotatingCubeJob.ScheduleParallel();
     }
 
+    [WithNone(typeof(Player))]
     public partial struct RotatingCubeJob : IJobEntity
     {
         public float deltaTime;
