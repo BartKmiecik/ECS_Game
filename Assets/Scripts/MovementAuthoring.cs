@@ -13,7 +13,7 @@ public class MovementAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new Movement
             {
-                value = new float3 (UnityEngine.Random.Range(-2,2), 0.5f, UnityEngine.Random.Range(-2, 2))
+                value = new float3 (UnityEngine.Random.Range(-2,2), 0, UnityEngine.Random.Range(-2, 2))
             });
         }
     }

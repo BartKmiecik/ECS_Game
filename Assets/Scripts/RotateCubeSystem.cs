@@ -29,7 +29,7 @@ public partial struct RotateCubeSystem : ISystem
         rotatingCubeJob.ScheduleParallel();
     }
 
-    [WithNone(typeof(Player))]
+    [WithNone(typeof(Player), typeof(LookAt))]
     public partial struct RotatingCubeJob : IJobEntity
     {
         public float deltaTime;
