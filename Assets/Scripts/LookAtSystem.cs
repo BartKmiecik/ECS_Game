@@ -33,17 +33,19 @@ public partial struct LookAtSystem : ISystem
         lookAtJob.ScheduleParallel();
     }
 
-    [WithNone(typeof(Player))]
+    [WithNone(typeof(Player), typeof(Movement))]
     public partial struct LookAtJob : IJobEntity
     {
         public float deltaTime;
         public float3 playerPos;
-        public void Execute(ref LocalTransform localTransform, in RotateSpeed rotateSpeed)
+        public void Execute(ref LocalTransform localTransform, in RotateSpeed rotateSpeed, ref LookAt lookAt)
         {
             float3 targetPos;
             targetPos.x = playerPos.x;
             targetPos.y = playerPos.y;
             targetPos.z = playerPos.z;
+
+            lookAt.target = targetPos;
 
 
             float3 curentPos;

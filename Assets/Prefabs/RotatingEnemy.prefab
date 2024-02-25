@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6565878903304546447}
   - component: {fileID: 3060146034912443744}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: RotatingEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
