@@ -5,11 +5,12 @@ using Unity.Mathematics;
 using UnityEngine;
 using Unity.Transforms;
 using Unity.Collections;
+using static UnityEngine.GraphicsBuffer;
 
 public class FollowEntity : MonoBehaviour
 {
     public Entity entityToFollow;
-    public float3 offset = float3.zero;
+    public float lerpSpeed = 10;
 
     private EntityManager manager;
 
@@ -36,7 +37,8 @@ public class FollowEntity : MonoBehaviour
         if (entityToFollow != null)
         {
             LocalTransform entPos = manager.GetComponentData<LocalTransform>(entityToFollow);
-            transform.position = entPos.Position + offset;
+            transform.position = Vector3.Lerp(transform.position, entPos.Position, Time.deltaTime * lerpSpeed);
+
         }
     }
 }
