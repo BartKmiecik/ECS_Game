@@ -9,7 +9,7 @@ public class EnemyTagAuthoring : MonoBehaviour
     {
         public override void Bake(EnemyTagAuthoring authoring)
         {
-            Entity entity = GetEntity(TransformUsageFlags.None);
+            Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new EnemyTag { });
         }
     }

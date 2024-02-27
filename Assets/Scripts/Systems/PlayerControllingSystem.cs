@@ -19,7 +19,6 @@ public partial struct PlayerControllingSystem : ISystem
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
-        Debug.Log(horizontal + " " + vertical); 
         ShadowMovement simpleShadow = new ShadowMovement
         {
             deltaTime = Time.deltaTime,
