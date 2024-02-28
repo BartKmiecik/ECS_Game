@@ -19,9 +19,6 @@ public partial struct SimpleSpawnSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        Debug.Log("OnUpdate!");
-        /*        Debug.Log(amount);
-                Debug.Log(prefab);*/
         if (amount == -1)
         {
             foreach (RefRO<SimpleEnemySpawner> spawner in SystemAPI.Query<RefRO<SimpleEnemySpawner>>())
@@ -32,7 +29,6 @@ public partial struct SimpleSpawnSystem : ISystem
         }
         for (int i = 0; i < amount; i++)
         {
-            Debug.Log("Entity Spawned");
             Entity spawnedEntity = manager.Instantiate(prefab);
             manager.SetComponentData(spawnedEntity, new LocalTransform
             {
