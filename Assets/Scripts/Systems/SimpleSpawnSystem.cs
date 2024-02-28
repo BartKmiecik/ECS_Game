@@ -13,17 +13,8 @@ public partial struct SimpleSpawnSystem : ISystem
     EntityManager manager;
     public void OnCreate(ref SystemState state)
     {
-        Debug.Log("OnCreate!");
         amount = -1;
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        foreach (RefRO<SimpleEnemySpawner> spawner in SystemAPI.Query<RefRO<SimpleEnemySpawner>>())
-        {
-            amount = spawner.ValueRO.amount;
-            prefab = spawner.ValueRO.entityToSpawn;
-            Debug.Log("MANAGER");
-            Debug.Log(amount + " ON Create");
-        }
-        Debug.Log(manager);
     }
 
     public void OnUpdate(ref SystemState state)
@@ -37,8 +28,6 @@ public partial struct SimpleSpawnSystem : ISystem
             {
                 amount = spawner.ValueRO.amount;
                 prefab = spawner.ValueRO.entityToSpawn;
-                Debug.Log("Update");
-                Debug.Log(amount + " ON Create");
             }
         }
         for (int i = 0; i < amount; i++)
