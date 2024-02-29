@@ -29,6 +29,7 @@ public partial struct DamageSystem : ISystem
                     if (health.ValueRW.health <= 0)
                     {
                         health.ValueRW.isAlive = false;
+                        //TODO destroy entity
                     }
                 }
             }
