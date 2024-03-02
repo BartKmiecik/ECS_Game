@@ -21,7 +21,7 @@ public partial struct DamageSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        var space = Input.GetKeyDown("space");
+        /*var space = Input.GetKeyDown("space");
         ecb = new EntityCommandBuffer(Allocator.TempJob);
         
         if (space){
@@ -40,7 +40,7 @@ public partial struct DamageSystem : ISystem
                     }
                 }
             }
-        }
+        }*/
         ecb.Playback(em);
         ecb.Dispose();
     }
