@@ -38,9 +38,9 @@ public partial struct PlayerControllingSystem : ISystem
         public void Execute(ref LocalTransform localTransform, in PlayerControl playerControl)
         {
             float3 targetPos;
-            targetPos.x = localTransform.Position.x + (-horizontal * playerControl.speed * deltaTime);
+            targetPos.x = localTransform.Position.x + (horizontal * playerControl.speed * deltaTime);
             targetPos.y = localTransform.Position.y;
-            targetPos.z = localTransform.Position.z + (-vertical * playerControl.speed * deltaTime);
+            targetPos.z = localTransform.Position.z + (vertical * playerControl.speed * deltaTime);
 
             localTransform.Position = targetPos;
         }
