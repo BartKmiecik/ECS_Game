@@ -11,7 +11,7 @@ using UnityEngine;
 public partial struct DamageSystem : ISystem
 {
     int toHit;
-    EntityCommandBuffer ecb;
+    //EntityCommandBuffer ecb;
     EntityManager em;
     public void OnCreate(ref SystemState state)
     {
@@ -40,16 +40,16 @@ public partial struct DamageSystem : ISystem
                     }
                 }
             }
-        }*/
+        }
         ecb.Playback(em);
-        ecb.Dispose();
+        ecb.Dispose();*/
     }
 
-/*    public partial struct IDamageJob : IJobEntity
-    {
-        public void Execute()
+    /*    public partial struct IDamageJob : IJobEntity
         {
-            
-        }
-    }*/
+            public void Execute()
+            {
+
+            }
+        }*/
 }

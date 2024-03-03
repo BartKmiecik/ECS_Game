@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 57205564064141156}
   - component: {fileID: 2228187491790034583}
   - component: {fileID: 5283258826852244282}
+  - component: {fileID: 2752960901796785822}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Transform:
   m_Children:
   - {fileID: 4133654177530490601}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6407496475579266889
 MeshFilter:
@@ -149,6 +150,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+--- !u!114 &2752960901796785822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3996655529113797531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419734599c81bf54094b9914ff741b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 3988843249836129921, guid: 29c2b8be05ecec640876e425c7dd803a,
+    type: 3}
 --- !u!1 &6589157199080882064
 GameObject:
   m_ObjectHideFlags: 0
