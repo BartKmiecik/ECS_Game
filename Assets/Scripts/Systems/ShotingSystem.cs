@@ -17,7 +17,7 @@ public partial struct ShotingSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        var space = Input.GetKeyDown("space");
+        var space = Input.GetMouseButton(0);
         if (space)
         {
             foreach ((RefRO<PlayerShooting> player, RefRO<LocalToWorld> localTransform) in SystemAPI.Query<RefRO<PlayerShooting>, RefRO<LocalToWorld>>())
