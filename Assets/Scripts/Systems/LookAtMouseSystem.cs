@@ -9,10 +9,11 @@ using UnityEngine;
 [BurstCompile]
 public partial struct LookAtMouseSystem : ISystem
 {
-    
+    Vector3 mid_screen;
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<LookAtMouse>();
+        mid_screen = new Vector3 (0.5f, 0.5f, 0.0f);
     }
 
     float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
@@ -32,8 +33,7 @@ public partial struct LookAtMouseSystem : ISystem
             targetPos.y = mousePos.y;
             targetPos.z = mousePos.z;
 
-            float3 playerPos = cam.ScreenToViewportPoint(Vector3.zero);
-            float angle = AngleBetweenTwoPoints(playerPos, mousePos);
+            float angle = AngleBetweenTwoPoints(mid_screen, mousePos)-180;
 
             /*            float3 curentPos;
 
@@ -46,7 +46,7 @@ public partial struct LookAtMouseSystem : ISystem
             // the second argument, upwards, defaults to Vector3.up
 
             //quaternion start = localTransform.Rotation;
-            quaternion end = Quaternion.Euler(new Vector3(0f, -angle, 0f));
+            quaternion end = Quaternion.Euler(new Vector3(0f, angle, 0f));
             
 
             //quaternion result=quaternion.sl
