@@ -32,7 +32,7 @@ public partial struct SimpleSpawnSystem : ISystem
             Entity spawnedEntity = manager.Instantiate(prefab);
             manager.SetComponentData(spawnedEntity, new LocalTransform
             {
-                Position = new Unity.Mathematics.float3(2 * i, 0, 0),
+                Position = new Unity.Mathematics.float3(2 * i, 1, 0),
                 Scale = 1
             });
         }

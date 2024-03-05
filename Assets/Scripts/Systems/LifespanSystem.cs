@@ -22,7 +22,6 @@ public partial struct LifespanSystem : ISystem
             if (lifespan.ValueRW.currentLife > 0)
             {
                 lifespan.ValueRW.currentLife -= SystemAPI.Time.DeltaTime;
-                //Debug.Log(lifespan.ValueRW.currentLife);
             }
             else
             {

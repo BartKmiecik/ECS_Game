@@ -7,7 +7,6 @@ public class BulletAuthoring : MonoBehaviour
 {
     public int damage_value;
     public float speed;
-    public float lifespan;
 
     public class Baker : Baker<BulletAuthoring>
     {
