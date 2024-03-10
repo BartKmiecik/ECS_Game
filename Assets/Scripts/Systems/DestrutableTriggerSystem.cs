@@ -24,6 +24,7 @@ public partial struct DestrutableTriggerSystem : ISystem
         {
             destructable = SystemAPI.GetComponentLookup<Destructable>(),
             bullet = SystemAPI.GetComponentLookup<Bullet>(),
+            health = SystemAPI.GetComponentLookup<Health>(),
         }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
 
     }
@@ -32,6 +33,7 @@ public partial struct DestrutableTriggerSystem : ISystem
     {
         public ComponentLookup<Destructable> destructable;
         public ComponentLookup<Bullet> bullet;
+        public ComponentLookup<Health> health;
 
         public void Execute(Unity.Physics.TriggerEvent collisionEvent)
         {
@@ -45,7 +47,6 @@ public partial struct DestrutableTriggerSystem : ISystem
             {
                 return;
             }    
-                 
 
             bool isABullet = bullet.HasComponent(entityA);
             bool isBBullet = bullet.HasComponent(entityB);
@@ -54,9 +55,24 @@ public partial struct DestrutableTriggerSystem : ISystem
             {
                 return;
             }
-                
-            destructable.GetRefRW(entityA).ValueRW.shouldBeDestroyed = true;
-            destructable.GetRefRW(entityB).ValueRW.shouldBeDestroyed = true;
+
+            bool hasAHealth = health.HasComponent(entityA);
+            bool hasBHealth = health.HasComponent(entityB);
+
+            if (hasAHealth)
+            {
+                int damage_recived = bullet.GetRefRW(entityB).ValueRW.damage_value;
+                health.GetRefRW(entityA).ValueRW.currentHealth -= damage_recived;
+            }
+            else
+                destructable.GetRefRW(entityA).ValueRW.shouldBeDestroyed = true;
+            if (hasBHealth)
+            {
+                int damage_recived = bullet.GetRefRW(entityA).ValueRW.damage_value;
+                health.GetRefRW(entityB).ValueRW.currentHealth -= damage_recived;
+            }
+            else
+                destructable.GetRefRW(entityB).ValueRW.shouldBeDestroyed = true;
         }
     }
 }
