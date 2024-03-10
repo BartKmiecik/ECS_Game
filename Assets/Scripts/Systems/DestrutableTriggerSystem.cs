@@ -20,7 +20,7 @@ public partial struct DestrutableTriggerSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        state.Dependency = new CountNumTriggerEvents
+        state.Dependency = new BulletsCollideEventsJob
         {
             destructable = SystemAPI.GetComponentLookup<Destructable>(),
             bullet = SystemAPI.GetComponentLookup<Bullet>(),
@@ -29,7 +29,7 @@ public partial struct DestrutableTriggerSystem : ISystem
 
     }
 
-    public partial struct CountNumTriggerEvents : ITriggerEventsJob
+    public partial struct BulletsCollideEventsJob : ITriggerEventsJob
     {
         public ComponentLookup<Destructable> destructable;
         public ComponentLookup<Bullet> bullet;
@@ -38,20 +38,11 @@ public partial struct DestrutableTriggerSystem : ISystem
         public void Execute(Unity.Physics.TriggerEvent collisionEvent)
         {
             Entity entityA = collisionEvent.EntityA;
-            Entity entityB = collisionEvent.EntityB;
-
-            bool isBodyATrigger = destructable.HasComponent(entityA);
-            bool isBodyBTrigger = destructable.HasComponent(entityB);
-
-            if (!isBodyATrigger || !isBodyBTrigger 
-                || destructable.GetRefRO(entityA).ValueRO.shouldBeDestroyed 
-                || destructable.GetRefRO(entityB).ValueRO.shouldBeDestroyed)
-            {
-                return;
-            }    
+            Entity entityB = collisionEvent.EntityB;  
 
             bool isABullet = bullet.HasComponent(entityA);
             bool isBBullet = bullet.HasComponent(entityB);
+
 
             if (isABullet && isBBullet)
             {
@@ -61,20 +52,39 @@ public partial struct DestrutableTriggerSystem : ISystem
             bool hasAHealth = health.HasComponent(entityA);
             bool hasBHealth = health.HasComponent(entityB);
 
-            if (hasAHealth)
+            if (hasAHealth && hasBHealth)
+            {
+                return;
+            }
+
+            if (!hasAHealth && !hasBHealth)
+            {
+                return;
+            }
+
+            bool isBodyATrigger = destructable.HasComponent(entityA);
+            bool isBodyBTrigger = destructable.HasComponent(entityB);
+
+            if (!isBodyATrigger || !isBodyBTrigger
+                || destructable.GetRefRO(entityA).ValueRO.shouldBeDestroyed
+                || destructable.GetRefRO(entityB).ValueRO.shouldBeDestroyed)
+            {
+                return;
+            }
+
+
+            if (hasAHealth && isBBullet)
             {
                 int damage_recived = bullet.GetRefRW(entityB).ValueRW.damage_value;
                 health.GetRefRW(entityA).ValueRW.currentHealth -= damage_recived;
+                destructable.GetRefRW(entityB).ValueRW.shouldBeDestroyed = true;
             }
-            else
-                destructable.GetRefRW(entityA).ValueRW.shouldBeDestroyed = true;
-            if (hasBHealth)
+            if (hasBHealth && isABullet)
             {
                 int damage_recived = bullet.GetRefRW(entityA).ValueRW.damage_value;
                 health.GetRefRW(entityB).ValueRW.currentHealth -= damage_recived;
-            }
-            else
-                destructable.GetRefRW(entityB).ValueRW.shouldBeDestroyed = true;
+                destructable.GetRefRW(entityA).ValueRW.shouldBeDestroyed = true;
+            }   
         }
     }
 }
