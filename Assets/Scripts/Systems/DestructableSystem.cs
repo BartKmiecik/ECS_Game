@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
+using Unity.Transforms;
 using UnityEngine;
 
 [BurstCompile]
@@ -20,7 +22,8 @@ public partial struct DestructableSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         ecb = new EntityCommandBuffer(Allocator.TempJob);
-        foreach ((RefRO<Destructable> destructable, Entity entity) in SystemAPI.Query<RefRO<Destructable>>().WithEntityAccess())
+        foreach ((RefRO<Destructable> destructable, Entity entity) in 
+            SystemAPI.Query<RefRO<Destructable>>().WithEntityAccess())
         {
             if (destructable.ValueRO.shouldBeDestroyed == true)
             {

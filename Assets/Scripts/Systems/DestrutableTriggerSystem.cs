@@ -8,7 +8,7 @@ using Unity.Physics.Systems;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-
+[BurstCompile]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateAfter(typeof(PhysicsSimulationGroup))]
 public partial struct DestrutableTriggerSystem : ISystem
@@ -43,7 +43,9 @@ public partial struct DestrutableTriggerSystem : ISystem
             bool isBodyATrigger = destructable.HasComponent(entityA);
             bool isBodyBTrigger = destructable.HasComponent(entityB);
 
-            if (!isBodyATrigger || !isBodyBTrigger)
+            if (!isBodyATrigger || !isBodyBTrigger 
+                || destructable.GetRefRO(entityA).ValueRO.shouldBeDestroyed 
+                || destructable.GetRefRO(entityB).ValueRO.shouldBeDestroyed)
             {
                 return;
             }    
