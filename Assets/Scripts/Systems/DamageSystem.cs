@@ -6,50 +6,27 @@ using Unity.Entities;
 using Unity.Entities.UniversalDelegates;
 using Unity.Transforms;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [BurstCompile]
 public partial struct DamageSystem : ISystem
 {
-    int toHit;
-    //EntityCommandBuffer ecb;
-    EntityManager em;
     public void OnCreate(ref SystemState state)
     {
-        toHit = 5;
-        em = World.DefaultGameObjectInjectionWorld.EntityManager;
+        
     }
 
     public void OnUpdate(ref SystemState state)
     {
-        /*var space = Input.GetKeyDown("space");
-        ecb = new EntityCommandBuffer(Allocator.TempJob);
-        
-        if (space){
-            int i = 0;
-            foreach ((RefRW<Health> health, Entity entity) in SystemAPI.Query<RefRW<Health>>().WithEntityAccess())
+        foreach ((RefRW<Health> health, RefRW<Destructable> destructable) in SystemAPI.Query<RefRW<Health>, RefRW<Destructable>>())
+        {
+            if (health.ValueRW.currentHealth <= 0)
             {
-                while (health.ValueRW.isAlive && i < toHit)
-                {
-                    ++i;
-                    health.ValueRW.health -= 5;
-                    if (health.ValueRW.health <= 0)
-                    {
-                        
-                        health.ValueRW.isAlive = false;
-                        ecb.DestroyEntity(entity);
-                    }
-                }
+                Debug.LogWarning("Health dropped below 0");
+                health.ValueRW.isAlive = false;
+                destructable.ValueRW.shouldBeDestroyed = true;
             }
         }
-        ecb.Playback(em);
-        ecb.Dispose();*/
     }
 
-    /*    public partial struct IDamageJob : IJobEntity
-        {
-            public void Execute()
-            {
-
-            }
-        }*/
 }

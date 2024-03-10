@@ -22,7 +22,8 @@ public partial struct DestrutableTriggerSystem : ISystem
     {
         state.Dependency = new CountNumTriggerEvents
         {
-            destructable = SystemAPI.GetComponentLookup<Destructable>()
+            destructable = SystemAPI.GetComponentLookup<Destructable>(),
+            bullet = SystemAPI.GetComponentLookup<Bullet>(),
         }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
 
     }
@@ -30,6 +31,7 @@ public partial struct DestrutableTriggerSystem : ISystem
     public partial struct CountNumTriggerEvents : ITriggerEventsJob
     {
         public ComponentLookup<Destructable> destructable;
+        public ComponentLookup<Bullet> bullet;
 
         public void Execute(Unity.Physics.TriggerEvent collisionEvent)
         {
@@ -39,12 +41,21 @@ public partial struct DestrutableTriggerSystem : ISystem
             bool isBodyATrigger = destructable.HasComponent(entityA);
             bool isBodyBTrigger = destructable.HasComponent(entityB);
 
-            if (isBodyATrigger && isBodyBTrigger)
+            if (!isBodyATrigger || !isBodyBTrigger)
+            {
                 return;
+            }    
+                 
 
-            Debug.Log($"Before: {destructable.GetRefRW(entityA).ValueRW.shouldBeDestroyed}");
+            bool isABullet = bullet.HasComponent(entityA);
+            bool isBBullet = bullet.HasComponent(entityB);
+
+            if (isABullet && isBBullet)
+            {
+                return;
+            }
+                
             destructable.GetRefRW(entityA).ValueRW.shouldBeDestroyed = true;
-            Debug.Log($"After: {destructable.GetRefRW(entityA).ValueRW.shouldBeDestroyed}");
             destructable.GetRefRW(entityB).ValueRW.shouldBeDestroyed = true;
         }
     }

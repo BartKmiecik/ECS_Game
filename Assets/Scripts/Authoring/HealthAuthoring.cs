@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HealthAuthoring : MonoBehaviour
 {
-    public int health;
+    public int maxHealth;
 
     public class Baker : Baker<HealthAuthoring>
     {
@@ -14,7 +14,8 @@ public class HealthAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new Health
             {
-                health = authoring.health,
+                maxHealth = authoring.maxHealth,
+                currentHealth = authoring.maxHealth,
                 isAlive = true
             });
         }
@@ -23,6 +24,7 @@ public class HealthAuthoring : MonoBehaviour
 
 public struct Health : IComponentData
 {
-    public int health;
+    public int maxHealth;
+    public int currentHealth;
     public bool isAlive;
 }

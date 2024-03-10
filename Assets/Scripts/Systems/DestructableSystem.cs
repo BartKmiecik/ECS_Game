@@ -24,7 +24,6 @@ public partial struct DestructableSystem : ISystem
         {
             if (destructable.ValueRO.shouldBeDestroyed == true)
             {
-                Debug.Log($"Should be destroyed: {entity}");
                 ecb.DestroyEntity(entity);
             }
         }

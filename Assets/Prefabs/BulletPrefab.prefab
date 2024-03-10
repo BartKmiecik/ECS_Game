@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5512933455325138481}
   - component: {fileID: -2902761020684868931}
   - component: {fileID: 5437626042420372359}
+  - component: {fileID: 3090864413519706032}
+  - component: {fileID: 733595913222848171}
   m_Layer: 0
   m_Name: BulletPrefab
   m_TagString: Untagged
@@ -32,8 +34,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2341845913484693067}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -270,54 +271,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a644fecd6841e840a096df28ebbbbfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6910068048334578704
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2341845913484693067}
-  - component: {fileID: 3105184341320582946}
-  - component: {fileID: 425467506939580496}
-  m_Layer: 0
-  m_Name: Sphere
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2341845913484693067
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6910068048334578704}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8498058543031826556}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3105184341320582946
+--- !u!33 &3090864413519706032
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6910068048334578704}
+  m_GameObject: {fileID: 5143752714182186735}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &425467506939580496
+--- !u!23 &733595913222848171
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6910068048334578704}
+  m_GameObject: {fileID: 5143752714182186735}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
