@@ -20,21 +20,29 @@ public partial struct ShotingSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        var space = Input.GetMouseButton(0);
-        if (space)
+        foreach ((RefRW<PlayerShooting> player, RefRO<LocalToWorld> localTransform) in SystemAPI.Query<RefRW<PlayerShooting>, RefRO<LocalToWorld>>())
         {
-            foreach ((RefRO<PlayerShooting> player, RefRO<LocalToWorld> localTransform) in SystemAPI.Query<RefRO<PlayerShooting>, RefRO<LocalToWorld>>())
+            var space = Input.GetMouseButton(0);
+            if (space)
             {
-                Entity prefab = player.ValueRO.buletPrefab;
-                var temp = localTransform.ValueRO.Value;
-                Entity spawnedEntity = manager.Instantiate(prefab);
-                manager.SetComponentData(spawnedEntity, new LocalTransform
+                if (player.ValueRO.currentCooldown >= player.ValueRO.cooldown)
                 {
-                    Position = temp.Translation(),
-                    Rotation = temp.Rotation(),
-                    Scale = 1
-                });
+                    Entity prefab = player.ValueRO.buletPrefab;
+                    var temp = localTransform.ValueRO.Value;
+                    Entity spawnedEntity = manager.Instantiate(prefab);
+                    manager.SetComponentData(spawnedEntity, new LocalTransform
+                    {
+                        Position = temp.Translation(),
+                        Rotation = temp.Rotation(),
+                        Scale = 1
+                    });
+                    player.ValueRW.currentCooldown = 0;
+                }
+            }  
+            if (player.ValueRO.currentCooldown < player.ValueRO.cooldown)
+            {
+                player.ValueRW.currentCooldown += SystemAPI.Time.DeltaTime;
             }
-        } 
+        }
     }
 }

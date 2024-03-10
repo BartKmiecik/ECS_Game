@@ -13,7 +13,7 @@ public partial struct DamageSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
-        
+        state.RequireForUpdate<Health>();
     }
 
     public void OnUpdate(ref SystemState state)
@@ -22,7 +22,6 @@ public partial struct DamageSystem : ISystem
         {
             if (health.ValueRW.currentHealth <= 0)
             {
-                Debug.LogWarning("Health dropped below 0");
                 health.ValueRW.isAlive = false;
                 destructable.ValueRW.shouldBeDestroyed = true;
             }

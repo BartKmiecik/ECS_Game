@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerShootingAuthoring : MonoBehaviour
 {
     public GameObject bulletPrefab;
+    public float cooldown;
 
     public class Baker : Baker<PlayerShootingAuthoring>
     {
@@ -14,7 +15,9 @@ public class PlayerShootingAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new PlayerShooting
             {
-                buletPrefab = GetEntity(authoring.bulletPrefab, TransformUsageFlags.Dynamic)
+                buletPrefab = GetEntity(authoring.bulletPrefab, TransformUsageFlags.Dynamic),
+                cooldown = authoring.cooldown,
+                currentCooldown = authoring.cooldown
             });
         }
     }
@@ -23,4 +26,6 @@ public class PlayerShootingAuthoring : MonoBehaviour
 public partial struct PlayerShooting : IComponentData
 {
     public Entity buletPrefab;
+    public float cooldown;
+    public float currentCooldown;
 }
