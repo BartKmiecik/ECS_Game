@@ -17,6 +17,9 @@ GameObject:
   - component: {fileID: 7597793027894218837}
   - component: {fileID: 4226180170368177483}
   - component: {fileID: -8146154617577301390}
+  - component: {fileID: 2410936943128818442}
+  - component: {fileID: 7589714089381106839}
+  - component: {fileID: -3332084486287682817}
   m_Layer: 0
   m_Name: SimpleChase
   m_TagString: Untagged
@@ -37,7 +40,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3330227125232909673
 MeshFilter:
@@ -332,5 +335,44 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a644fecd6841e840a096df28ebbbbfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2410936943128818442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6423908751162866428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3db97849e7024240a06a987ac77fb5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToDrop: {fileID: 8456891065154698620, guid: 245672f453d102e4e813e6ba65ff3393,
+    type: 3}
+--- !u!114 &7589714089381106839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6423908751162866428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec88eea290ec46e49b29a0d06bd429f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+--- !u!114 &-3332084486287682817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6423908751162866428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b01ce4fd351c3d44bb3e8392990fc9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
