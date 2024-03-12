@@ -13,7 +13,6 @@ public partial struct BulletSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<Bullet>();
-        
     }
 
     public void OnUpdate(ref SystemState state) {
@@ -24,6 +23,5 @@ public partial struct BulletSystem : ISystem
             var speed = bullet.ValueRO.speed;
             localTransform.ValueRW.Position += direction * speed * SystemAPI.Time.DeltaTime;
         }
-        
     }
 }
