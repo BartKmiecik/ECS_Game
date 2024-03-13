@@ -13,16 +13,15 @@ using UnityEngine;
 [WithNone(typeof(Health))]
 public partial struct CollectableSystem : ISystem
 {
-/*    EntityManager entityManager;
-    EntityCommandBuffer ecb;*/
+    public bool paused;
 
     public void OnCreate(ref SystemState state)
     {
-/*        entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-*/    }
+    }
 
     
     public void OnUpdate(ref SystemState state) {
+        if (paused) return;
         state.Dependency = new PlayerCollectEventsJob {
             player = SystemAPI.GetComponentLookup<Player>(),
             expirience = SystemAPI.GetComponentLookup<Expirience>(),
@@ -36,7 +35,7 @@ public partial struct CollectableSystem : ISystem
         public ComponentLookup<Expirience> expirience;
         public ComponentLookup<Destructable> destructable;
 
-        public void Execute(Unity.Physics.TriggerEvent collisionEvent)
+        public void Execute(TriggerEvent collisionEvent)
         {
             Entity entityA = collisionEvent.EntityA;
             Entity entityB = collisionEvent.EntityB;

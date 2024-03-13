@@ -11,6 +11,7 @@ using static UnityEditor.FilePathAttribute;
 [BurstCompile]
 public partial struct LookAtSystem : ISystem
 {
+    public bool paused;
     float3 target;
     void OnCreate(ref SystemState state)
     {
@@ -20,6 +21,7 @@ public partial struct LookAtSystem : ISystem
 
     void OnUpdate(ref SystemState state)
     {
+        if (paused) return;
         foreach ((RefRO<LocalTransform> localTransform, RefRO<Player> rotateSpeed) in SystemAPI.Query<RefRO<LocalTransform>, RefRO<Player>>())
         {
             target = localTransform.ValueRO.Position;

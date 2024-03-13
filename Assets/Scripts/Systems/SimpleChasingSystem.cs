@@ -5,12 +5,14 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using static RotateCubeSystem;
 
 [BurstCompile]
 public partial struct SimpleChasingSystem : ISystem
 {
+    public bool paused;
     void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<MovementSpeed>();
@@ -18,6 +20,7 @@ public partial struct SimpleChasingSystem : ISystem
 
     void OnUpdate(ref SystemState state)
     {
+        if (paused) return;
         SimpleChaseJob simpleChaseJob = new SimpleChaseJob
         {
             deltaTime = Time.deltaTime

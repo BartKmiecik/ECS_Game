@@ -8,6 +8,7 @@ using UnityEngine;
 [BurstCompile]
 public partial struct SimpleSpawnSystem : ISystem
 {
+    public bool paused;
     int amount;
     Entity prefab;
     EntityManager manager;
@@ -19,6 +20,7 @@ public partial struct SimpleSpawnSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
+        if (paused) return;
         if (amount == -1)
         {
             foreach (RefRO<SimpleEnemySpawner> spawner in SystemAPI.Query<RefRO<SimpleEnemySpawner>>())

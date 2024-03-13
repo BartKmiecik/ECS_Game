@@ -4,11 +4,13 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 [BurstCompile]
 public partial struct PlayerControllingSystem : ISystem
 {
+    public bool paused;
     float horizontal, vertical;
     void OnCreate(ref SystemState state)
     {
@@ -17,6 +19,7 @@ public partial struct PlayerControllingSystem : ISystem
 
     void OnUpdate(ref SystemState state)
     {
+        if (paused) return;
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         ShadowMovement simpleShadow = new ShadowMovement

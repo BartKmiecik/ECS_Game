@@ -9,6 +9,7 @@ using UnityEngine;
 [BurstCompile]
 public partial struct LookAtMouseSystem : ISystem
 {
+    public bool paused;
     Vector3 mid_screen;
     public void OnCreate(ref SystemState state)
     {
@@ -22,7 +23,8 @@ public partial struct LookAtMouseSystem : ISystem
     }
 
     public void OnUpdate(ref SystemState state)
-    { 
+    {
+        if (paused) return;
         foreach ((RefRW<LocalTransform> localTransform, RefRO<Player> _) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<Player>>())
         {
             Camera cam = Camera.main;

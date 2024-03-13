@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Physics.Systems;
 using Unity.Transforms;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 [BurstCompile]
@@ -12,6 +13,7 @@ using UnityEngine;
 [UpdateAfter(typeof(PhysicsSimulationGroup))]
 public partial struct ShotingSystem : ISystem
 {
+    public bool paused;
     EntityManager manager;
     public void OnCreate(ref SystemState state)
     {
@@ -20,6 +22,7 @@ public partial struct ShotingSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
+        if (paused) return;
         foreach ((RefRW<PlayerShooting> player, RefRO<LocalToWorld> localTransform) in SystemAPI.Query<RefRW<PlayerShooting>, RefRO<LocalToWorld>>())
         {
             var space = Input.GetMouseButton(0);
