@@ -1,12 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
-using Unity.Physics;
 using Unity.Physics.Systems;
-using Unity.Transforms;
-using Unity.VisualScripting;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 
@@ -14,13 +7,9 @@ public partial struct PauseGameSystem : ISystem
 {
     private bool isPaused;
 
-
-    public void OnCreate(ref SystemState state)
+    public void ChangeSystemStates(bool state)
     {
-    }
-
-    private void ChangeSystemStates(bool state)
-    {
+        this.isPaused = state;
         var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<SimpleSpawnSystem>();
         World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<SimpleSpawnSystem>(handle).paused = state;
 
