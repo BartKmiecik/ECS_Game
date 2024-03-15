@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst;
@@ -15,9 +16,16 @@ public partial struct ShotingSystem : ISystem
 {
     public bool paused;
     EntityManager manager;
+    private float _cd;
     public void OnCreate(ref SystemState state)
     {
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        _cd = 0;
+    }
+
+    public void UpdateCoolDown(float cooldown)
+    {
+        _cd = cooldown;
     }
 
     public void OnUpdate(ref SystemState state)
@@ -25,10 +33,15 @@ public partial struct ShotingSystem : ISystem
         if (paused) return;
         foreach ((RefRW<PlayerShooting> player, RefRO<LocalToWorld> localTransform) in SystemAPI.Query<RefRW<PlayerShooting>, RefRO<LocalToWorld>>())
         {
+            if (_cd > 0)
+            {
+                player.ValueRW.extraCd += _cd;
+                _cd = 0;
+            }
             var space = Input.GetMouseButton(0);
             if (space)
             {
-                if (player.ValueRO.currentCooldown >= player.ValueRO.cooldown)
+                if (player.ValueRO.currentCooldown >= Mathf.Max(player.ValueRO.cooldown - player.ValueRO.extraCd, 0))
                 {
                     Entity prefab = player.ValueRO.buletPrefab;
                     var temp = localTransform.ValueRO.Value;
@@ -42,7 +55,7 @@ public partial struct ShotingSystem : ISystem
                     player.ValueRW.currentCooldown = 0;
                 }
             }  
-            if (player.ValueRO.currentCooldown < player.ValueRO.cooldown)
+            if (player.ValueRO.currentCooldown < Mathf.Max(player.ValueRO.cooldown - player.ValueRO.extraCd, 0))
             {
                 player.ValueRW.currentCooldown += SystemAPI.Time.DeltaTime;
             }

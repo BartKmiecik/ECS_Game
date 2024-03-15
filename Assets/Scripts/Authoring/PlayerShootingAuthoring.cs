@@ -17,7 +17,8 @@ public class PlayerShootingAuthoring : MonoBehaviour
             {
                 buletPrefab = GetEntity(authoring.bulletPrefab, TransformUsageFlags.Dynamic),
                 cooldown = authoring.cooldown,
-                currentCooldown = authoring.cooldown
+                currentCooldown = authoring.cooldown,
+                extraCd = 0
             });
         }
     }
@@ -28,4 +29,5 @@ public partial struct PlayerShooting : IComponentData
     public Entity buletPrefab;
     public float cooldown;
     public float currentCooldown;
+    public float extraCd;
 }

@@ -5,9 +5,9 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class UIExpBar : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class UIExpBar : MonoBehaviour
     public int skills_to_select = 3;
     private float _expirience = 0;
     private float _lastExpirience = 0;
+    private List<ISkill> skills_to_ = new List<ISkill>();
 
     void Start()
     {
@@ -37,6 +38,9 @@ public class UIExpBar : MonoBehaviour
             }
         }
         _player = _entityManager.GetComponentData<Player>(_playerEntity);
+
+        skills_to_ .AddRange(GetComponents<ISkill>());
+        Debug.Log(skills_to_.Count);
     }
 
     void LateUpdate()
@@ -46,7 +50,7 @@ public class UIExpBar : MonoBehaviour
         _expirience = ((float)_player.expirience % 100) / 100;
         _image.fillAmount = _expirience;
 
-        if (_expirience == 0 && _lastExpirience != _expirience)
+        if (_lastExpirience > _expirience)
         {
             var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PauseGameSystem>();
             World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true);
@@ -62,6 +66,7 @@ public class UIExpBar : MonoBehaviour
 
     public void OnSkillSelected(int skillSelected)
     {
+        skills_to_[0].Skill();
         Debug.Log($"Skill selected: {skillSelected}");
         for (int i = skills.Count - 1; i >=0; i--)
         {
