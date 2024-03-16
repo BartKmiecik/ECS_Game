@@ -47,7 +47,6 @@ public partial struct DamagePlayerSystem : ISystem
 
         public void Execute(CollisionEvent collisionEvent)
         {
-            Debug.Log("Collision checking");
             Entity entityA = collisionEvent.EntityA;
             Entity entityB = collisionEvent.EntityB;
 
@@ -73,18 +72,22 @@ public partial struct DamagePlayerSystem : ISystem
                 return;
             }
 
-            Debug.Log("Player attacked");
+
             if (isAPlayer && isBEnemy)
             {
+                if (player.GetRefRW(entityA).ValueRW.timer > 0)
+                    return;
+                player.GetRefRW(entityA).ValueRW.timer = player.GetRefRO(entityA).ValueRO.playerInvincibilityTime;
                 int damage_recived = enemy.GetRefRW(entityB).ValueRW.attackValue;
                 player.GetRefRW(entityA).ValueRW.currentHealth -= damage_recived;
-                player.GetRefRW(entityA).ValueRW.timer = player.GetRefRO(entityA).ValueRO.playerInvincibilityTime;
             }
             if (isBPlayer && isAEnemy)
             {
+                if (player.GetRefRW(entityB).ValueRW.timer > 0)
+                    return;
+                player.GetRefRW(entityB).ValueRW.timer = player.GetRefRO(entityB).ValueRO.playerInvincibilityTime;
                 int damage_recived = enemy.GetRefRW(entityA).ValueRW.attackValue;
                 player.GetRefRW(entityB).ValueRW.currentHealth -= damage_recived;
-                player.GetRefRW(entityB).ValueRW.timer = player.GetRefRO(entityB).ValueRO.playerInvincibilityTime;
             }
         }
     }
