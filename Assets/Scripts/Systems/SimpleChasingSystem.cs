@@ -4,12 +4,14 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Physics.Systems;
 using Unity.Transforms;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using static RotateCubeSystem;
 
 [BurstCompile]
+[UpdateAfter(typeof(LookAtSystem))]
 public partial struct SimpleChasingSystem : ISystem
 {
     public bool paused;
@@ -49,7 +51,7 @@ public partial struct SimpleChasingSystem : ISystem
 
             float3 relativePos = targetPos - curentPos;
 
-
+            //Like not normalized relativePos, giving nice feature that enemies slowing down close to player and speed up otherwise
             localTransform.Position = curentPos + (relativePos * movementSpeed.speed * deltaTime);
         }
     }

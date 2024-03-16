@@ -103,6 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fdd06807ec58414aae6eec9fcd49f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  playerInvincibilityTime: 1
 --- !u!114 &5283258826852244282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2277423017147235066, guid: 7976da43d02e2684e81bb71700e2c49d,
     type: 3}
-  cooldown: 0.1
+  cooldown: 0.25
 --- !u!114 &-8683009451078825120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +194,7 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_CollisionResponse:
       m_Override: 0
-      m_Value: 0
+      m_Value: 1
     m_Friction:
       m_Override: 0
       m_Value:

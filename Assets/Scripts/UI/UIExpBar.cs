@@ -40,7 +40,6 @@ public class UIExpBar : MonoBehaviour
         _player = _entityManager.GetComponentData<Player>(_playerEntity);
 
         skills_to_ .AddRange(GetComponents<ISkill>());
-        Debug.Log(skills_to_.Count);
     }
 
     void LateUpdate()

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class PlayerAuthoring : MonoBehaviour
 {
+    public int maxHealth;
+    public float playerInvincibilityTime;
     public class Baker : Baker<PlayerAuthoring>
     {
         public override void Bake(PlayerAuthoring authoring)
@@ -13,7 +15,11 @@ public class PlayerAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new Player
             {
-                expirience = 0
+                expirience = 0,
+                maxHealth = authoring.maxHealth,
+                currentHealth = authoring.maxHealth,
+                playerInvincibilityTime = authoring.playerInvincibilityTime,
+                timer = 0f,
             });
         }
     }
@@ -22,4 +28,8 @@ public class PlayerAuthoring : MonoBehaviour
 public struct Player : IComponentData
 {
     public int expirience;
+    public int maxHealth;
+    public int currentHealth;
+    public float playerInvincibilityTime;
+    public float timer;
 }

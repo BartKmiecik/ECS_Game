@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class LookAtAuthoring : MonoBehaviour
 {
-    public Transform target;
+    //public Transform target;
 
     private class Baker : Baker<LookAtAuthoring>
     {
@@ -15,7 +15,7 @@ public class LookAtAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new LookAt
             {
-                target = authoring.target.position
+                //target = authoring.target.position
             });
         }
     }

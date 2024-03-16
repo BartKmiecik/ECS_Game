@@ -7,7 +7,7 @@ using Unity.Physics.Systems;
 using Unity.Transforms;
 using UnityEngine;
 
-[UpdateBefore(typeof(Destructable))]
+
 [BurstCompile]
 public partial struct DropableSystem : ISystem
 {
