@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GridController : MonoBehaviour
@@ -20,6 +21,7 @@ public class GridController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             InitializeFlowField();
+            curFlowField.CreateCostField();
         }
     }
 
@@ -37,6 +39,17 @@ public class GridController : MonoBehaviour
                     Gizmos.DrawWireCube(center, size);
                 }
             }
+            if (curFlowField.hasCostField)
+            {
+                for (int x = 0; x < gridSize.x; x++)
+                {
+                    for (int y = 0; y < gridSize.y; y++)
+                    {
+                        Handles.Label(curFlowField.grid[x, y].wordPos, curFlowField.grid[x, y].cost.ToString());
+                    }
+                }
+            }
         }
+
     }
 }
