@@ -25,7 +25,7 @@ public class GridController : MonoBehaviour
             InitializeFlowField();
             curFlowField.CreateCostField();
 
-            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y);
             Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
             UnityEngine.RaycastHit hit;
             UnityEngine.Ray ray = Camera.main.ScreenPointToRay(mousePos);
@@ -63,11 +63,15 @@ public class GridController : MonoBehaviour
                     for (int y = 0; y < gridSize.y; y++)
                     {
                         Vector3 pos = new Vector3(curFlowField.grid[x, y].wordPos.x, 0, curFlowField.grid[x, y].wordPos.z);
-                        Handles.Label(pos, curFlowField.grid[x, y].bestCost.ToString());
+                        GUIStyle myStyle = new GUIStyle();
+                        myStyle.fontSize = 6;
+                        myStyle.imagePosition = ImagePosition.TextOnly;
+                        myStyle.normal.textColor = Color.white;
+                        myStyle.margin.bottom = 100;
+                        Handles.Label(pos, curFlowField.grid[x, y].bestCost.ToString(), myStyle);
                     }
                 }
             }
         }
-
     }
 }
