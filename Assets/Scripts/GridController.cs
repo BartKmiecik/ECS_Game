@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
+using Unity.Physics;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,20 +10,35 @@ public class GridController : MonoBehaviour
     public Vector2Int gridSize;
     public float cellSize;
     public FlowField curFlowField;
+    public Transform indicator;
 
     public void InitializeFlowField()
     {
-        Debug.Log("Initialize FLow field");
         curFlowField = new FlowField(cellSize, gridSize);
         curFlowField.CreateGrid();
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetMouseButtonDown(0))
         {
             InitializeFlowField();
             curFlowField.CreateCostField();
+
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
+            Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            UnityEngine.RaycastHit hit;
+            UnityEngine.Ray ray = Camera.main.ScreenPointToRay(mousePos);
+            if (Physics.Raycast(ray, out hit))
+            {
+                Transform objectHit = hit.transform;
+
+                Debug.Log($"RAY trans POS: {objectHit} pos {objectHit.position}");
+            }
+            Cell destinationCell = curFlowField.GetCellFromWorldPos(worldMousePos);
+            indicator.position = worldMousePos;
+            
+            curFlowField.CreateDestinationCell(destinationCell);
         }
     }
 
@@ -45,7 +62,8 @@ public class GridController : MonoBehaviour
                 {
                     for (int y = 0; y < gridSize.y; y++)
                     {
-                        Handles.Label(curFlowField.grid[x, y].wordPos, curFlowField.grid[x, y].cost.ToString());
+                        Vector3 pos = new Vector3(curFlowField.grid[x, y].wordPos.x, 0, curFlowField.grid[x, y].wordPos.z);
+                        Handles.Label(pos, curFlowField.grid[x, y].bestCost.ToString());
                     }
                 }
             }

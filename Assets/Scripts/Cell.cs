@@ -5,12 +5,14 @@ public class Cell
     public Vector3 wordPos;
     public Vector2Int gridIdx;
     public byte cost;
+    public ushort bestCost;
 
     public Cell(Vector3 pos, Vector2Int idx)
     {
         this.wordPos = pos;
         this.gridIdx = idx;
         this.cost = 1;
+        this.bestCost = ushort.MaxValue;
     }
 
     public void IncreaseCost(int cost)
