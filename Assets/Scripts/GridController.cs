@@ -9,6 +9,11 @@ public class GridController : MonoBehaviour
     public FlowField curFlowField;
 	public GridDebug gridDebug;
 
+	public bool shouldFocusOnObject = false;
+	public Transform objectToFocus;
+    public int frameDeley;
+    private int curFrame = 0;
+
     private void InitializeFlowField()
 	{
         curFlowField = new FlowField(cellRadius, gridSize);
@@ -18,20 +23,42 @@ public class GridController : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetMouseButtonDown(0))
+		if (!shouldFocusOnObject)
 		{
-			InitializeFlowField();
+            if (Input.GetMouseButtonDown(0))
+            {
+                InitializeFlowField();
 
-			curFlowField.CreateCostField();
+                curFlowField.CreateCostField();
 
-			Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
-			Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
-			Cell destinationCell = curFlowField.GetCellFromWorldPos(worldMousePos);
-			curFlowField.CreateIntegrationField(destinationCell);
+                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
+                Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+                Cell destinationCell = curFlowField.GetCellFromWorldPos(worldMousePos);
+                curFlowField.CreateIntegrationField(destinationCell);
 
-			curFlowField.CreateFlowField();
+                curFlowField.CreateFlowField();
 
-			gridDebug.DrawFlowField();
-		}
+                gridDebug.DrawFlowField();
+            }
+        }
+        else
+        {
+            if (curFrame >= 0)
+            {
+                InitializeFlowField();
+
+                curFlowField.CreateCostField();
+
+                Cell destinationCell = curFlowField.GetCellFromWorldPos(objectToFocus.position);
+                curFlowField.CreateIntegrationField(destinationCell);
+
+                curFlowField.CreateFlowField();
+
+                gridDebug.DrawFlowField();
+                curFrame = 0;
+            }
+            curFrame += 1;
+        }
+
 	}
 }
