@@ -12,7 +12,6 @@ public partial class BridgeGridFollowSystem : SystemBase
     protected override void OnCreate()
     {
         gridController = GameObject.FindAnyObjectByType<GridController>().GetComponent<GridController>();
-        Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
 
     protected override void OnUpdate()
@@ -22,7 +21,6 @@ public partial class BridgeGridFollowSystem : SystemBase
 
     public Cell GetCellFromWorldPos(Vector3 worldPos)
     {
-        Debug.Log(worldPos);
         Cell result = gridController.curFlowField.GetCellFromWorldPos(worldPos);
         return result;
     }

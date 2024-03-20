@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 public class GridController : MonoBehaviour
 {
@@ -13,6 +15,19 @@ public class GridController : MonoBehaviour
 	public Transform objectToFocus;
     public int frameDeley;
     private int curFrame = 0;
+    private Cell destinationCell = null;
+/*
+    private void OnEnable()
+    {
+        GarbageCollector.GCMode = GarbageCollector.Mode.Enabled;
+        GC.Collect();
+    }
+
+    private void OnDisable()
+    {
+        GarbageCollector.GCMode = GarbageCollector.Mode.Disabled;
+    }*/
+
 
     private void InitializeFlowField()
 	{
@@ -21,44 +36,21 @@ public class GridController : MonoBehaviour
 		gridDebug.SetFlowField(curFlowField);
 	}
 
+        
 	private void Update()
 	{
-		if (!shouldFocusOnObject)
-		{
-            if (Input.GetMouseButtonDown(0))
-            {
-                InitializeFlowField();
-
-                curFlowField.CreateCostField();
-
-                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
-                Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
-                Cell destinationCell = curFlowField.GetCellFromWorldPos(worldMousePos);
-                curFlowField.CreateIntegrationField(destinationCell);
-
-                curFlowField.CreateFlowField();
-
-                gridDebug.DrawFlowField();
-            }
-        }
-        else
+        if (curFrame >= 0)
         {
-            if (curFrame >= 0)
-            {
-                InitializeFlowField();
+            InitializeFlowField();
 
-                curFlowField.CreateCostField();
+            curFlowField.CreateCostField();
 
-                Cell destinationCell = curFlowField.GetCellFromWorldPos(objectToFocus.position);
-                curFlowField.CreateIntegrationField(destinationCell);
+            destinationCell = curFlowField.GetCellFromWorldPos(objectToFocus.position);
+            curFlowField.CreateIntegrationField(destinationCell);
 
-                curFlowField.CreateFlowField();
-
-                gridDebug.DrawFlowField();
-                curFrame = 0;
-            }
-            curFrame += 1;
+            curFlowField.CreateFlowField();
+            curFrame = 0;
         }
-
-	}
+        curFrame += 1;
+    }
 }

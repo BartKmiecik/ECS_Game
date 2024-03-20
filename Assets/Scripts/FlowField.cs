@@ -10,17 +10,20 @@ public class FlowField
 	private Vector2Int gridOffset;
 	public float cellRadius { get; private set; }
 	public Cell destinationCell;
-
 	private float cellDiameter;
+    private Vector3 cellHalfExtents;
+	private Vector3 worldPos;
+	private Vector3 vOne = new Vector3(1,1,1);
+	private int terrainMask;
 
-
-	public FlowField(float _cellRadius, Vector2Int _gridSize)
+    public FlowField(float _cellRadius, Vector2Int _gridSize)
 	{
 		cellRadius = _cellRadius;
 		cellDiameter = cellRadius * 2f;
 		gridSize = _gridSize;
 		gridOffset = _gridSize / 2;
-	}
+		cellHalfExtents = vOne * cellRadius;
+    }
 
 	public void CreateGrid()
 	{
@@ -30,7 +33,7 @@ public class FlowField
 		{
 			for (int y = 0; y < gridSize.y; y++)
 			{
-				Vector3 worldPos = new Vector3(cellDiameter * x + cellRadius - gridOffset.x, 0, 
+				worldPos = new Vector3(cellDiameter * x + cellRadius - gridOffset.x, 0, 
 					cellDiameter * y + cellRadius - gridOffset.y);
 				grid[x, y] = new Cell(worldPos, new Vector2Int(x, y));
 			}
@@ -39,8 +42,7 @@ public class FlowField
 
 	public void CreateCostField()
 	{
-		Vector3 cellHalfExtents = Vector3.one * cellRadius;
-		int terrainMask = LayerMask.GetMask("Impossible", "RoughTerrain");
+		terrainMask = LayerMask.GetMask("Impossible", "RoughTerrain");
 		foreach (Cell curCell in grid)
 		{
 			Collider[] obstacles = Physics.OverlapBox(curCell.worldPos, cellHalfExtents, Quaternion.identity, terrainMask);
