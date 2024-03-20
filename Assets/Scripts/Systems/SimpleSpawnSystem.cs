@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Entities;
+using Unity.Physics;
+using Unity.Physics.Systems;
 using Unity.Transforms;
 using UnityEngine;
 
 [BurstCompile]
+[UpdateBefore(typeof(PhysicsSimulationGroup))]
 public partial struct SimpleSpawnSystem : ISystem
 {
     public bool paused;
@@ -34,8 +37,13 @@ public partial struct SimpleSpawnSystem : ISystem
             Entity spawnedEntity = manager.Instantiate(prefab);
             manager.SetComponentData(spawnedEntity, new LocalTransform
             {
-                Position = new Unity.Mathematics.float3(2 * i, 1, 0),
+                Position = new Unity.Mathematics.float3(2 * i, 2f , 0),
+                Rotation = Quaternion.identity,
                 Scale = 1
+            });
+            manager.SetComponentData(spawnedEntity, new PhysicsVelocity
+            {
+                Linear = 0
             });
         }
         amount = 0;
