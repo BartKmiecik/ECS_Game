@@ -7,16 +7,19 @@ public class FlowField
 {
 	public Cell[,] grid { get; private set; }
 	public Vector2Int gridSize { get; private set; }
+	private Vector2Int gridOffset;
 	public float cellRadius { get; private set; }
 	public Cell destinationCell;
 
 	private float cellDiameter;
+
 
 	public FlowField(float _cellRadius, Vector2Int _gridSize)
 	{
 		cellRadius = _cellRadius;
 		cellDiameter = cellRadius * 2f;
 		gridSize = _gridSize;
+		gridOffset = _gridSize / 2;
 	}
 
 	public void CreateGrid()
@@ -27,7 +30,8 @@ public class FlowField
 		{
 			for (int y = 0; y < gridSize.y; y++)
 			{
-				Vector3 worldPos = new Vector3(cellDiameter * x + cellRadius, 0, cellDiameter * y + cellRadius);
+				Vector3 worldPos = new Vector3(cellDiameter * x + cellRadius - gridOffset.x, 0, 
+					cellDiameter * y + cellRadius - gridOffset.y);
 				grid[x, y] = new Cell(worldPos, new Vector2Int(x, y));
 			}
 		}
@@ -132,8 +136,8 @@ public class FlowField
 
 	public Cell GetCellFromWorldPos(Vector3 worldPos)
 	{
-		float percentX = worldPos.x / (gridSize.x * cellDiameter);
-		float percentY = worldPos.z / (gridSize.y * cellDiameter);
+		float percentX = (worldPos.x + gridOffset.x) / (gridSize.x * cellDiameter);
+		float percentY = (worldPos.z + gridOffset.y) / (gridSize.y * cellDiameter);
 
 		percentX = Mathf.Clamp01(percentX);
 		percentY = Mathf.Clamp01(percentY);

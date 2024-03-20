@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public enum FlowFieldDisplayType { None, AllIcons, DestinationIcon, CostField, IntegrationField };
@@ -27,7 +28,7 @@ public class GridDebug : MonoBehaviour
 		curFlowField = newFlowField;
 		cellRadius = newFlowField.cellRadius;
 		gridSize = newFlowField.gridSize;
-	}
+    }
 	
 	public void DrawFlowField()
 	{
@@ -194,7 +195,8 @@ public class GridDebug : MonoBehaviour
 		{
 			for (int y = 0; y < drawGridSize.y; y++)
 			{
-				Vector3 center = new Vector3(drawCellRadius * 2 * x + drawCellRadius, 0, drawCellRadius * 2 * y + drawCellRadius);
+				Vector3 center = new Vector3(drawCellRadius * 2 * x + drawCellRadius - drawGridSize.x / 2, 0, 
+					drawCellRadius * 2 * y + drawCellRadius - drawGridSize.y / 2);
 				Vector3 size = Vector3.one * drawCellRadius * 2;
 				Gizmos.DrawWireCube(center, size);
 			}
