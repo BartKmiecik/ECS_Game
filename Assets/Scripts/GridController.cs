@@ -16,33 +16,28 @@ public class GridController : MonoBehaviour
     public int frameDeley;
     private int curFrame = 0;
     private Cell destinationCell = null;
-/*
-    private void OnEnable()
+
+    private void Start()
     {
-        GarbageCollector.GCMode = GarbageCollector.Mode.Enabled;
-        GC.Collect();
+        InitializeFlowField();
     }
-
-    private void OnDisable()
-    {
-        GarbageCollector.GCMode = GarbageCollector.Mode.Disabled;
-    }*/
-
 
     private void InitializeFlowField()
 	{
         curFlowField = new FlowField(cellRadius, gridSize);
         curFlowField.CreateGrid();
-		gridDebug.SetFlowField(curFlowField);
-	}
+        gridDebug.SetFlowField(curFlowField);
+        curFlowField.CreateCostField();
+    }
 
         
 	private void Update()
 	{
-        if (curFrame >= 0)
+        if (curFrame >= frameDeley)
         {
-            InitializeFlowField();
-
+            curFlowField = new FlowField(cellRadius, gridSize);
+            curFlowField.CreateGrid();
+            gridDebug.SetFlowField(curFlowField);
             curFlowField.CreateCostField();
 
             destinationCell = curFlowField.GetCellFromWorldPos(objectToFocus.position);

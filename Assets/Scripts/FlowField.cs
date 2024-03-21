@@ -15,6 +15,16 @@ public class FlowField
 	private Vector3 worldPos;
 	private Vector3 vOne = new Vector3(1,1,1);
 	private int terrainMask;
+	private bool hasIncreasedCost = false;
+	private Collider[] obstacles;
+    private List<Cell> curentNeighbors = new List<Cell>();
+    private Cell curentCell = null;
+    private List<Cell> curNeighbors = new List<Cell>();
+    private List<Cell> neighborCells = new List<Cell>();
+	private Cell newNeighbor = null;
+	private Vector2Int finalPos = new Vector2Int(0,0);
+    private float percentX, percentY;
+	private int x, y;
 
     public FlowField(float _cellRadius, Vector2Int _gridSize)
 	{
@@ -45,8 +55,8 @@ public class FlowField
 		terrainMask = LayerMask.GetMask("Impossible", "RoughTerrain");
 		foreach (Cell curCell in grid)
 		{
-			Collider[] obstacles = Physics.OverlapBox(curCell.worldPos, cellHalfExtents, Quaternion.identity, terrainMask);
-			bool hasIncreasedCost = false;
+			obstacles = Physics.OverlapBox(curCell.worldPos, cellHalfExtents, Quaternion.identity, terrainMask);
+			hasIncreasedCost = false;
 			foreach (Collider col in obstacles)
 			{
 				if (col.gameObject.layer == 6)
@@ -76,14 +86,15 @@ public class FlowField
 
 		while(cellsToCheck.Count > 0)
 		{
-			Cell curCell = cellsToCheck.Dequeue();
-			List<Cell> curNeighbors = GetNeighborCells(curCell.gridIndex, GridDirection.CardinalDirections);
-			foreach (Cell curNeighbor in curNeighbors)
+			curentCell = cellsToCheck.Dequeue();
+            curentNeighbors.Clear();
+            curentNeighbors = GetNeighborCells(curentCell.gridIndex, GridDirection.CardinalDirections);
+			foreach (Cell curNeighbor in curentNeighbors)
 			{
 				if (curNeighbor.cost == byte.MaxValue) { continue; }
-				if (curNeighbor.cost + curCell.bestCost < curNeighbor.bestCost)
+				if (curNeighbor.cost + curentCell.bestCost < curNeighbor.bestCost)
 				{
-					curNeighbor.bestCost = (ushort)(curNeighbor.cost + curCell.bestCost);
+					curNeighbor.bestCost = (ushort)(curNeighbor.cost + curentCell.bestCost);
 					cellsToCheck.Enqueue(curNeighbor);
 				}
 			}
@@ -94,7 +105,8 @@ public class FlowField
 	{
 		foreach(Cell curCell in grid)
 		{
-			List<Cell> curNeighbors = GetNeighborCells(curCell.gridIndex, GridDirection.AllDirections);
+			curNeighbors.Clear();
+            curNeighbors = GetNeighborCells(curCell.gridIndex, GridDirection.AllDirections);
 
 			int bestCost = curCell.bestCost;
 
@@ -111,11 +123,10 @@ public class FlowField
 
 	private List<Cell> GetNeighborCells(Vector2Int nodeIndex, List<GridDirection> directions)
 	{
-		List<Cell> neighborCells = new List<Cell>();
-
+		neighborCells.Clear();
 		foreach (Vector2Int curDirection in directions)
 		{
-			Cell newNeighbor = GetCellAtRelativePos(nodeIndex, curDirection);
+            newNeighbor = GetCellAtRelativePos(nodeIndex, curDirection);
 			if (newNeighbor != null)
 			{
 				neighborCells.Add(newNeighbor);
@@ -126,7 +137,7 @@ public class FlowField
 
 	private Cell GetCellAtRelativePos(Vector2Int orignPos, Vector2Int relativePos)
 	{
-		Vector2Int finalPos = orignPos + relativePos;
+		finalPos = orignPos + relativePos;
 
 		if (finalPos.x < 0 || finalPos.x >= gridSize.x || finalPos.y < 0 || finalPos.y >= gridSize.y)
 		{
@@ -138,14 +149,14 @@ public class FlowField
 
 	public Cell GetCellFromWorldPos(Vector3 worldPos)
 	{
-		float percentX = (worldPos.x + gridOffset.x) / (gridSize.x * cellDiameter);
-		float percentY = (worldPos.z + gridOffset.y) / (gridSize.y * cellDiameter);
+		percentX = (worldPos.x + gridOffset.x) / (gridSize.x * cellDiameter);
+		percentY = (worldPos.z + gridOffset.y) / (gridSize.y * cellDiameter);
 
 		percentX = Mathf.Clamp01(percentX);
 		percentY = Mathf.Clamp01(percentY);
 
-		int x = Mathf.Clamp(Mathf.FloorToInt((gridSize.x) * percentX), 0, gridSize.x - 1);
-		int y = Mathf.Clamp(Mathf.FloorToInt((gridSize.y) * percentY), 0, gridSize.y - 1);
+		x = Mathf.Clamp(Mathf.FloorToInt((gridSize.x) * percentX), 0, gridSize.x - 1);
+		y = Mathf.Clamp(Mathf.FloorToInt((gridSize.y) * percentY), 0, gridSize.y - 1);
 		return grid[x, y];
 	}
 }
