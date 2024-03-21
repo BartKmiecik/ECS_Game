@@ -24,13 +24,37 @@ public partial struct SimpleSpawnSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         if (paused) return;
-        if (amount == -1)
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             foreach (RefRO<SimpleEnemySpawner> spawner in SystemAPI.Query<RefRO<SimpleEnemySpawner>>())
             {
                 amount = spawner.ValueRO.amount;
                 prefab = spawner.ValueRO.entityToSpawn;
             }
+            for (int i = 0; i < amount; i++)
+            {
+                Entity spawnedEntity = manager.Instantiate(prefab);
+                manager.SetComponentData(spawnedEntity, new LocalTransform
+                {
+                    Position = new Unity.Mathematics.float3(2 * i, 1f, 0),
+                    Rotation = Quaternion.identity,
+                    Scale = 1
+                });
+                manager.SetComponentData(spawnedEntity, new PhysicsVelocity
+                {
+                    Linear = 0
+                });
+            }
+            amount = 0;
+        }
+        /*if (amount == -1)
+        {
+            foreach (RefRO<SimpleEnemySpawner> spawner in SystemAPI.Query<RefRO<SimpleEnemySpawner>>())
+            {
+                amount = spawner.ValueRO.amount;
+                prefab = spawner.ValueRO.entityToSpawn;
+            }
+
         }
         for (int i = 0; i < amount; i++)
         {
@@ -46,7 +70,7 @@ public partial struct SimpleSpawnSystem : ISystem
                 Linear = 0
             });
         }
-        amount = 0;
+        amount = 0;*/
         /*ISimpleSpawnJob simpleSpawnJob = new ISimpleSpawnJob
         {
             _simpleEnemySpawner = simpleEnemySpawner,

@@ -16,7 +16,7 @@ public class UnitController : MonoBehaviour
 		unitsInGame = new List<GameObject>();
 	}
 
-	void Update()
+/*	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
@@ -39,7 +39,7 @@ public class UnitController : MonoBehaviour
 			Rigidbody unitRB = unit.GetComponent<Rigidbody>();
 			unitRB.velocity = moveDirection * moveSpeed;
 		}
-	}
+	}*/
 
 	private void SpawnUnits()
 	{

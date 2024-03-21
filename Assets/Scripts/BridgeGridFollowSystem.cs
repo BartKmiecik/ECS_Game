@@ -21,7 +21,6 @@ public partial class BridgeGridFollowSystem : SystemBase
 
     public Cell GetCellFromWorldPos(Vector3 worldPos)
     {
-        Cell result = gridController.curFlowField.GetCellFromWorldPos(worldPos);
-        return result;
+        return gridController.curFlowField.GetCellFromWorldPos(worldPos);
     }
 }
