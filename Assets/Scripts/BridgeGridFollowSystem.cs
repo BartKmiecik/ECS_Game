@@ -8,10 +8,16 @@ public partial class BridgeGridFollowSystem : SystemBase
 {
     public GridController gridController;
 
-
     protected override void OnCreate()
     {
-        gridController = GameObject.FindAnyObjectByType<GridController>().GetComponent<GridController>();
+        try
+        {
+            gridController = GameObject.FindAnyObjectByType<GridController>().GetComponent<GridController>();
+        }
+        catch
+        {
+            Debug.Log("Grid controller missing");
+        }
     }
 
     protected override void OnUpdate()

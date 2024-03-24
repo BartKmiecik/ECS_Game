@@ -11,6 +11,7 @@ public class UISkillSelect : MonoBehaviour
     private int _childCount;
     private UIExpBar _expBar;
 
+
     void Awake()
     {
         _icon = GetComponentInChildren<Image>();

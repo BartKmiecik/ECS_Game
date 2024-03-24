@@ -21,7 +21,7 @@ public class UIExpBar : MonoBehaviour
     public int skills_to_select = 3;
     private float _expirience = 0;
     private float _lastExpirience = 0;
-    private List<ISkill> skills_to_ = new List<ISkill>();
+    private List<ISkill> _skills_to = new List<ISkill>();
 
     void Start()
     {
@@ -39,7 +39,7 @@ public class UIExpBar : MonoBehaviour
         }
         _player = _entityManager.GetComponentData<Player>(_playerEntity);
 
-        skills_to_ .AddRange(GetComponents<ISkill>());
+        _skills_to.AddRange(GetComponents<ISkill>());
     }
 
     void LateUpdate()
@@ -65,7 +65,7 @@ public class UIExpBar : MonoBehaviour
 
     public void OnSkillSelected(int skillSelected)
     {
-        skills_to_[0].Skill();
+        _skills_to[skillSelected].Skill();
         Debug.Log($"Skill selected: {skillSelected}");
         for (int i = skills.Count - 1; i >=0; i--)
         {

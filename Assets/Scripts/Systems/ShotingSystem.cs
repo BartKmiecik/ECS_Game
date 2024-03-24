@@ -38,8 +38,8 @@ public partial struct ShotingSystem : ISystem
                 player.ValueRW.extraCd += _cd;
                 _cd = 0;
             }
-            var space = Input.GetMouseButton(0);
-            if (space)
+            var fireMB = Input.GetMouseButton(0);
+            if (fireMB)
             {
                 if (player.ValueRO.currentCooldown >= Mathf.Max(player.ValueRO.cooldown - player.ValueRO.extraCd, 0))
                 {

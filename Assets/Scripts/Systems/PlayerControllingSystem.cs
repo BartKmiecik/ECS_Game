@@ -4,6 +4,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ public partial struct PlayerControllingSystem : ISystem
 {
     public bool paused;
     float horizontal, vertical;
+
+    private float extraSpeed;
+
     void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<PlayerControl>();
@@ -22,13 +26,34 @@ public partial struct PlayerControllingSystem : ISystem
         if (paused) return;
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
-        ShadowMovement simpleShadow = new ShadowMovement
+        if (extraSpeed > 0)
         {
-            deltaTime = Time.deltaTime,
-            horizontal = horizontal,
-            vertical = vertical
-        };
-        simpleShadow.ScheduleParallel();
+            ShadowMovement simpleShadow = new ShadowMovement
+            {
+                deltaTime = Time.deltaTime,
+                horizontal = horizontal,
+                vertical = vertical,
+                extraSpeed = extraSpeed,
+            };
+            simpleShadow.ScheduleParallel();
+            extraSpeed = 0;
+        }
+        else
+        {
+            ShadowMovement simpleShadow = new ShadowMovement
+            {
+                deltaTime = Time.deltaTime,
+                horizontal = horizontal,
+                vertical = vertical,
+                extraSpeed = extraSpeed,
+            };
+            simpleShadow.ScheduleParallel();
+        }
+    }
+
+    public void UpdatePlayerSpeed(float speed)
+    {
+        extraSpeed = speed;
     }
 
     [WithAny(typeof(Player))]
@@ -38,8 +63,16 @@ public partial struct PlayerControllingSystem : ISystem
         public float deltaTime;
         public float horizontal;
         public float vertical;
-        public void Execute(ref LocalTransform localTransform, in PlayerControl playerControl)
+        public float extraSpeed;
+
+        public void Execute(ref LocalTransform localTransform, ref PlayerControl playerControl)
         {
+            if (extraSpeed > 0)
+            {
+                playerControl.speed += extraSpeed;
+                extraSpeed = 0;
+            }
+
             float3 targetPos;
             targetPos.x = localTransform.Position.x + (horizontal * playerControl.speed * deltaTime);
             targetPos.y = localTransform.Position.y;
