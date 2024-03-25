@@ -5,10 +5,13 @@ using Unity.Entities;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class SkillIncreaseAttackRate : MonoBehaviour, ISkill
+public class IncreaseAttackRateSkill : MonoBehaviour, ISkill
 {
     private Entity _playerEntity;
     public float coolDownDecrease;
+    public string description;
+
+    public string Description => description;
 
     public void Skill()
     {

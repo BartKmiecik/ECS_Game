@@ -4,10 +4,13 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-public class SkillMovementSpeedIncrease : MonoBehaviour, ISkill
+public class DamageIncreaseSkill : MonoBehaviour, ISkill
 {
     private Entity _playerEntity;
-    public float movementIcrease;
+    public int damageIncrease;
+    public string description;
+
+    public string Description => description;
 
     public void Skill()
     {
@@ -23,8 +26,8 @@ public class SkillMovementSpeedIncrease : MonoBehaviour, ISkill
                 break;
             }
         }
-        PlayerControl _playerControl = _entityManager.GetComponentData<PlayerControl>(_playerEntity);
-        var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PlayerControllingSystem>();
-        World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PlayerControllingSystem>(handle).UpdatePlayerSpeed(movementIcrease);
+        PlayerShooting _playerControl = _entityManager.GetComponentData<PlayerShooting>(_playerEntity);
+        var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<ShotingSystem>();
+        World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<ShotingSystem>(handle).UpdateDamage(damageIncrease);
     }
 }

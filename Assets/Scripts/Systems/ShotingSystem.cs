@@ -17,15 +17,22 @@ public partial struct ShotingSystem : ISystem
     public bool paused;
     EntityManager manager;
     private float _cd;
+    private int _extraDamage;
     public void OnCreate(ref SystemState state)
     {
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         _cd = 0;
+        _extraDamage = 0;
     }
 
     public void UpdateCoolDown(float cooldown)
     {
         _cd = cooldown;
+    }
+
+    public void UpdateDamage(int damage)
+    {
+        _extraDamage += damage;
     }
 
     public void OnUpdate(ref SystemState state)
@@ -51,6 +58,11 @@ public partial struct ShotingSystem : ISystem
                         Position = temp.Translation(),
                         Rotation = temp.Rotation(),
                         Scale = 1
+                    });
+                    manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
+                    {
+                        damage_value = manager.GetComponentData<Bullet>(spawnedEntity).damage_value + _extraDamage,
+                        speed = manager.GetComponentData<Bullet>(spawnedEntity).speed
                     });
                     player.ValueRW.currentCooldown = 0;
                 }

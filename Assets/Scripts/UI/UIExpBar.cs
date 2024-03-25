@@ -57,7 +57,7 @@ public class UIExpBar : MonoBehaviour
             for (int i = 0; i < skills_to_select;  i++)
             {
                 GameObject _skill = Instantiate(skillUiPrefab, levelUpPanel);
-                _skill.GetComponent<UISkillSelect>().Constructor(null, $"Skill {i}", i, this);
+                _skill.GetComponent<UISkillSelect>().Constructor(null, _skills_to[i].Description, i, this);
                 skills.Add(_skill);
             }
         }
