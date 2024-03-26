@@ -502,9 +502,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77406283d6dee0d4cb2667c541bdcfe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 3494204825280676317, guid: adde49068ff6eee48a3b1a090aa166f2,
+  prefabToSpawn: {fileID: 8617895117984625041, guid: 616af6910f79c944aa8c36f6d3761e6f,
     type: 3}
-  amount: 5
+  amount: 20
 --- !u!1 &7602348518454116156
 GameObject:
   m_ObjectHideFlags: 0

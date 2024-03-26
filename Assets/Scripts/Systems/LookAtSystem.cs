@@ -12,7 +12,7 @@ using static UnityEditor.FilePathAttribute;
 public partial struct LookAtSystem : ISystem
 {
     public bool paused;
-    float3 target;
+    public float3 target;
     void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<LookAt>();
@@ -22,7 +22,7 @@ public partial struct LookAtSystem : ISystem
     void OnUpdate(ref SystemState state)
     {
         if (paused) return;
-        foreach ((RefRO<LocalTransform> localTransform, RefRO<Player> rotateSpeed) in SystemAPI.Query<RefRO<LocalTransform>, RefRO<Player>>())
+        foreach ((RefRO<Player> _, RefRO<LocalTransform> localTransform) in SystemAPI.Query<RefRO<Player>, RefRO<LocalTransform>>())
         {
             target = localTransform.ValueRO.Position;
         }
@@ -40,7 +40,7 @@ public partial struct LookAtSystem : ISystem
     {
         public float deltaTime;
         public float3 playerPos;
-        public void Execute(ref LocalTransform localTransform, in RotateSpeed rotateSpeed, ref LookAt lookAt)
+        public void Execute(ref LocalTransform localTransform, ref LookAt lookAt)
         {
             float3 targetPos;
             targetPos.x = playerPos.x;
@@ -53,7 +53,7 @@ public partial struct LookAtSystem : ISystem
             float3 curentPos;
 
             curentPos.x = localTransform.Position.x;
-            curentPos.y = localTransform.Position.y;
+            curentPos.y = playerPos.y;
             curentPos.z = localTransform.Position.z;
 
             float3 relativePos = targetPos - curentPos;
