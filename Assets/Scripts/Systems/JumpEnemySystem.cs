@@ -24,9 +24,11 @@ public partial struct JumpEnemySystem : ISystem
             {
                 float force = jumpEnemy.ValueRO.force;
                 float3 relativePos = math.normalizesafe(target.ValueRO.target - localTransform.ValueRO.Position);
-                relativePos.y = 1;
+                relativePos.y = 5;
+                relativePos.x *= force;
+                relativePos.z *= force;
                 jumpEnemy.ValueRW.currentCooldown = jumpEnemy.ValueRO.cooldown;
-                physic.ValueRW.Linear = relativePos * force;
+                physic.ValueRW.Linear = relativePos;
             }
             jumpEnemy.ValueRW.currentCooldown -= SystemAPI.Time.DeltaTime;
         }

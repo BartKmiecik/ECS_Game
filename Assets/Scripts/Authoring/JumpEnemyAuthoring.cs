@@ -14,10 +14,12 @@ public class JumpEnemyAuthoring : MonoBehaviour
     public float2 cooldown; // Range
     private Unity.Mathematics.Random random;
 
+
     public class Baker : Baker<JumpEnemyAuthoring>
     {
         public override void Bake(JumpEnemyAuthoring authoring)
         {
+            authoring.random = new Unity.Mathematics.Random((uint)(Time.deltaTime * 100000));
             float f = authoring.random.NextFloat(authoring.force.x, authoring.force.y);
             float c = authoring.random.NextFloat(authoring.cooldown.x, authoring.cooldown.y);
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
