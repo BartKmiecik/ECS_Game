@@ -38,7 +38,8 @@ public partial struct ShotingSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         if (paused) return;
-        foreach ((RefRW<PlayerShooting> player, RefRO<LocalToWorld> localTransform) in SystemAPI.Query<RefRW<PlayerShooting>, RefRO<LocalToWorld>>())
+        foreach ((RefRW<PlayerShooting> player, RefRO<LocalToWorld> localTransform) 
+            in SystemAPI.Query<RefRW<PlayerShooting>, RefRO<LocalToWorld>>())
         {
             if (_cd > 0)
             {

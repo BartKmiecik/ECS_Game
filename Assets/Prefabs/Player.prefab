@@ -118,7 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5faa5006149d358468161afa1f25c445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  maxSpeed: 50
+  acceleration: 50
 --- !u!114 &2752960901796785822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +190,7 @@ MonoBehaviour:
     m_BevelRadius: 0.05
     m_MinimumAngle: 2.5000002
   m_CustomMesh: {fileID: 0}
-  m_ForceUnique: 0
+  m_ForceUnique: 1
   m_Material:
     m_SupportsTemplate: 1
     m_Template: {fileID: 0}
@@ -199,7 +200,7 @@ MonoBehaviour:
     m_Friction:
       m_Override: 0
       m_Value:
-        Value: 0.5
+        Value: 0
         CombineMode: 0
     m_Restitution:
       m_Override: 0
@@ -301,11 +302,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccea9ea98e38942e0b0938c27ed1903e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MotionType: 1
-  m_Smoothing: 0
-  m_Mass: 1
-  m_LinearDamping: 0.01
-  m_AngularDamping: 0.05
+  m_MotionType: 0
+  m_Smoothing: 1
+  m_Mass: 5
+  m_LinearDamping: 5
+  m_AngularDamping: 2
   m_InitialLinearVelocity:
     x: 0
     y: 0
@@ -365,8 +366,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858d45fc7053b594db0348cb8e063a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
-  force: 50
+  bulletPrefab: {fileID: 2277423017147235066, guid: 7976da43d02e2684e81bb71700e2c49d,
+    type: 3}
+  force: 500
   damage: 5
   cooldown: 1
 --- !u!1 &6589157199080882064

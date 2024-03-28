@@ -22,6 +22,9 @@ public partial struct PauseGameSystem : ISystem
         handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<ShotingSystem>();
         World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<ShotingSystem>(handle).paused = state;
 
+        handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PlayerShootingSystemV2>();
+        World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PlayerShootingSystemV2>(handle).paused = state;
+
         handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<LookAtMouseSystem>();
         World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<LookAtMouseSystem>(handle).paused = state;
 
