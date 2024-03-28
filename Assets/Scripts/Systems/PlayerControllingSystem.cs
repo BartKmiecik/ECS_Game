@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
@@ -65,20 +66,54 @@ public partial struct PlayerControllingSystem : ISystem
         public float vertical;
         public float extraSpeed;
 
-        public void Execute(ref LocalTransform localTransform, ref PlayerControl playerControl)
+        public void Execute(ref PhysicsVelocity physicsVelocity, ref PlayerControl playerControl)
         {
             if (extraSpeed > 0)
             {
-                playerControl.speed += extraSpeed;
+                playerControl.maxSpeed += extraSpeed;
                 extraSpeed = 0;
             }
 
-            float3 targetPos;
-            targetPos.x = localTransform.Position.x + (horizontal * playerControl.speed * deltaTime);
-            targetPos.y = localTransform.Position.y;
-            targetPos.z = localTransform.Position.z + (vertical * playerControl.speed * deltaTime);
+            float2 targetPos;
+            targetPos.x = horizontal * playerControl.acceleration;
+            targetPos.y = vertical * playerControl.acceleration;
 
-            localTransform.Position = targetPos;
+/*            float3 currentSpped = targetPos * deltaTime;*/
+
+            if (math.sign(targetPos.x) == math.sign(physicsVelocity.Linear.x))
+            {
+                physicsVelocity.Linear.x += targetPos.x * deltaTime;
+            }  else if (math.sign(targetPos.x) == 0)
+            {
+
+            }else
+            {
+                physicsVelocity.Linear.x = 0;
+                physicsVelocity.Linear.x += targetPos.x * deltaTime;
+            }
+            if (math.sign(targetPos.y) == math.sign(physicsVelocity.Linear.z))
+            {
+                physicsVelocity.Linear.z += targetPos.y * deltaTime;
+            }
+            else if (math.sign(targetPos.y) == 0)
+            {
+                
+            }
+            else
+            {
+                physicsVelocity.Linear.z = 0;
+                physicsVelocity.Linear.z += targetPos.y * deltaTime;
+            }
+
+
+            if (math.abs(physicsVelocity.Linear.x) > playerControl.maxSpeed)
+            {
+                physicsVelocity.Linear.x -= targetPos.x * deltaTime;
+            } 
+            if (math.abs(physicsVelocity.Linear.z) > playerControl.maxSpeed)
+            {
+                physicsVelocity.Linear.z -= targetPos.y * deltaTime;
+            }
         }
     }
 }

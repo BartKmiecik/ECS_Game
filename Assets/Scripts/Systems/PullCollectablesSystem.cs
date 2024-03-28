@@ -19,7 +19,7 @@ public partial struct PullCollectablesSystem : ISystem
             SystemAPI.Query<RefRO<PlayerControl>, RefRO<LocalTransform>, RefRO<PullCollectables>>())
         {
             playerPos = playerTransform.ValueRO.Position;
-            collectingSpeed = (player.ValueRO.speed) * 2;
+            collectingSpeed = (player.ValueRO.maxSpeed) * 2;
             collatableDistance = pullCollectables.ValueRO.distance;
         }
         foreach ((RefRO<Expirience> _, RefRW<LocalTransform> expirienceTransform) in SystemAPI.Query<RefRO<Expirience>, RefRW<LocalTransform>>())

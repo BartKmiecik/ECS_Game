@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PlayerControllingAuthoring : MonoBehaviour
 {
-    public float speed;
+    public float maxSpeed;
+    public float acceleration;
     public class Baker : Baker<PlayerControllingAuthoring>
     {
         public override void Bake(PlayerControllingAuthoring authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new PlayerControl {
-                speed = authoring.speed
+                maxSpeed = authoring.maxSpeed,
+                acceleration = authoring.acceleration,
             });
         }
     }
@@ -19,5 +21,6 @@ public class PlayerControllingAuthoring : MonoBehaviour
 
 public struct PlayerControl: IComponentData
 {
-    public float speed;
+    public float maxSpeed;
+    public float acceleration;
 }
