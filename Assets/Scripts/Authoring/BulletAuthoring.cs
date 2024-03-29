@@ -16,7 +16,8 @@ public class BulletAuthoring : MonoBehaviour
             AddComponent(entity, new Bullet
             {
                 damage_value = authoring.damage_value,
-                speed = authoring.speed
+                speed = authoring.speed,
+                force = 0,
             });
         }
     }
@@ -26,4 +27,5 @@ public partial struct Bullet : IComponentData
 {
     public int damage_value;
     public float speed;
+    public float force;
 }

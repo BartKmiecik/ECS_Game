@@ -191,37 +191,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5002229146560756486, guid: 2b3f38ef5f1431148b0b3a28c955a921,
+        type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3996655529113797531, guid: 2b3f38ef5f1431148b0b3a28c955a921,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1882489134}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b3f38ef5f1431148b0b3a28c955a921, type: 3}
---- !u!1 &1882489123 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3996655529113797531, guid: 2b3f38ef5f1431148b0b3a28c955a921,
-    type: 3}
-  m_PrefabInstance: {fileID: 528569618}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1882489134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882489123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 858d45fc7053b594db0348cb8e063a46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
-  force: 0
-  damage: 0
-  cooldown: 0
 --- !u!1 &1997261634
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,7 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77406283d6dee0d4cb2667c541bdcfe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 3494204825280676317, guid: adde49068ff6eee48a3b1a090aa166f2,
+  prefabToSpawn: {fileID: 8617895117984625041, guid: 616af6910f79c944aa8c36f6d3761e6f,
     type: 3}
   amount: 20
 --- !u!1 &7602348518454116156

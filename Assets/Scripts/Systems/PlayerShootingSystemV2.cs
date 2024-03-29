@@ -69,7 +69,8 @@ public partial struct PlayerShootingSystemV2 : ISystem
                     manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
                     {
                         damage_value = _damage,
-                        speed = manager.GetComponentData<Bullet>(spawnedEntity).speed
+                        speed = manager.GetComponentData<Bullet>(spawnedEntity).speed,
+                        force = _force
                     });
                     float3 temp2 = new float3(localTransform.ValueRO.Forward);
                     physicsVelocity.ValueRW.Linear -= temp2 * _force;

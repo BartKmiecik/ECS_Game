@@ -366,9 +366,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858d45fc7053b594db0348cb8e063a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2277423017147235066, guid: 7976da43d02e2684e81bb71700e2c49d,
+  bulletPrefab: {fileID: 2277423017147235066, guid: a7ab868df384b644b877c814de5ccdc6,
     type: 3}
-  force: 500
+  force: 20
   damage: 5
   cooldown: 1
 --- !u!1 &6589157199080882064
