@@ -19,7 +19,7 @@ public class JumpEnemyAuthoring : MonoBehaviour
     {
         public override void Bake(JumpEnemyAuthoring authoring)
         {
-            authoring.random = new Unity.Mathematics.Random((uint)(Time.deltaTime * 100000));
+            authoring.random = new Unity.Mathematics.Random((uint)(math.max(1,Time.deltaTime * 100000)));
             float f = authoring.random.NextFloat(authoring.force.x, authoring.force.y);
             float c = authoring.random.NextFloat(authoring.cooldown.x, authoring.cooldown.y);
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
