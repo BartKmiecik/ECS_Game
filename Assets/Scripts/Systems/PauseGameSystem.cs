@@ -34,6 +34,9 @@ public partial struct PauseGameSystem : ISystem
         handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<CollectableSystem>();
         World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<CollectableSystem>(handle).paused = state;
 
+        handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<DamagePlayerSystem>();
+        World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<DamagePlayerSystem>(handle).paused = state;
+
         World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<PhysicsSystemGroup>().Enabled = !state;
     }
 

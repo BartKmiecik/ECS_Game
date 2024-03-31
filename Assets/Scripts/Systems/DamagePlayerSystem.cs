@@ -12,6 +12,7 @@ using UnityEngine;
 public partial struct DamagePlayerSystem : ISystem
 {
     private float playerInvincibilityTime;
+    public bool paused;
     public void OnCreate(ref SystemState state)
     {
         foreach (RefRO<Player> player in SystemAPI.Query<RefRO<Player>>())
@@ -23,6 +24,7 @@ public partial struct DamagePlayerSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
+        if (paused) return;
         foreach (RefRW<Player> player in SystemAPI.Query<RefRW<Player>>())
         {
             if (player.ValueRO.timer > 0f)

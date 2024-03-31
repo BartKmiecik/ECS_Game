@@ -18,6 +18,7 @@ public partial struct DestrutableTriggerSystem : ISystem
 
     public void OnCreate(ref SystemState state)
     {
+        state.RequireForUpdate<SimulationSingleton>();
     }
 
     public void OnUpdate(ref SystemState state)
