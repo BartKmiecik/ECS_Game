@@ -12,7 +12,7 @@ public class UIHealthBar : MonoBehaviour
     private Entity _playerEntity;
     private Player _player;
     private float _curentHealth = 0;
-
+    public GameObject gameOverScreen;
 
     void Start()
     {
@@ -36,5 +36,11 @@ public class UIHealthBar : MonoBehaviour
         _player = _entityManager.GetComponentData<Player>(_playerEntity);
         _curentHealth = (float)_player.currentHealth / (float)_player.maxHealth;
         _image.fillAmount = _curentHealth;
+        if (_curentHealth <= 0)
+        {
+            gameOverScreen.SetActive(true);
+            var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PauseGameSystem>();
+            World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true);
+        }
     }
 }
