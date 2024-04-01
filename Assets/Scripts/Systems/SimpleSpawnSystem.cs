@@ -19,6 +19,7 @@ public partial struct SimpleSpawnSystem : ISystem
     {
         amount = -1;
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        paused = false;
     }
 
     public void OnUpdate(ref SystemState state)
