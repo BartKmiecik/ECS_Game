@@ -6,10 +6,17 @@ using Unity.Entities;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
+public enum SpawningType
+{
+    Line,
+    Circle
+}
 public class BetterSpawnerAuthoring: MonoBehaviour
 {
     public List<GameObject> prefabKindsToSpawne = new List<GameObject>();
     public int maxPrefabSpawn;
+    public SpawningType spawningType;
+    public float radius;
 
     public class Baker : Baker<BetterSpawnerAuthoring>
     {
@@ -21,7 +28,9 @@ public class BetterSpawnerAuthoring: MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new BetterSpawner
             {
-                maxEntitesToSpawn = authoring.maxPrefabSpawn
+                maxEntitesToSpawn = authoring.maxPrefabSpawn,
+                spawningType = authoring.spawningType,
+                radius = authoring.radius,
             });
         }
     }
@@ -35,4 +44,6 @@ public struct Spawnable : IBufferElementData
 public partial struct BetterSpawner : IComponentData
 {
     public int maxEntitesToSpawn;
+    public SpawningType spawningType;
+    public float radius;
 }

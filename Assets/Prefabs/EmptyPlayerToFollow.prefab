@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8362517474258734658}
   - component: {fileID: 6376353076337363466}
+  - component: {fileID: 4765434613308818636}
   m_Layer: 0
   m_Name: EmptyPlayerToFollow
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6376353076337363466
 MonoBehaviour:
@@ -45,3 +46,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 5
+--- !u!114 &4765434613308818636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316607319176795721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbf59448d9703a4e90701d5f0479f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3
