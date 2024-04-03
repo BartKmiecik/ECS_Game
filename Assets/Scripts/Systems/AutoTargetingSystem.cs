@@ -47,13 +47,24 @@ public partial struct AutoTargetingSystem : ISystem
                 BelongsTo = (uint)CollisionLayers.Player,
                 CollidesWith = (uint)CollisionLayers.Enemies,
             });
-
+            List<float3> targetsList = new List<float3>();
             foreach (ColliderCastHit hit in hits)
             {
                 ComponentLookup<LocalTransform> localTransform = SystemAPI.GetComponentLookup<LocalTransform>();
-                float3 enemyPos = new float3(localTransform.GetRefRW(hit.Entity).ValueRO.Position);
-                Debug.Log($"{hit.Entity} and distance {math.distance(LocalTransform.ValueRO.Position, enemyPos)}");
+                try
+                {
+                    float3 enemyPos = new float3(localTransform.GetRefRW(hit.Entity).ValueRO.Position);
+                    targetsList.Add(enemyPos);
+                } catch (Exception ex)
+                {
+                    Debug.Log($"{ex.Message} - Enemy destroyed in meantime");
+                }    
             }
+            if (targetsList.Count > 0) 
+            {
+                targetsList.Sort((p1, p2) => math.distance(LocalTransform.ValueRO.Position, p1).CompareTo(math.distance(LocalTransform.ValueRO.Position, p2)));
+            }
+            World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<AutomaticTargetHolder>().SetTargetsPos(targetsList);
             break;
         }
     }

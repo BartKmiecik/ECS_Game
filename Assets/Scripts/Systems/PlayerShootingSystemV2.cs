@@ -15,6 +15,7 @@ using UnityEngine;
 public partial struct PlayerShootingSystemV2 : ISystem
 {
     public bool paused;
+    public bool automatic;
     EntityManager manager;
     private float _cd;
     private int _damage;
@@ -24,6 +25,7 @@ public partial struct PlayerShootingSystemV2 : ISystem
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         _cd = 0;
         _damage = 0;
+        automatic = false;
     }
 
     public void UpdateCoolDown(float cooldown)
@@ -48,7 +50,7 @@ public partial struct PlayerShootingSystemV2 : ISystem
                 _cd = 0;
             }
             var fireMB = Input.GetMouseButton(1);
-            if (fireMB)
+            if (fireMB || automatic)
             {
                 if (player.ValueRO.currentCooldown >= Mathf.Max(player.ValueRO.cooldown, 0))
                 {
@@ -59,21 +61,51 @@ public partial struct PlayerShootingSystemV2 : ISystem
                     float _force = player.ValueRO.force;
                     Entity _bulletPrefab = player.ValueRO.bulletPrefab;
                     var temp = localTransform.ValueRO.Value;
-                    Entity spawnedEntity = manager.Instantiate(_bulletPrefab);
-                    manager.SetComponentData(spawnedEntity, new LocalTransform
+
+                    if (automatic)
                     {
-                        Position = temp.Translation(),
-                        Rotation = temp.Rotation(),
-                        Scale = 1
-                    });
-                    manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
+                        float3 closestTarget = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<AutomaticTargetHolder>().GetClosestTarget();
+                        if (math.all(closestTarget == float3.zero))
+                            return;
+                        Entity spawnedEntity = manager.Instantiate(_bulletPrefab);
+                        Quaternion rot = Quaternion.LookRotation(math.normalize(closestTarget - localTransform.ValueRO.Position), math.up());
+
+                        LocalTransform tmp = new LocalTransform {
+                            Position = temp.Translation(),
+                            Rotation = rot,
+                            Scale = 1
+                        };
+
+                        manager.SetComponentData(spawnedEntity, tmp);
+                        manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
+                        {
+                            damage_value = _damage,
+                            speed = manager.GetComponentData<Bullet>(spawnedEntity).speed,
+                            force = _force
+                        });
+
+                        float3 temp2 = new float3(tmp.Forward());
+                        physicsVelocity.ValueRW.Linear -= temp2 * _force;
+                    }
+                    else
                     {
-                        damage_value = _damage,
-                        speed = manager.GetComponentData<Bullet>(spawnedEntity).speed,
-                        force = _force
-                    });
-                    float3 temp2 = new float3(localTransform.ValueRO.Forward);
-                    physicsVelocity.ValueRW.Linear -= temp2 * _force;
+                        Entity spawnedEntity = manager.Instantiate(_bulletPrefab);
+                        manager.SetComponentData(spawnedEntity, new LocalTransform
+                        {
+                            Position = temp.Translation(),
+                            Rotation = temp.Rotation(),
+                            Scale = 1
+                        });
+                        manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
+                        {
+                            damage_value = _damage,
+                            speed = manager.GetComponentData<Bullet>(spawnedEntity).speed,
+                            force = _force
+                        });
+                        float3 temp2 = new float3(localTransform.ValueRO.Forward);
+                        physicsVelocity.ValueRW.Linear -= temp2 * _force;
+                    }
+
                     player.ValueRW.currentCooldown = 0;
                 }
             }

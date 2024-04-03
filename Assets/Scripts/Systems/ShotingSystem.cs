@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Physics.Systems;
 using Unity.Transforms;
 using Unity.VisualScripting.Antlr3.Runtime;
@@ -15,6 +16,7 @@ using UnityEngine;
 public partial struct ShotingSystem : ISystem
 {
     public bool paused;
+    public bool automatic;
     EntityManager manager;
     private float _cd;
     private int _extraDamage;
@@ -23,6 +25,7 @@ public partial struct ShotingSystem : ISystem
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         _cd = 0;
         _extraDamage = 0;
+        automatic = false;
     }
 
     public void UpdateCoolDown(float cooldown)
@@ -47,24 +50,51 @@ public partial struct ShotingSystem : ISystem
                 _cd = 0;
             }
             var fireMB = Input.GetMouseButton(0);
-            if (fireMB)
+            if (fireMB || automatic)
             {
                 if (player.ValueRO.currentCooldown >= Mathf.Max(player.ValueRO.cooldown - player.ValueRO.extraCd, 0))
                 {
-                    Entity prefab = player.ValueRO.buletPrefab;
-                    var temp = localTransform.ValueRO.Value;
-                    Entity spawnedEntity = manager.Instantiate(prefab);
-                    manager.SetComponentData(spawnedEntity, new LocalTransform
+                    if ( automatic)
                     {
-                        Position = temp.Translation(),
-                        Rotation = temp.Rotation(),
-                        Scale = 1
-                    });
-                    manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
+                        float3 closestTarget = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<AutomaticTargetHolder>().GetClosestTarget();
+                        if (math.all(closestTarget == float3.zero))
+                            return;
+                        Entity prefab = player.ValueRO.buletPrefab;
+                        var temp = localTransform.ValueRO.Value;
+                        Entity spawnedEntity = manager.Instantiate(prefab);
+                        Quaternion rot = Quaternion.LookRotation(math.normalize(closestTarget - localTransform.ValueRO.Position), math.up());
+
+                        LocalTransform tmp = new LocalTransform
+                        {
+                            Position = temp.Translation(),
+                            Rotation = rot,
+                            Scale = 1
+                        };
+
+                        manager.SetComponentData(spawnedEntity, tmp);
+                        manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
+                        {
+                            damage_value = manager.GetComponentData<Bullet>(spawnedEntity).damage_value + _extraDamage,
+                            speed = manager.GetComponentData<Bullet>(spawnedEntity).speed
+                        });
+                    }
+                    else
                     {
-                        damage_value = manager.GetComponentData<Bullet>(spawnedEntity).damage_value + _extraDamage,
-                        speed = manager.GetComponentData<Bullet>(spawnedEntity).speed
-                    });
+                        Entity prefab = player.ValueRO.buletPrefab;
+                        var temp = localTransform.ValueRO.Value;
+                        Entity spawnedEntity = manager.Instantiate(prefab);
+                        manager.SetComponentData(spawnedEntity, new LocalTransform
+                        {
+                            Position = temp.Translation(),
+                            Rotation = temp.Rotation(),
+                            Scale = 1
+                        });
+                        manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
+                        {
+                            damage_value = manager.GetComponentData<Bullet>(spawnedEntity).damage_value + _extraDamage,
+                            speed = manager.GetComponentData<Bullet>(spawnedEntity).speed
+                        });
+                    }
                     player.ValueRW.currentCooldown = 0;
                 }
             }  
