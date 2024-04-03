@@ -26,7 +26,7 @@ public class SpawningGizmos : MonoBehaviour
          }
      }*/
 
-    private void OnDrawGizmos()
+/*    private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         float spacing = 360 / count;
@@ -41,5 +41,5 @@ public class SpawningGizmos : MonoBehaviour
         {
             currentOffset = 0;
         }
-    }
+    }*/
 }

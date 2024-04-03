@@ -1,49 +1,61 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Burst.CompilerServices;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Systems;
+using Unity.Transforms;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using RaycastHit = Unity.Physics.RaycastHit;
+
+[Flags]
+public enum CollisionLayers
+{
+    Player = 1 << 1,
+    Enemies = 1 << 2
+}
 
 [BurstCompile]
 public partial struct AutoTargetingSystem : ISystem
 {
-    PhysicsWorld world;
+    PhysicsWorldSingleton world;
+    float3 zeros;
+    float radius;
 
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<PhysicsWorldSingleton>();
-        Debug.Log("Start");
-        world = SystemAPI.GetSingletonRW<PhysicsWorldSingleton>().ValueRW.PhysicsWorld;
+        zeros = new float3(0, 0, 0);
+        radius = 15;
     }
 
     public void OnUpdate(ref SystemState state)
     {
-        Debug.Log("SMTH");
-        Raycast(new float3(0, 0, 0), new float3(0, 0, 10), out var hit);
-    }
-
-    private bool Raycast(float3 rayStart , float3 rayEnd, out RaycastHit raycast)
-    {
-        try
+        foreach ((RefRO<Player> player, RefRO<LocalTransform> LocalTransform) in SystemAPI.Query<RefRO<Player>, RefRO<LocalTransform>>())
         {
-            RaycastInput rayInput = new RaycastInput
+            NativeList<ColliderCastHit> hits = new NativeList<ColliderCastHit>(Allocator.Temp);
+            world = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
+            world.SphereCastAll(LocalTransform.ValueRO.Position, radius, zeros, 1, ref hits, new CollisionFilter
             {
-                Start = rayStart,
-                End = rayEnd,
-            };
-            var hit = world.CastRay(rayInput, out raycast);
-            Debug.Log(hit);
-            return hit;
+                BelongsTo = (uint)CollisionLayers.Player,
+                CollidesWith = (uint)CollisionLayers.Enemies,
+            });
+
+            foreach (ColliderCastHit hit in hits)
+            {
+                ComponentLookup<LocalTransform> localTransform = SystemAPI.GetComponentLookup<LocalTransform>();
+                float3 enemyPos = new float3(localTransform.GetRefRW(hit.Entity).ValueRO.Position);
+                Debug.Log($"{hit.Entity} and distance {math.distance(LocalTransform.ValueRO.Position, enemyPos)}");
+            }
+            break;
         }
-        catch {
-            world = SystemAPI.GetSingletonRW<PhysicsWorldSingleton>().ValueRW.PhysicsWorld;
-            raycast = new RaycastHit();
-        }
-        return false;
     }
 }
+
