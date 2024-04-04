@@ -399,3 +399,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage_value: 5
   speed: 35
+  force: 0
