@@ -13,9 +13,8 @@ using static UnityEngine.EventSystems.EventTrigger;
 [BurstCompile]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateAfter(typeof(PhysicsSimulationGroup))]
-public partial struct DestrutableTriggerSystem : ISystem
+public partial struct PlayerBulletsDestrutableTriggerSystem : ISystem
 {
-
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<SimulationSingleton>();
@@ -23,7 +22,7 @@ public partial struct DestrutableTriggerSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        state.Dependency = new BulletsCollideEventsJob
+        state.Dependency = new PlayerBulletsBulletsCollideEventsJob
         {
             destructable = SystemAPI.GetComponentLookup<Destructable>(),
             bullet = SystemAPI.GetComponentLookup<Bullet>(),
@@ -34,7 +33,7 @@ public partial struct DestrutableTriggerSystem : ISystem
 
     }
 
-    public partial struct BulletsCollideEventsJob : ITriggerEventsJob
+    public partial struct PlayerBulletsBulletsCollideEventsJob : ITriggerEventsJob
     {
         public ComponentLookup<Destructable> destructable;
         public ComponentLookup<Bullet> bullet;
@@ -68,17 +67,6 @@ public partial struct DestrutableTriggerSystem : ISystem
             {
                 return;
             }
-
-/*            bool isBodyATrigger = destructable.HasComponent(entityA);
-            bool isBodyBTrigger = destructable.HasComponent(entityB);
-
-            if (!isBodyATrigger || !isBodyBTrigger
-                || destructable.GetRefRO(entityA).ValueRO.shouldBeDestroyed
-                || destructable.GetRefRO(entityB).ValueRO.shouldBeDestroyed)
-            {
-                return;
-            }*/
-
 
             if (hasAHealth && isBBullet)
             {

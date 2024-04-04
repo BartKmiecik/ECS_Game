@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
-public class BulletAuthoring : MonoBehaviour
+public class EnemyBulletAuthoring : MonoBehaviour
 {
     public int damage_value;
     public float speed;
     public float force;
 
-    public class Baker : Baker<BulletAuthoring>
+    public class Baker : Baker<EnemyBulletAuthoring>
     {
-        public override void Bake(BulletAuthoring authoring)
+        public override void Bake(EnemyBulletAuthoring authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
-            AddComponent(entity, new Bullet
+            AddComponent(entity, new EnemyBullet
             {
                 damage_value = authoring.damage_value,
                 speed = authoring.speed,
@@ -24,7 +24,7 @@ public class BulletAuthoring : MonoBehaviour
     }
 }
 
-public partial struct Bullet : IComponentData
+public partial struct EnemyBullet : IComponentData
 {
     public int damage_value;
     public float speed;
