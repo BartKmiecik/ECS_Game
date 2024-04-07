@@ -12,6 +12,7 @@ using UnityEngine;
 [UpdateAfter(typeof(PhysicsSimulationGroup))]
 public partial struct EnemySimpleShotingSystem : ISystem
 {
+    public bool paused;
     EntityManager manager;
 
     public void OnCreate(ref SystemState state)
@@ -21,7 +22,8 @@ public partial struct EnemySimpleShotingSystem : ISystem
 
     public void OnUpdate(ref SystemState state) 
     {
-        foreach((RefRW<EnemySimpleShooting> enemy, RefRO<LocalToWorld> localTransform) 
+        if (paused) return;
+        foreach ((RefRW<EnemySimpleShooting> enemy, RefRO<LocalToWorld> localTransform) 
             in SystemAPI.Query<RefRW<EnemySimpleShooting>, RefRO<LocalToWorld>>()) 
         {
             if (enemy.ValueRO.currentCooldown >= enemy.ValueRO.cooldown)

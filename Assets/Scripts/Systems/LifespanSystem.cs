@@ -10,6 +10,8 @@ public partial struct LifespanSystem : ISystem
 {
     EntityCommandBuffer ecb;
     EntityManager em;
+    public bool paused;
+
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<Lifespan>();
@@ -17,6 +19,7 @@ public partial struct LifespanSystem : ISystem
     }
     public void OnUpdate(ref SystemState state)
     {
+        if (paused) return;
         ecb = new EntityCommandBuffer(Allocator.TempJob);
         foreach ((RefRW<Lifespan> lifespan, Entity entity) in SystemAPI.Query<RefRW<Lifespan>>().WithEntityAccess()) {
             if (lifespan.ValueRW.currentLife > 0)

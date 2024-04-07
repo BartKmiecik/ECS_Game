@@ -9,6 +9,7 @@ using UnityEngine;
 [BurstCompile]
 public partial struct RotateFlameSystem : ISystem
 {
+    public bool paused;
     public float cooldown;
     public float currentCooldown;
     public float duration;
@@ -25,6 +26,10 @@ public partial struct RotateFlameSystem : ISystem
 
     public void OnUpdate(ref SystemState state) 
     {
+        if (paused) { return; }
+        {
+            
+        }
         float deltaTime = SystemAPI.Time.DeltaTime;
         foreach ((RefRW<RotatingFlame> rotateFlame, RefRO<LocalToWorld> localTransform) in SystemAPI.Query<RefRW<RotatingFlame>, RefRO<LocalToWorld>>())
         {

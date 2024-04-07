@@ -670,8 +670,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fdd06807ec58414aae6eec9fcd49f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  playerInvincibilityTime: 1
+  maxHealth: 81
+  playerInvincibilityTime: 0.25
 --- !u!114 &2752960901520014220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,7 +777,7 @@ MonoBehaviour:
   beams: 1
   distance: 10
   cooldown: 5
-  duration: 5
+  duration: 5.01
   rotationSpeed: 5
   damage: 1
 --- !u!114 &5002229146904604180

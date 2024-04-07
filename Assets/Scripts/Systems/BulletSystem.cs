@@ -10,13 +10,16 @@ using UnityEngine;
 [BurstCompile]
 public partial struct BulletSystem : ISystem
 {
+    public bool paused; 
+
     public void OnCreate(ref SystemState state)
     {
 /*        state.RequireForUpdate<Bullet>();*/
     }
 
-    public void OnUpdate(ref SystemState state) {
-
+    public void OnUpdate(ref SystemState state) 
+    {
+        if (paused) { return; }
         foreach ((RefRO<Bullet> bullet, RefRW<LocalTransform> localTransform) in SystemAPI.Query<RefRO<Bullet>, RefRW<LocalTransform>>())
         {
             var direction = math.mul(localTransform.ValueRO.Rotation, new float3(0f, 0f, 1f));
