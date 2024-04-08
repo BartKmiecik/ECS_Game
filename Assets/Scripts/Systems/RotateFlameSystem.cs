@@ -92,7 +92,7 @@ public partial struct RotateFlameSystem : ISystem
         public float3 playerPos;
         public void Execute(in FireBeam _, ref LocalTransform localTransform)
         {
-            localTransform.Position = playerPos;
+            localTransform.Position = math.lerp(playerPos, localTransform.Position, 0.5f);
             localTransform = localTransform.RotateY(rotateSpeed * deltaTime);
         }
     }
