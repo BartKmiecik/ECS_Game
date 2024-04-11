@@ -67,7 +67,6 @@ public partial struct PauseGameSystem : ISystem
     {
         if (Input.GetKeyDown(KeyCode.P)) 
         {
-            Debug.Log($"P pressed: {isPaused}");
             isPaused = !isPaused;
             ChangeSystemStates(isPaused);
         }

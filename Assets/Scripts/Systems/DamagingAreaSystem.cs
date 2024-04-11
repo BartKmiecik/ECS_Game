@@ -58,13 +58,11 @@ public partial struct DamagingAreaSystem : ISystem
 
             if (isADamagable && isBDamagable)
             {
-                Debug.Log("Both damagable");
                 return;
             }
 
             if (!isADamagable && !isBDamagable)
             {
-                Debug.Log("Both NOT damagable");
                 return;
             }
 
@@ -73,7 +71,6 @@ public partial struct DamagingAreaSystem : ISystem
                 int damage_recived = damagingArea.GetRefRW(entityB).ValueRW.damage;
                 float damage_cooldown = damagingArea.GetRefRW(entityB).ValueRW.damageCooldown;
                 damagable.GetRefRW(entityA).ValueRW.currentCooldown += deltaTime;
-                Debug.Log("Standing in fire");
                 if (damagable.GetRefRW(entityA).ValueRO.currentCooldown >= damage_cooldown)
                 {
                     damagable.GetRefRW(entityA).ValueRW.currentCooldown = 0;
