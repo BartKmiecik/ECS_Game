@@ -19,7 +19,7 @@ using RaycastHit = Unity.Physics.RaycastHit;
 [BurstCompile]
 public partial struct Raycasttest : ISystem
 {
-    PhysicsWorldSingleton world;
+   /* PhysicsWorldSingleton world;
     float3 zeros;
     float radius;
     float offset;
@@ -41,11 +41,11 @@ public partial struct Raycasttest : ISystem
         {
             //NativeList<ColliderCastHit> hits = new NativeList<ColliderCastHit>(Allocator.Temp);
             world = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
-            /*            world.SphereCastAll(LocalTransform.ValueRO.Position, radius, zeros, 1, ref hits, new CollisionFilter
+            *//*            world.SphereCastAll(LocalTransform.ValueRO.Position, radius, zeros, 1, ref hits, new CollisionFilter
                         {
                             BelongsTo = (uint)CollisionLayers.Player,
                             CollidesWith = (uint)CollisionLayers.Enemies,
-                        });*/
+                        });*//*
             RaycastInput rayInput = new RaycastInput {
                 Start = LocalTransform.ValueRO.Position,
                 End = LocalTransform.ValueRO.Forward() * radius,
@@ -89,5 +89,5 @@ public partial struct Raycasttest : ISystem
         {
             currentOffset = 0;
         }
-    }
+    }*/
 }

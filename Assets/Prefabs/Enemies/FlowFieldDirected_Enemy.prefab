@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1978379320361676203}
   - component: {fileID: 5042310816403084989}
   - component: {fileID: 989647513015218917}
+  - component: {fileID: -323632993065651773}
   m_Layer: 0
   m_Name: FlowFieldDirected_Enemy
   m_TagString: Untagged
@@ -360,5 +361,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c44c18b0aec5a914f912424685e13cc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-323632993065651773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504612576844599724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b96904869592fe408cea957d734635b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

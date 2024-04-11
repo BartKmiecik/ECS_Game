@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -5429047468223922330}
   - component: {fileID: -7921850811530794629}
   - component: {fileID: -2871785770790529071}
+  - component: {fileID: 4890777189630110011}
   m_Layer: 0
   m_Name: WithHealth_Enemy
   m_TagString: Untagged
@@ -346,5 +347,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c942d23dcb7296f40b5da6d1e7ee24b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4890777189630110011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3494204825280676317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b96904869592fe408cea957d734635b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

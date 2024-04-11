@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 6151249471779904197}
   - component: {fileID: 5413857484631278207}
   - component: {fileID: 9050448571923841622}
+  - component: {fileID: -7254689421356147968}
   m_Layer: 0
   m_Name: SimpleShotingEnemy
   m_TagString: Untagged
@@ -364,3 +365,15 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7199148124957208576, guid: ac29e12fe44af67489509b0cc29c729e,
     type: 3}
   cooldown: 2
+--- !u!114 &-7254689421356147968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996411086569399096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b96904869592fe408cea957d734635b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

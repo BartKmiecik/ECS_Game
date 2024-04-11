@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 5153864517085343654}
   - component: {fileID: 2216068506790831309}
   - component: {fileID: 5699015158887553248}
+  - component: {fileID: 8955684913362994367}
   m_Layer: 0
   m_Name: JumpingEnemy
   m_TagString: Untagged
@@ -367,3 +368,15 @@ MonoBehaviour:
   cooldown:
     x: 1.5
     y: 3
+--- !u!114 &8955684913362994367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617895117984625041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b96904869592fe408cea957d734635b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

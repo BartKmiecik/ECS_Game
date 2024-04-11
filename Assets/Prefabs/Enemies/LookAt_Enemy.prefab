@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5561789250649772429}
   - component: {fileID: 6268753003497667100}
   - component: {fileID: 1167232173639421627}
+  - component: {fileID: -2442327593677228883}
   m_Layer: 0
   m_Name: LookAt_Enemy
   m_TagString: Untagged
@@ -119,7 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c942d23dcb7296f40b5da6d1e7ee24b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
 --- !u!114 &1167232173639421627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,3 +133,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 5
+--- !u!114 &-2442327593677228883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3570752889972937483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b96904869592fe408cea957d734635b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
