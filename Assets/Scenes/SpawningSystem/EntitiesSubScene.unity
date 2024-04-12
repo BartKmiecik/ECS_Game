@@ -722,7 +722,6 @@ GameObject:
   - component: {fileID: 6189260998378487107}
   - component: {fileID: 8618685139283824452}
   - component: {fileID: 5002229146904604180}
-  - component: {fileID: 4952255501014747623}
   - component: {fileID: 8618685139283824453}
   m_Layer: 0
   m_Name: Player
@@ -761,26 +760,6 @@ Transform:
   m_Father: {fileID: 3582417337564427448}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4952255501014747623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3996655529172440713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81d752966832e9e4186f96562cc57310, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  beamPrefab: {fileID: 1710777112840558766, guid: 932333f204827f245af436b19e94f65a,
-    type: 3}
-  beams: 1
-  distance: -39.7
-  cooldown: 5
-  duration: 5
-  rotationSpeed: 2
-  damage: 1
 --- !u!114 &5002229146904604180
 MonoBehaviour:
   m_ObjectHideFlags: 0
