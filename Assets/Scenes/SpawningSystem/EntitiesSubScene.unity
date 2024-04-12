@@ -776,10 +776,10 @@ MonoBehaviour:
   beamPrefab: {fileID: 1710777112840558766, guid: 932333f204827f245af436b19e94f65a,
     type: 3}
   beams: 1
-  distance: 10
+  distance: -39.7
   cooldown: 5
-  duration: 5.01
-  rotationSpeed: 5
+  duration: 5
+  rotationSpeed: 2
   damage: 1
 --- !u!114 &5002229146904604180
 MonoBehaviour:
