@@ -40,7 +40,7 @@ public class UIHealthBar : MonoBehaviour
         {
             gameOverScreen.SetActive(true);
             var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PauseGameSystem>();
-            World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true);
+            World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true, false);
         }
     }
 }

@@ -52,7 +52,7 @@ public class UIExpBar : MonoBehaviour
         if (_lastExpirience > _expirience)
         {
             var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PauseGameSystem>();
-            World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true);
+            World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true, false);
             skills.Clear();
             for (int i = 0; i < skills_to_select;  i++)
             {
@@ -72,6 +72,6 @@ public class UIExpBar : MonoBehaviour
             Destroy(skills[i]);
         }
         var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PauseGameSystem>();
-        World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(false);
+        World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(false, false);
     }
 }

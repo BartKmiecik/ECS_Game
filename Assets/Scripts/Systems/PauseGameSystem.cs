@@ -7,7 +7,7 @@ public partial struct PauseGameSystem : ISystem
 {
     private bool isPaused;
 
-    public void ChangeSystemStates(bool state)
+    public void ChangeSystemStates(bool state, bool byKeyPress)
     {
         this.isPaused = state;
         if (isPaused)
@@ -19,7 +19,10 @@ public partial struct PauseGameSystem : ISystem
             Time.timeScale = 1;
         }
 
-        World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<UIBridge>().Paused(state);
+        if (byKeyPress)
+        {
+            World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<UIBridge>().Paused(state);
+        }
 
         var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<SimpleSpawnSystem>();
         World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<SimpleSpawnSystem>(handle).paused = state;
@@ -68,7 +71,7 @@ public partial struct PauseGameSystem : ISystem
         if (Input.GetKeyDown(KeyCode.P)) 
         {
             isPaused = !isPaused;
-            ChangeSystemStates(isPaused);
+            ChangeSystemStates(isPaused, true);
         }
     }
 }
