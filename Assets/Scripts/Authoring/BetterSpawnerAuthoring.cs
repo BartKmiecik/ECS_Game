@@ -17,6 +17,9 @@ public class BetterSpawnerAuthoring: MonoBehaviour
     public int maxPrefabSpawn;
     public SpawningType spawningType;
     public float radius;
+    public bool automaticSpawn;
+    public float cooldown;
+    public float rotOffset;
 
     public class Baker : Baker<BetterSpawnerAuthoring>
     {
@@ -31,6 +34,11 @@ public class BetterSpawnerAuthoring: MonoBehaviour
                 maxEntitesToSpawn = authoring.maxPrefabSpawn,
                 spawningType = authoring.spawningType,
                 radius = authoring.radius,
+                automaticSpawn = authoring.automaticSpawn,
+                cooldown = authoring.cooldown,
+                currentCooldown = 0,
+                rotOffset = authoring.rotOffset,
+                currentRotOffset = 0,
             });
         }
     }
@@ -46,4 +54,9 @@ public partial struct BetterSpawner : IComponentData
     public int maxEntitesToSpawn;
     public SpawningType spawningType;
     public float radius;
+    public bool automaticSpawn;
+    public float cooldown;
+    public float currentCooldown;
+    public float rotOffset;
+    public float currentRotOffset;
 }

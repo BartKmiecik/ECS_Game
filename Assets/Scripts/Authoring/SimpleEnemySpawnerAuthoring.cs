@@ -16,7 +16,7 @@ public class SimpleEnemySpawnerAuthoring : MonoBehaviour
             AddComponent(entity, new SimpleEnemySpawner
             {
                 entityToSpawn = GetEntity(authoring.prefabToSpawn, TransformUsageFlags.Dynamic),
-                amount = authoring.amount
+                amount = authoring.amount,
             });
         }
     }

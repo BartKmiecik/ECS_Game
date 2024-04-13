@@ -17,39 +17,30 @@ public partial struct BetterSpawnSystem : ISystem
     int amount;
     EntityManager manager;
     private float deg2rad;
+    private bool isAutomatic;
 
-    public void OnCreate(ref SystemState state)
+    private void Spawn(ref SystemState state)
     {
-        amount = -1;
-        manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        paused = false;
-        deg2rad = Mathf.Deg2Rad;
-    }
-
-    public void OnUpdate(ref SystemState state)
-    {
-        if (paused) return;
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        int bufferLenght = 0;
+        var dynamicBuffer = new DynamicBuffer<Spawnable>();
+        SpawningType spawningType = SpawningType.Line;
+        float radius = 10;
+        float rotOffset = 0;
+        foreach ((RefRW<BetterSpawner> spawner, Entity entity) in SystemAPI.Query<RefRW<BetterSpawner>>().WithEntityAccess())
         {
-            int bufferLenght = 0;
-            var dynamicBuffer = new DynamicBuffer<Spawnable>();
-            SpawningType spawningType = SpawningType.Line;
-            float radius = 10;
-            Debug.Log("SPAWN");
-            foreach ((RefRO<BetterSpawner> spawner, Entity entity) in SystemAPI.Query<RefRO<BetterSpawner>>().WithEntityAccess())
-            {
-                amount = spawner.ValueRO.maxEntitesToSpawn;
-                dynamicBuffer = manager.GetBuffer<Spawnable>(entity);
-                bufferLenght = dynamicBuffer.Length;
-                spawningType = spawner.ValueRO.spawningType;
-                radius = spawner.ValueRO.radius;
-            }
+            amount = spawner.ValueRO.maxEntitesToSpawn;
+            dynamicBuffer = manager.GetBuffer<Spawnable>(entity);
+            bufferLenght = dynamicBuffer.Length;
+            spawningType = spawner.ValueRO.spawningType;
+            radius = spawner.ValueRO.radius;
+            rotOffset = spawner.ValueRO.rotOffset;
+        
             Entity[] prefabs = new Entity[bufferLenght];
             for (int i = 0; i < dynamicBuffer.Length; i++)
             {
                 prefabs[i] = dynamicBuffer[i].prefab;
             }
-            Debug.Log($"Prefabs count {prefabs.Length} and amount {amount} type {prefabs[0].GetType()}");
+    /*        Debug.Log($"Prefabs count {prefabs.Length} and amount {amount} type {prefabs[0].GetType()}");*/
             if (spawningType == SpawningType.Line)
             {
                 for (int i = 0; i < amount; i++)
@@ -70,10 +61,11 @@ public partial struct BetterSpawnSystem : ISystem
                         counter = 0;
                     }
                 }
-            } else if (spawningType == SpawningType.Circle)
+            }
+            else if (spawningType == SpawningType.Circle)
             {
-                float3 playerPos = new float3(0,0,0);
-                foreach ((RefRO<Player> player, RefRO<LocalTransform> localTransform) 
+                float3 playerPos = new float3(0, 0, 0);
+                foreach ((RefRO<Player> player, RefRO<LocalTransform> localTransform)
                     in SystemAPI.Query<RefRO<Player>, RefRO<LocalTransform>>())
                 {
                     playerPos = localTransform.ValueRO.Position;
@@ -82,8 +74,15 @@ public partial struct BetterSpawnSystem : ISystem
                 for (int i = 0; i < amount; i++)
                 {
                     Entity spawnedEntity = manager.Instantiate(prefabs[counter++]);
-                    float x = radius * Mathf.Sin(space * i * deg2rad);
-                    float y = radius * Mathf.Cos(space * i * deg2rad);
+                    float x = radius * Mathf.Sin((space * i + spawner.ValueRO.currentRotOffset) * deg2rad);
+                    float y = radius * Mathf.Cos((space * i + spawner.ValueRO.currentRotOffset) * deg2rad);
+
+                    spawner.ValueRW.currentRotOffset += spawner.ValueRO.rotOffset;
+
+                    if (spawner.ValueRO.currentRotOffset >= 360)
+                    {
+                        spawner.ValueRW.currentRotOffset = 0;
+                    }
 
                     manager.SetComponentData(spawnedEntity, new LocalTransform
                     {
@@ -102,6 +101,38 @@ public partial struct BetterSpawnSystem : ISystem
                 }
             }
             amount = 0;
+        }
+    }
+
+    public void OnCreate(ref SystemState state)
+    {
+        amount = -1;
+        manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        paused = false;
+        deg2rad = Mathf.Deg2Rad;
+    }
+
+    public void OnUpdate(ref SystemState state)
+    {
+        if (paused) return;
+        foreach (RefRW<BetterSpawner> spawner in SystemAPI.Query<RefRW<BetterSpawner>>())
+        {
+            isAutomatic = spawner.ValueRO.automaticSpawn;
+            if (isAutomatic)
+            {
+                spawner.ValueRW.currentCooldown += SystemAPI.Time.DeltaTime;
+                if (spawner.ValueRW.currentCooldown > spawner.ValueRO.cooldown)
+                {
+                    spawner.ValueRW.currentCooldown = 0;
+                    Spawn(ref state);
+                }
+            }
+            break;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Spawn(ref state);
         }
     }
 
