@@ -68,6 +68,9 @@ public partial struct EBulletsTriggerSystem : ISystem
 
             if (hasAHealth && isBBullet)
             {
+                if (health.GetRefRO(entityA).ValueRO.timer > 0)
+                    return;
+                health.GetRefRW(entityA).ValueRW.timer = health.GetRefRO(entityA).ValueRO.playerInvincibilityTime;
                 int damage_recived = bullet.GetRefRW(entityB).ValueRW.damage_value;
                 health.GetRefRW(entityA).ValueRW.currentHealth -= damage_recived;
                 if (destructable.HasComponent(entityB))
@@ -83,6 +86,9 @@ public partial struct EBulletsTriggerSystem : ISystem
             }
             if (hasBHealth && isABullet)
             {
+                if (health.GetRefRO(entityB).ValueRO.timer > 0)
+                    return;
+                health.GetRefRW(entityB).ValueRW.timer = health.GetRefRO(entityA).ValueRO.playerInvincibilityTime;
                 int damage_recived = bullet.GetRefRW(entityA).ValueRW.damage_value;
                 health.GetRefRW(entityB).ValueRW.currentHealth -= damage_recived;
                 if (destructable.HasComponent(entityA))

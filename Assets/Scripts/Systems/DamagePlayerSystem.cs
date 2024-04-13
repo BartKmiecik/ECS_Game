@@ -77,7 +77,7 @@ public partial struct DamagePlayerSystem : ISystem
 
             if (isAPlayer && isBEnemy)
             {
-                if (player.GetRefRW(entityA).ValueRW.timer > 0)
+                if (player.GetRefRO(entityA).ValueRO.timer > 0)
                     return;
                 player.GetRefRW(entityA).ValueRW.timer = player.GetRefRO(entityA).ValueRO.playerInvincibilityTime;
                 int damage_recived = enemy.GetRefRW(entityB).ValueRW.attackValue;
@@ -85,7 +85,7 @@ public partial struct DamagePlayerSystem : ISystem
             }
             if (isBPlayer && isAEnemy)
             {
-                if (player.GetRefRW(entityB).ValueRW.timer > 0)
+                if (player.GetRefRO(entityB).ValueRO.timer > 0)
                     return;
                 player.GetRefRW(entityB).ValueRW.timer = player.GetRefRO(entityB).ValueRO.playerInvincibilityTime;
                 int damage_recived = enemy.GetRefRW(entityA).ValueRW.attackValue;
