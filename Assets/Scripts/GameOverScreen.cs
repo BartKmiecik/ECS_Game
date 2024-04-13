@@ -20,11 +20,9 @@ public class GameOverScreen : MonoBehaviour
         entityArray.Dispose();
         World.DisposeAllWorlds();
         DefaultWorldInitialization.Initialize("Base World", false);
-        ScriptBehaviourUpdateOrder.AppendWorldToCurrentPlayerLoop(World.DefaultGameObjectInjectionWorld);
         var sceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadSceneAsync(sceneName);
 
-        /*Time.timeScale = .5f;*/
+        SceneManager.LoadSceneAsync(sceneName);
     }
 
     public void Menu()
