@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SimpleChase/MainScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
+  - enabled: 1
+    path: Assets/Scenes/SpawningSystem/EntitiesSubScene.unity
+    guid: 0ef9f923e5773b74f9a7e7c14bd2038d
   m_configObjects: {}

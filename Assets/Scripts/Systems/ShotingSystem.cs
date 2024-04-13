@@ -9,6 +9,7 @@ using Unity.Physics.Systems;
 using Unity.Transforms;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 [BurstCompile]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
@@ -20,6 +21,7 @@ public partial struct ShotingSystem : ISystem
     EntityManager manager;
     private float _cd;
     private int _extraDamage;
+
     public void OnCreate(ref SystemState state)
     {
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;

@@ -15,6 +15,7 @@ public partial struct DamagePlayerSystem : ISystem
     public bool paused;
     public void OnCreate(ref SystemState state)
     {
+        state.RequireForUpdate<SimulationSingleton>();
         foreach (RefRO<Player> player in SystemAPI.Query<RefRO<Player>>())
         {
             playerInvincibilityTime = player.ValueRO.playerInvincibilityTime;

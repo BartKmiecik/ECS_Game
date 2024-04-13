@@ -7,6 +7,7 @@ public partial struct PauseGameSystem : ISystem
 {
     private bool isPaused;
 
+
     public void ChangeSystemStates(bool state, bool byKeyPress)
     {
         this.isPaused = state;

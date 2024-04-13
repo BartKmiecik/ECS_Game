@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: 6189260997883471953}
   - component: {fileID: 8618685139359242838}
   - component: {fileID: 5002229146560756486}
-  - component: {fileID: 4952255500788178165}
   - component: {fileID: 8469989942956654783}
   m_Layer: 0
   m_Name: Player
@@ -106,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fdd06807ec58414aae6eec9fcd49f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 11
   playerInvincibilityTime: 1
 --- !u!114 &5283258826852244282
 MonoBehaviour:
@@ -373,26 +372,6 @@ MonoBehaviour:
   force: 20
   damage: 1
   cooldown: 1
---- !u!114 &4952255500788178165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3996655529113797531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81d752966832e9e4186f96562cc57310, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  beamPrefab: {fileID: 1710777112840558766, guid: 932333f204827f245af436b19e94f65a,
-    type: 3}
-  beams: 1
-  distance: 10
-  cooldown: 1
-  duration: 1
-  rotationSpeed: 10
-  damage: 1
 --- !u!114 &8469989942956654783
 MonoBehaviour:
   m_ObjectHideFlags: 0

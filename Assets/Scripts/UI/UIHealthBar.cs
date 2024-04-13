@@ -16,6 +16,11 @@ public class UIHealthBar : MonoBehaviour
 
     void Start()
     {
+
+    }
+
+    private void Init()
+    {
         _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var playerControlSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PlayerControllingSystem>();
         _image = GetComponent<Image>();
@@ -28,19 +33,26 @@ public class UIHealthBar : MonoBehaviour
                 break;
             }
         }
-        _player = _entityManager.GetComponentData<Player>(_playerEntity);
     }
 
     void LateUpdate()
     {
-        _player = _entityManager.GetComponentData<Player>(_playerEntity);
-        _curentHealth = (float)_player.currentHealth / (float)_player.maxHealth;
-        _image.fillAmount = _curentHealth;
-        if (_curentHealth <= 0)
+        try
         {
-            gameOverScreen.SetActive(true);
-            var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PauseGameSystem>();
-            World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true, false);
+            _player = _entityManager.GetComponentData<Player>(_playerEntity);
+            _curentHealth = (float)_player.currentHealth / (float)_player.maxHealth;
+            _image.fillAmount = _curentHealth;
+            if (_curentHealth <= 0)
+            {
+                gameOverScreen.SetActive(true);
+                var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PauseGameSystem>();
+                World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true, false);
+            }
         }
+        catch
+        {
+            Init();
+        }
+
     }
 }

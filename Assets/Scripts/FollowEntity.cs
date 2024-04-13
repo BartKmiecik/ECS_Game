@@ -14,13 +14,15 @@ public class FollowEntity : MonoBehaviour
 
     private EntityManager manager;
 
-    private void Awake()
-    {
-        manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-    }
 
     private void Start()
     {
+        Init();
+    }
+
+    private void Init()
+    {
+        manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var entities = manager.GetAllEntities(Allocator.Temp);
         foreach (var entity in entities)
         {
@@ -36,9 +38,14 @@ public class FollowEntity : MonoBehaviour
     {
         if (entityToFollow != null)
         {
-            LocalTransform entPos = manager.GetComponentData<LocalTransform>(entityToFollow);
-            transform.position = Vector3.Lerp(transform.position, entPos.Position, Time.deltaTime * lerpSpeed);
-
+            try
+            {
+                LocalTransform entPos = manager.GetComponentData<LocalTransform>(entityToFollow);
+                transform.position = Vector3.Lerp(transform.position, entPos.Position, Time.deltaTime * lerpSpeed);
+            }
+            catch {
+                Init();
+            }
         }
     }
 }
