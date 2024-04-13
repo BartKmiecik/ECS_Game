@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 5413857484631278207}
   - component: {fileID: 9050448571923841622}
   - component: {fileID: -7254689421356147968}
+  - component: {fileID: 5988388778838920132}
   m_Layer: 0
   m_Name: SimpleShotingEnemy
   m_TagString: Untagged
@@ -40,7 +41,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4047131774544699301
 MeshFilter:
@@ -377,3 +378,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b96904869592fe408cea957d734635b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5988388778838920132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996411086569399096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5caa6ddbafdc61d4698e4ab1b428a74c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistance: 10
+  maxDistance: 27.3
+  speed: 5

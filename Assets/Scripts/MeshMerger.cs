@@ -15,7 +15,6 @@ public class MeshMerger : MonoBehaviour
         int i = 0;
         while (i < meshFilters.Length)
         {
-            Debug.Log(meshFilters[i]);
             combine[i].mesh = meshFilters[i].sharedMesh;
             combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
             meshFilters[i].gameObject.SetActive(false);
