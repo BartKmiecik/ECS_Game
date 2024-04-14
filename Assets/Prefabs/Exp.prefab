@@ -326,6 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   expirience: 5
+  collectingFlySpeed: 20
 --- !u!114 &-8279014879376254259
 MonoBehaviour:
   m_ObjectHideFlags: 0

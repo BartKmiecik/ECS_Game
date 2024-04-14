@@ -6,6 +6,7 @@ using UnityEngine;
 public class ExpirienceAuthoring : MonoBehaviour
 {
     public int expirience;
+    public float collectingFlySpeed;
 
     public class Baker : Baker<ExpirienceAuthoring>
     {
@@ -15,6 +16,8 @@ public class ExpirienceAuthoring : MonoBehaviour
             AddComponent(entity, new Expirience
             {
                 exprience = authoring.expirience,
+                shouldBeCollected = false,
+                collectingFlySpeed = authoring.collectingFlySpeed,
             });
         }
     }
@@ -23,4 +26,6 @@ public class ExpirienceAuthoring : MonoBehaviour
 public partial struct Expirience : IComponentData
 {
     public int exprience;
+    public bool shouldBeCollected;
+    public float collectingFlySpeed;
 }
