@@ -9,7 +9,6 @@ using Unity.Physics;
 public class FPSCounter : MonoBehaviour
 {
     public TextMeshProUGUI Text;
-    public TextMeshProUGUI TimeScale;
 
     private Dictionary<int, string> CachedNumberStrings = new();
     private int[] _frameRateSamples;
@@ -59,7 +58,6 @@ public class FPSCounter : MonoBehaviour
                 var x when x < 0 => "< 0",
                 _ => "?"
             };
-            TimeScale.text = Time.timeScale.ToString();
         }
     }
 }
