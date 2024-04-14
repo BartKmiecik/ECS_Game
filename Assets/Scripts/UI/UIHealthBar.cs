@@ -16,7 +16,7 @@ public class UIHealthBar : MonoBehaviour
 
     void Start()
     {
-
+        Init();
     }
 
     private void Init()
@@ -37,7 +37,7 @@ public class UIHealthBar : MonoBehaviour
 
     void LateUpdate()
     {
-        try
+        if (_entityManager.Exists(_playerEntity))
         {
             _player = _entityManager.GetComponentData<Player>(_playerEntity);
             _curentHealth = (float)_player.currentHealth / (float)_player.maxHealth;
@@ -49,10 +49,9 @@ public class UIHealthBar : MonoBehaviour
                 World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true, false);
             }
         }
-        catch
+        else
         {
             Init();
         }
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 
 public enum FlowFieldDisplayType { None, AllIcons, DestinationIcon, CostField, IntegrationField };
@@ -170,7 +169,7 @@ public class GridDebug : MonoBehaviour
 
 				foreach (Cell curCell in curFlowField.grid)
 				{
-					Handles.Label(curCell.worldPos, curCell.cost.ToString(), style);
+					//Handles.Label(curCell.worldPos, curCell.cost.ToString(), style);
 				}
 				break;
 				
@@ -178,7 +177,7 @@ public class GridDebug : MonoBehaviour
 
 				foreach (Cell curCell in curFlowField.grid)
 				{
-					Handles.Label(curCell.worldPos, curCell.bestCost.ToString(), style);
+					//Handles.Label(curCell.worldPos, curCell.bestCost.ToString(), style);
 				}
 				break;
 				

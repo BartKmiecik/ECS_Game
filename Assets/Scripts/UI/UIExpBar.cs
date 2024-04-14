@@ -48,7 +48,7 @@ public class UIExpBar : MonoBehaviour
 
     void LateUpdate()
     {
-        try
+        if (_entityManager.Exists(_playerEntity))
         {
             _player = _entityManager.GetComponentData<Player>(_playerEntity);
             _lastExpirience = _expirience;
@@ -67,9 +67,12 @@ public class UIExpBar : MonoBehaviour
                     skills.Add(_skill);
                 }
             }
-        } catch {
+        }
+        else
+        {
             Init();
         }
+
     }
 
     public void OnSkillSelected(int skillSelected)

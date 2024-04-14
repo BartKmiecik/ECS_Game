@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class IncreaseAttackRateSkill : MonoBehaviour, ISkill
 {

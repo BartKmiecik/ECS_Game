@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
-using Unity.Mathematics;
 using UnityEngine;
 using Unity.Transforms;
 using Unity.Collections;
-using static UnityEngine.GraphicsBuffer;
 
 public class FollowEntity : MonoBehaviour
 {
@@ -36,16 +34,14 @@ public class FollowEntity : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (entityToFollow != null)
+        if (manager.Exists(entityToFollow))
         {
-            try
-            {
-                LocalTransform entPos = manager.GetComponentData<LocalTransform>(entityToFollow);
-                transform.position = Vector3.Lerp(transform.position, entPos.Position, Time.deltaTime * lerpSpeed);
-            }
-            catch {
-                Init();
-            }
+            LocalTransform entPos = manager.GetComponentData<LocalTransform>(entityToFollow);
+            transform.position = Vector3.Lerp(transform.position, entPos.Position, Time.deltaTime * lerpSpeed);
+        }
+        else
+        {
+            Init();
         }
     }
 }
