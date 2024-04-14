@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fdd06807ec58414aae6eec9fcd49f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 11
+  maxHealth: 9999
   playerInvincibilityTime: 1
 --- !u!114 &5283258826852244282
 MonoBehaviour:
