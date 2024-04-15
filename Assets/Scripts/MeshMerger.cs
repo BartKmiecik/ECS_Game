@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 public class MeshMerger : MonoBehaviour
 {
+    public bool shouldSaveOnDisk;
     void Start()
     {
         MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
@@ -27,5 +30,28 @@ public class MeshMerger : MonoBehaviour
         mesh.CombineMeshes(combine);
         transform.GetComponent<MeshFilter>().sharedMesh = mesh;
         transform.gameObject.SetActive(true);
+        if (shouldSaveOnDisk)
+        {
+            CreateAndSaveFile();
+        }
+    }
+
+    private void CreateAndSaveFile()
+    {
+        string mapName = Path.GetFileNameWithoutExtension(name);
+        string localPath = Path.Combine("Assets", "Resources", "Prefabs", "Data", "Maps", mapName);
+        Directory.CreateDirectory(localPath);
+
+        var filters = GetComponentsInChildren<MeshFilter>();
+        foreach (var filter in filters)
+        {
+            var id = filter.mesh.GetInstanceID();
+            AssetDatabase.CreateAsset(filter.mesh, Path.Combine(localPath, id + ".asset"));
+        }
+
+        localPath = AssetDatabase.GenerateUniqueAssetPath(localPath + ".prefab");
+
+        PrefabUtility.SaveAsPrefabAssetAndConnect(this.gameObject, localPath, InteractionMode.UserAction);
+        Debug.Log($"Saving to {localPath}");
     }
 }

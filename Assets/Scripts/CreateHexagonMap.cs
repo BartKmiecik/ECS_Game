@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CreateHexagonMap : MonoBehaviour
 {
+    public bool createOnStart = true;
     public GameObject hexagon;
     public float yOffset;
     public float xOffset;
@@ -32,6 +33,9 @@ public class CreateHexagonMap : MonoBehaviour
 
     private void Start()
     {
-        CreateMap();
+        if (createOnStart)
+        {
+            CreateMap();
+        }
     }
 }

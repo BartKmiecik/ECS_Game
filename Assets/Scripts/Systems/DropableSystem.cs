@@ -28,7 +28,6 @@ public partial struct DropableSystem : ISystem
             {
                 Entity prefab = dropable.ValueRO.entityToDrop;
                 Entity spawnedEntity = entityManager.Instantiate(prefab);
-                Debug.Log("Spawning exp");
 
                 entityManager.SetComponentData(spawnedEntity, new LocalTransform
                 {
