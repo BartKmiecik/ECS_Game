@@ -22,7 +22,6 @@ public class UIHealthBar : MonoBehaviour
     private void Init()
     {
         _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        var playerControlSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PlayerControllingSystem>();
         _image = GetComponent<Image>();
         var entities = _entityManager.GetAllEntities(Allocator.Temp);
         foreach (var entity in entities)

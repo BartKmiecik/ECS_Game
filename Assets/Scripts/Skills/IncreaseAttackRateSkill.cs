@@ -27,8 +27,7 @@ public class IncreaseAttackRateSkill : MonoBehaviour, ISkill
             }
         }
         PlayerShooting _playerShootingEntity = _entityManager.GetComponentData<PlayerShooting>(_playerEntity);
-        float tmp = _playerShootingEntity.cooldown + coolDownDecrease;
         var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<ShotingSystem>();
-        World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<ShotingSystem>(handle).UpdateCoolDown(tmp);
+        World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<ShotingSystem>(handle).UpdateCoolDown(coolDownDecrease);
     }
 }

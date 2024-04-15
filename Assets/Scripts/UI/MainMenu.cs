@@ -19,7 +19,6 @@ public class MainMenu : MonoBehaviour
     {
         int currentScene = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadSceneAsync(currentScene + 1);
-
     }
 
     private void CreateBackground()

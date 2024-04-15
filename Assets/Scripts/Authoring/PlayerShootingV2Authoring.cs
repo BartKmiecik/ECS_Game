@@ -9,6 +9,8 @@ public class PlayerShootingV2Authoring : MonoBehaviour
     public float force;
     public int damage;
     public float cooldown;
+    public int maxAmo;
+    public float maxReloadSpeed;
 
     public class Baker : Baker<PlayerShootingV2Authoring>
     {
@@ -21,7 +23,12 @@ public class PlayerShootingV2Authoring : MonoBehaviour
                 force = authoring.force,
                 damage = authoring.damage,
                 cooldown = authoring.cooldown,
-                currentCooldown = authoring.cooldown
+                currentCooldown = authoring.cooldown,
+                maxAmo = authoring.maxAmo,
+                currentAmo = authoring.maxAmo,
+                maxReloadSpeed = authoring.maxReloadSpeed,
+                currentReload = 0,
+                extraAmo = 0,
             });
         }
     }
@@ -35,4 +42,9 @@ public partial struct PlayerShootingV2 : IComponentData
     public int damage;
     public float cooldown;
     public float currentCooldown;
+    public int maxAmo;
+    public int extraAmo;
+    public int currentAmo;
+    public float maxReloadSpeed;
+    public float currentReload;
 }

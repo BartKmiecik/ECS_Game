@@ -7,6 +7,8 @@ public class PlayerShootingAuthoring : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public float cooldown;
+    public int maxAmo;
+    public float maxReloadSpeed;
 
     public class Baker : Baker<PlayerShootingAuthoring>
     {
@@ -18,7 +20,12 @@ public class PlayerShootingAuthoring : MonoBehaviour
                 buletPrefab = GetEntity(authoring.bulletPrefab, TransformUsageFlags.Dynamic),
                 cooldown = authoring.cooldown,
                 currentCooldown = authoring.cooldown,
-                extraCd = 0
+                extraCd = 0,
+                maxAmo = authoring.maxAmo,
+                currentAmo = authoring.maxAmo,
+                maxReloadSpeed = authoring.maxReloadSpeed,
+                currentReload = 0,
+                extraAmo = 0,
             });
         }
     }
@@ -30,4 +37,9 @@ public partial struct PlayerShooting : IComponentData
     public float cooldown;
     public float currentCooldown;
     public float extraCd;
+    public int maxAmo;
+    public int extraAmo;
+    public int currentAmo;
+    public float maxReloadSpeed;
+    public float currentReload;
 }

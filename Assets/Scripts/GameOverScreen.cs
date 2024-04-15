@@ -21,12 +21,22 @@ public class GameOverScreen : MonoBehaviour
         World.DisposeAllWorlds();
         DefaultWorldInitialization.Initialize("Base World", false);
         var sceneName = SceneManager.GetActiveScene().name;
-
         SceneManager.LoadSceneAsync(sceneName);
     }
 
     public void Menu()
     {
-        //TODO
+        var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PauseGameSystem>();
+        World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(false, false);
+        World.DefaultGameObjectInjectionWorld.EntityManager.DestroyEntity(World.DefaultGameObjectInjectionWorld.EntityManager.UniversalQuery);
+        var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        var entityArray = entityManager.GetAllEntities();
+        foreach (var e in entityArray)
+            entityManager.DestroyEntity(e);
+        entityArray.Dispose();
+        World.DisposeAllWorlds();
+        DefaultWorldInitialization.Initialize("Base World", false);
+        var sceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadSceneAsync(0);
     }
 }

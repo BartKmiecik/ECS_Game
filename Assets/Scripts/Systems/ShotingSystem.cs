@@ -32,7 +32,10 @@ public partial struct ShotingSystem : ISystem
 
     public void UpdateCoolDown(float cooldown)
     {
-        _cd = cooldown;
+        if (_cd == 0)
+        {
+            _cd = cooldown;
+        }
     }
 
     public void UpdateDamage(int damage)
@@ -48,61 +51,67 @@ public partial struct ShotingSystem : ISystem
         {
             if (_cd > 0)
             {
+                Debug.Log($"Extra cd {_cd}");
                 player.ValueRW.extraCd += _cd;
                 _cd = 0;
             }
             var fireMB = Input.GetMouseButton(0);
-            if (fireMB || automatic)
+            if (player.ValueRO.currentAmo > 0) 
             {
-                if (player.ValueRO.currentCooldown >= Mathf.Max(player.ValueRO.cooldown - player.ValueRO.extraCd, 0))
+                if (fireMB || automatic)
                 {
-                    if ( automatic)
+                    if (player.ValueRO.currentCooldown >= Mathf.Max(player.ValueRO.cooldown - player.ValueRO.extraCd, 0))
                     {
-                        float3 closestTarget = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<AutomaticTargetHolder>().GetClosestTarget();
-                        if (math.all(closestTarget == float3.zero))
-                            return;
-                        Entity prefab = player.ValueRO.buletPrefab;
-                        var temp = localTransform.ValueRO.Value;
-                        Entity spawnedEntity = manager.Instantiate(prefab);
-                        Quaternion rot = Quaternion.LookRotation(math.normalize(closestTarget - localTransform.ValueRO.Position), math.up());
+                        if (automatic)
+                        {
+                            float3 closestTarget = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<AutomaticTargetHolder>().GetClosestTarget();
+                            if (math.all(closestTarget == float3.zero))
+                                return;
+                            player.ValueRW.currentAmo -= 1;
+                            Entity prefab = player.ValueRO.buletPrefab;
+                            var temp = localTransform.ValueRO.Value;
+                            Entity spawnedEntity = manager.Instantiate(prefab);
+                            Quaternion rot = Quaternion.LookRotation(math.normalize(closestTarget - localTransform.ValueRO.Position), math.up());
 
-                        LocalTransform tmp = new LocalTransform
-                        {
-                            Position = temp.Translation(),
-                            Rotation = rot,
-                            Scale = 1
-                        };
+                            LocalTransform tmp = new LocalTransform
+                            {
+                                Position = temp.Translation(),
+                                Rotation = rot,
+                                Scale = 1
+                            };
 
-                        manager.SetComponentData(spawnedEntity, tmp);
-                        manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
+                            manager.SetComponentData(spawnedEntity, tmp);
+                            manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
+                            {
+                                damage_value = manager.GetComponentData<Bullet>(spawnedEntity).damage_value + _extraDamage,
+                                speed = manager.GetComponentData<Bullet>(spawnedEntity).speed
+                            });
+                        }
+                        else
                         {
-                            damage_value = manager.GetComponentData<Bullet>(spawnedEntity).damage_value + _extraDamage,
-                            speed = manager.GetComponentData<Bullet>(spawnedEntity).speed
-                        });
+                            player.ValueRW.currentAmo -= 1;
+                            Entity prefab = player.ValueRO.buletPrefab;
+                            var temp = localTransform.ValueRO.Value;
+                            Entity spawnedEntity = manager.Instantiate(prefab);
+                            manager.SetComponentData(spawnedEntity, new LocalTransform
+                            {
+                                Position = temp.Translation(),
+                                Rotation = temp.Rotation(),
+                                Scale = 1
+                            });
+                            manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
+                            {
+                                damage_value = manager.GetComponentData<Bullet>(spawnedEntity).damage_value + _extraDamage,
+                                speed = manager.GetComponentData<Bullet>(spawnedEntity).speed
+                            });
+                        }
+                        player.ValueRW.currentCooldown = 0;
                     }
-                    else
-                    {
-                        Entity prefab = player.ValueRO.buletPrefab;
-                        var temp = localTransform.ValueRO.Value;
-                        Entity spawnedEntity = manager.Instantiate(prefab);
-                        manager.SetComponentData(spawnedEntity, new LocalTransform
-                        {
-                            Position = temp.Translation(),
-                            Rotation = temp.Rotation(),
-                            Scale = 1
-                        });
-                        manager.SetComponentData<Bullet>(spawnedEntity, new Bullet
-                        {
-                            damage_value = manager.GetComponentData<Bullet>(spawnedEntity).damage_value + _extraDamage,
-                            speed = manager.GetComponentData<Bullet>(spawnedEntity).speed
-                        });
-                    }
-                    player.ValueRW.currentCooldown = 0;
                 }
-            }  
-            if (player.ValueRO.currentCooldown < Mathf.Max(player.ValueRO.cooldown - player.ValueRO.extraCd, 0))
-            {
-                player.ValueRW.currentCooldown += SystemAPI.Time.DeltaTime;
+                if (player.ValueRO.currentCooldown < Mathf.Max(player.ValueRO.cooldown - player.ValueRO.extraCd, 0))
+                {
+                    player.ValueRW.currentCooldown += SystemAPI.Time.DeltaTime;
+                }
             }
         }
     }
