@@ -553,7 +553,7 @@ MonoBehaviour:
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
-  m_FillClockwise: 1
+  m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
@@ -1988,7 +1988,7 @@ MonoBehaviour:
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
-  m_FillClockwise: 1
+  m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
@@ -2622,7 +2622,7 @@ GameObject:
   - component: {fileID: 663522204396837934}
   - component: {fileID: 4640941590314111097}
   m_Layer: 5
-  m_Name: Acco count
+  m_Name: Amo count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3655,6 +3655,10 @@ GameObject:
   - component: {fileID: 7933363717383274055}
   - component: {fileID: 5535817692701637315}
   - component: {fileID: 3044814788498243033}
+  - component: {fileID: 6168886726619812562}
+  - component: {fileID: 427815127482065349}
+  - component: {fileID: 5223803918748920675}
+  - component: {fileID: 4862533557174297698}
   m_Layer: 5
   m_Name: ExpBar
   m_TagString: Untagged
@@ -3778,6 +3782,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageIncrease: 5
   description: Increase Damage
+--- !u!114 &6168886726619812562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549776308609841479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65d6cf8d19839834482272054b374276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownDecrease: 1
+  description: AAAAAA
+--- !u!114 &427815127482065349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549776308609841479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a7d575f20c176b46a4f2dd3ce26bf1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageIncrease: 100
+  description: BBBBBB
+--- !u!114 &5223803918748920675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549776308609841479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e8927607f7e6544cb19450c240e424c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extraAmmo: 10
+  description: CCCCCC
+--- !u!114 &4862533557174297698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549776308609841479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aad6d4501e778649bc30f43ac956b13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extraAmmo: 10
+  description: DDDDD
 --- !u!1 &4751589977597851675
 GameObject:
   m_ObjectHideFlags: 0
@@ -4377,6 +4437,7 @@ GameObject:
   - component: {fileID: 4583135299926107758}
   - component: {fileID: 6817955247614375620}
   - component: {fileID: 3091940995074178229}
+  - component: {fileID: 6917157403767939191}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4501,6 +4562,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Text: {fileID: 415039000796934360}
+--- !u!114 &6917157403767939191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4945614623289371938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5ef02b6ef349c45814bd41f0c662cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill1Cooldown: {fileID: 5131161044662386714}
+  skill1Ammo: {fileID: 6206697304953519818}
+  skill2Cooldown: {fileID: 1260066627468230300}
+  skill2Ammo: {fileID: 4640941590314111097}
 --- !u!1 &4952104673813291572
 GameObject:
   m_ObjectHideFlags: 0
@@ -7771,7 +7848,7 @@ GameObject:
   - component: {fileID: 4045199314722185842}
   - component: {fileID: 6206697304953519818}
   m_Layer: 5
-  m_Name: Acco count
+  m_Name: Amo count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

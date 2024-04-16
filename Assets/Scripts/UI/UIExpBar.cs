@@ -23,6 +23,9 @@ public class UIExpBar : MonoBehaviour
     private float _lastExpirience = 0;
     private List<ISkill> _skills_to = new List<ISkill>();
 
+    public System.Random a = new System.Random();
+    private List<int> randomSkillList = new List<int>();
+
     void Start()
     {
         Init();
@@ -46,6 +49,13 @@ public class UIExpBar : MonoBehaviour
         _skills_to.AddRange(GetComponents<ISkill>());
     }
 
+    private void GetRandom()
+    {
+        int MyNumber = a.Next(0, _skills_to.Count);
+        if (!randomSkillList.Contains(MyNumber))
+            randomSkillList.Add(MyNumber);
+    }
+
     void LateUpdate()
     {
         if (_entityManager.Exists(_playerEntity))
@@ -60,7 +70,18 @@ public class UIExpBar : MonoBehaviour
                 var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PauseGameSystem>();
                 World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true, false);
                 skills.Clear();
-                for (int i = 0; i < skills_to_select; i++)
+                /*for (int i = 0; i < skills_to_select; i++)
+                {
+                    GameObject _skill = Instantiate(skillUiPrefab, levelUpPanel);
+                    _skill.GetComponent<UISkillSelect>().Constructor(null, _skills_to[i].Description, i, this);
+                    skills.Add(_skill);
+                }*/
+                randomSkillList.Clear();
+                while (randomSkillList.Count < 3) 
+                {
+                    GetRandom();
+                }
+                foreach (int i in randomSkillList)
                 {
                     GameObject _skill = Instantiate(skillUiPrefab, levelUpPanel);
                     _skill.GetComponent<UISkillSelect>().Constructor(null, _skills_to[i].Description, i, this);

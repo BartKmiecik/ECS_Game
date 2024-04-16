@@ -26,6 +26,7 @@ public class PlayerShootingAuthoring : MonoBehaviour
                 maxReloadSpeed = authoring.maxReloadSpeed,
                 currentReload = 0,
                 extraAmo = 0,
+                reloadSpeedReduction = 0,
             });
         }
     }
@@ -42,4 +43,5 @@ public partial struct PlayerShooting : IComponentData
     public int currentAmo;
     public float maxReloadSpeed;
     public float currentReload;
+    public float reloadSpeedReduction;
 }

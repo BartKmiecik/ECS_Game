@@ -24,11 +24,13 @@ public class PlayerShootingV2Authoring : MonoBehaviour
                 damage = authoring.damage,
                 cooldown = authoring.cooldown,
                 currentCooldown = authoring.cooldown,
+                extraCd = 0,
                 maxAmo = authoring.maxAmo,
                 currentAmo = authoring.maxAmo,
                 maxReloadSpeed = authoring.maxReloadSpeed,
                 currentReload = 0,
                 extraAmo = 0,
+                reloadSpeedReduction = 0,
             });
         }
     }
@@ -42,9 +44,11 @@ public partial struct PlayerShootingV2 : IComponentData
     public int damage;
     public float cooldown;
     public float currentCooldown;
+    public float extraCd;
     public int maxAmo;
     public int extraAmo;
     public int currentAmo;
     public float maxReloadSpeed;
     public float currentReload;
+    public float reloadSpeedReduction;
 }

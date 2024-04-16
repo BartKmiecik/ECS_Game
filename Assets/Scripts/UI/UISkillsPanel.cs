@@ -44,7 +44,7 @@ public class UISkillsPanel : MonoBehaviour
             if (shooting1.currentAmo == 0)
             {
                 skill1Cooldown.enabled = true;
-                skill1Cooldown.fillAmount = shooting1.currentReload / shooting1.maxReloadSpeed;
+                skill1Cooldown.fillAmount = shooting1.currentReload / (shooting1.maxReloadSpeed - shooting1.reloadSpeedReduction);
             }
             else
             {
@@ -55,7 +55,7 @@ public class UISkillsPanel : MonoBehaviour
             if (shooting2.currentAmo == 0)
             {
                 skill2Cooldown.enabled = true;
-                skill2Cooldown.fillAmount = shooting2.currentReload / shooting2.maxReloadSpeed;
+                skill2Cooldown.fillAmount = shooting2.currentReload / (shooting2.maxReloadSpeed - shooting2.reloadSpeedReduction);
             }
             else
             {

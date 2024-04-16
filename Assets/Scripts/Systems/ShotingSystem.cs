@@ -51,7 +51,6 @@ public partial struct ShotingSystem : ISystem
         {
             if (_cd > 0)
             {
-                Debug.Log($"Extra cd {_cd}");
                 player.ValueRW.extraCd += _cd;
                 _cd = 0;
             }

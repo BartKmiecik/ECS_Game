@@ -30,7 +30,10 @@ public partial struct PlayerShootingSystemV2 : ISystem
 
     public void UpdateCoolDown(float cooldown)
     {
-        _cd = cooldown;
+        if (_cd == 0)
+        {
+            _cd = cooldown;
+        }
     }
 
     public void UpdateDamage(int damage)
@@ -46,7 +49,7 @@ public partial struct PlayerShootingSystemV2 : ISystem
         {
             if (_cd > 0)
             {
-                player.ValueRW.cooldown -= _cd;
+                player.ValueRW.extraCd += _cd;
                 _cd = 0;
             }
             var fireMB = Input.GetMouseButton(1);
@@ -54,7 +57,7 @@ public partial struct PlayerShootingSystemV2 : ISystem
             {
                 if (fireMB || automatic)
                 {
-                    if (player.ValueRO.currentCooldown >= Mathf.Max(player.ValueRO.cooldown, 0))
+                    if (player.ValueRO.currentCooldown >= Mathf.Max(player.ValueRO.cooldown - player.ValueRO.extraCd, 0))
                     {
                         if (_damage == 0)
                         {
