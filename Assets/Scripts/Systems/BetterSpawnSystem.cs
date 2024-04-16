@@ -8,6 +8,7 @@ using Unity.Physics;
 using Unity.Transforms;
 using Unity.VisualScripting;
 using UnityEngine;
+using RaycastHit = Unity.Physics.RaycastHit;
 
 [BurstCompile]
 public partial struct BetterSpawnSystem : ISystem
@@ -73,7 +74,7 @@ public partial struct BetterSpawnSystem : ISystem
                 float space = 360 / amount;
                 for (int i = 0; i < amount; i++)
                 {
-                    Entity spawnedEntity = manager.Instantiate(prefabs[counter++]);
+                    
                     float x = radius * Mathf.Sin((space * i + spawner.ValueRO.currentRotOffset) * deg2rad);
                     float y = radius * Mathf.Cos((space * i + spawner.ValueRO.currentRotOffset) * deg2rad);
 
@@ -84,24 +85,61 @@ public partial struct BetterSpawnSystem : ISystem
                         spawner.ValueRW.currentRotOffset = 0;
                     }
 
-                    manager.SetComponentData(spawnedEntity, new LocalTransform
+                    if (CheckIfBound(ref state, new float3(x, 1f, y) + playerPos))
                     {
-                        Position = new Unity.Mathematics.float3(x, 1f, y) + playerPos,
-                        Rotation = Quaternion.identity,
-                        Scale = 1
-                    });
-                    manager.SetComponentData(spawnedEntity, new PhysicsVelocity
-                    {
-                        Linear = 0
-                    });
-                    if (counter >= prefabs.Length)
-                    {
-                        counter = 0;
+                        Entity spawnedEntity = manager.Instantiate(prefabs[counter++]);
+                        manager.SetComponentData(spawnedEntity, new LocalTransform
+                        {
+                            Position = new Unity.Mathematics.float3(x, 1f, y) + playerPos,
+                            Rotation = Quaternion.identity,
+                            Scale = 1
+                        });
+                        manager.SetComponentData(spawnedEntity, new PhysicsVelocity
+                        {
+                            Linear = 0
+                        });
+                        if (counter >= prefabs.Length)
+                        {
+                            counter = 0;
+                        }
                     }
                 }
             }
             amount = 0;
         }
+    }
+
+    private bool CheckIfBound(ref SystemState state, float3 potentialPos)
+    {
+        var world = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
+        RaycastInput rayInput = new RaycastInput
+        {
+            Start = potentialPos,
+            End = new float3(potentialPos.x, -20, potentialPos.z),
+            Filter = new CollisionFilter()
+            {
+                BelongsTo = 1 << 2,
+                CollidesWith = 1 << 3,
+                GroupIndex = 0
+            }
+
+        };
+
+        var tz = potentialPos;
+        RaycastHit hit = new RaycastHit();
+        bool haveHit = world.CastRay(rayInput, out hit);
+        List<float3> targetsList = new List<float3>();
+        if (haveHit)
+        {
+            ComponentLookup<LocalTransform> localTransform = SystemAPI.GetComponentLookup<LocalTransform>();
+            float3 enemyPos = new float3(localTransform.GetRefRW(hit.Entity).ValueRO.Position);
+            return true;
+        }
+        else
+        {
+            Debug.Log("Out of bounds");
+        }
+        return false;
     }
 
     public void OnCreate(ref SystemState state)
