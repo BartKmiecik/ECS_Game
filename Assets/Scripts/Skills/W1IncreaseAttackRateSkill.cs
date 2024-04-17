@@ -9,8 +9,9 @@ public class W1IncreaseAttackRateSkill : MonoBehaviour, ISkill
     private Entity _playerEntity;
     public float coolDownDecrease;
     public string description;
-
     public string Description => description;
+    public Sprite icon;
+    public Sprite Icon => icon;
 
     public void Skill()
     {

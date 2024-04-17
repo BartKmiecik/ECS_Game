@@ -8,8 +8,9 @@ public class W1ReloadTimeSkill : MonoBehaviour, ISkill
 {
     public float reloadReduction;
     public string description;
-
     public string Description => description;
+    public Sprite icon;
+    public Sprite Icon => icon;
 
     public void Skill()
     {

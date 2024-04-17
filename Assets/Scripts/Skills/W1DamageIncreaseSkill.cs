@@ -9,8 +9,9 @@ public class W1DamageIncreaseSkill : MonoBehaviour, ISkill
     private Entity _playerEntity;
     public int damageIncrease;
     public string description;
-
     public string Description => description;
+    public Sprite icon;
+    public Sprite Icon => icon;
 
     public void Skill()
     {

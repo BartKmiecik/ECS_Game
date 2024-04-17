@@ -6,7 +6,7 @@ using TMPro;
 
 public class UISkillSelect : MonoBehaviour
 {
-    private Image _icon;
+    public Image _icon;
     private TextMeshProUGUI _textMeshPro;
     private int _childCount;
     private UIExpBar _expBar;
@@ -14,7 +14,6 @@ public class UISkillSelect : MonoBehaviour
 
     void Awake()
     {
-        _icon = GetComponentInChildren<Image>();
         _textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
     }
 
@@ -22,7 +21,6 @@ public class UISkillSelect : MonoBehaviour
     {
         if (sprite != null) 
             _icon.sprite = sprite;
-
         _textMeshPro.text = text;
         _childCount = chldCount;
         _expBar = uIExpBar;

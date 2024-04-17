@@ -6,6 +6,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,10 +23,11 @@ public class UIExpBar : MonoBehaviour
     private float _expirience = 0;
     private float _lastExpirience = 0;
     private List<ISkill> _skills_to = new List<ISkill>();
+    private ISkill tempSkill = null;
 
     public System.Random a = new System.Random();
     private List<int> randomSkillList = new List<int>();
-
+    private int counter = 0;
     void Start()
     {
         Init();
@@ -33,7 +35,6 @@ public class UIExpBar : MonoBehaviour
 
     private void Init()
     {
-        _skills_to.Clear();
         _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var playerControlSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PlayerControllingSystem>();
         _image = GetComponent<Image>();
@@ -46,7 +47,38 @@ public class UIExpBar : MonoBehaviour
                 break;
             }
         }
+        if (_skills_to.Count > 0)
+        {
+            return;
+        }
         _skills_to.AddRange(GetComponents<ISkill>());
+        if (tempSkill != null)
+        {
+            _skills_to.Add(tempSkill);
+            tempSkill = null;
+        }
+    }
+
+    public void AddNewSkills(List<ISkill> skills)
+    {
+        _skills_to.AddRange(skills);
+    }
+
+    public void AddNewSkill(ISkill skill)
+    {
+        if (_skills_to.Count > 0)
+        {
+            _skills_to.Add(skill);
+        }
+        else
+        {
+            tempSkill = skill;
+        }
+    }
+
+    public void RemoveSkill(ISkill skill)
+    {
+        _skills_to.Remove(skill);
     }
 
     private void GetRandom()
@@ -54,6 +86,14 @@ public class UIExpBar : MonoBehaviour
         int MyNumber = a.Next(0, _skills_to.Count);
         if (!randomSkillList.Contains(MyNumber))
             randomSkillList.Add(MyNumber);
+    }
+
+    private void ShowAllSkills()
+    {
+        foreach (ISkill skill in _skills_to)
+        {
+            Debug.Log(skill.ToString());
+        }
     }
 
     void LateUpdate()
@@ -70,12 +110,6 @@ public class UIExpBar : MonoBehaviour
                 var handle = World.DefaultGameObjectInjectionWorld.GetExistingSystem<PauseGameSystem>();
                 World.DefaultGameObjectInjectionWorld.Unmanaged.GetUnsafeSystemRef<PauseGameSystem>(handle).ChangeSystemStates(true, false);
                 skills.Clear();
-                /*for (int i = 0; i < skills_to_select; i++)
-                {
-                    GameObject _skill = Instantiate(skillUiPrefab, levelUpPanel);
-                    _skill.GetComponent<UISkillSelect>().Constructor(null, _skills_to[i].Description, i, this);
-                    skills.Add(_skill);
-                }*/
                 randomSkillList.Clear();
                 while (randomSkillList.Count < 3) 
                 {
@@ -84,7 +118,7 @@ public class UIExpBar : MonoBehaviour
                 foreach (int i in randomSkillList)
                 {
                     GameObject _skill = Instantiate(skillUiPrefab, levelUpPanel);
-                    _skill.GetComponent<UISkillSelect>().Constructor(null, _skills_to[i].Description, i, this);
+                    _skill.GetComponent<UISkillSelect>().Constructor(_skills_to[i].Icon, _skills_to[i].Description, i, this);
                     skills.Add(_skill);
                 }
             }
@@ -99,7 +133,6 @@ public class UIExpBar : MonoBehaviour
     public void OnSkillSelected(int skillSelected)
     {
         _skills_to[skillSelected].Skill();
-        Debug.Log($"Skill selected: {skillSelected}");
         for (int i = skills.Count - 1; i >=0; i--)
         {
             Destroy(skills[i]);

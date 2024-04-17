@@ -19,6 +19,7 @@ public partial struct PlayerShootingSystemV2 : ISystem
     EntityManager manager;
     private float _cd;
     private int _damage;
+    private bool _weaponEnabled;
 
     public void OnCreate(ref SystemState state)
     {
@@ -26,6 +27,11 @@ public partial struct PlayerShootingSystemV2 : ISystem
         _cd = 0;
         _damage = 0;
         automatic = false;
+        foreach (RefRO<PlayerShootingV2> player in SystemAPI.Query<RefRO<PlayerShootingV2>>())
+        {
+            _weaponEnabled = player.ValueRO.enabled;
+            break;
+        }
     }
 
     public void UpdateCoolDown(float cooldown)
@@ -41,12 +47,20 @@ public partial struct PlayerShootingSystemV2 : ISystem
         _damage = damage;
     }
 
+    public void EnableWeapon(bool weaponEnabled)
+    {
+        _weaponEnabled = weaponEnabled;
+    }
+
+
     public void OnUpdate(ref SystemState state)
     {
         if (paused) return;
         foreach ((RefRW<PlayerShootingV2> player, RefRO<LocalToWorld> localTransform, RefRW<PhysicsVelocity> physicsVelocity) 
             in SystemAPI.Query<RefRW<PlayerShootingV2>, RefRO<LocalToWorld>, RefRW<PhysicsVelocity>> ())
         {
+            if (player.ValueRO.enabled != _weaponEnabled) { player.ValueRW.enabled = _weaponEnabled; }
+            if (!player.ValueRO.enabled) { return; }
             if (_cd > 0)
             {
                 player.ValueRW.extraCd += _cd;

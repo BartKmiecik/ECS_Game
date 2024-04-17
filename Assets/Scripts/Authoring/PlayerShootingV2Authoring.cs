@@ -11,6 +11,7 @@ public class PlayerShootingV2Authoring : MonoBehaviour
     public float cooldown;
     public int maxAmo;
     public float maxReloadSpeed;
+    public bool enabledByDefault;
 
     public class Baker : Baker<PlayerShootingV2Authoring>
     {
@@ -31,6 +32,7 @@ public class PlayerShootingV2Authoring : MonoBehaviour
                 currentReload = 0,
                 extraAmo = 0,
                 reloadSpeedReduction = 0,
+                enabled = authoring.enabledByDefault,
             });
         }
     }
@@ -51,4 +53,5 @@ public partial struct PlayerShootingV2 : IComponentData
     public float maxReloadSpeed;
     public float currentReload;
     public float reloadSpeedReduction;
+    public bool enabled;
 }

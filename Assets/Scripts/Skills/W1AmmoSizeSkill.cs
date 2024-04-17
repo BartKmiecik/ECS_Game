@@ -8,8 +8,9 @@ public class W1AmmoSizeSkill : MonoBehaviour, ISkill
 {
     public int extraAmmo;
     public string description;
-
     public string Description => description;
+    public Sprite icon;
+    public Sprite Icon => icon;
 
     public void Skill()
     {

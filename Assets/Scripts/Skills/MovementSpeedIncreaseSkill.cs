@@ -9,8 +9,9 @@ public class MovementSpeedIncreaseSkill : MonoBehaviour, ISkill
     private Entity _playerEntity;
     public float movementIcrease;
     public string description;
-
     public string Description => description;
+    public Sprite icon;
+    public Sprite Icon => icon;
 
     public void Skill()
     {
