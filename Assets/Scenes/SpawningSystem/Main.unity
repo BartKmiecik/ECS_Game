@@ -879,6 +879,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 323954957264946598, guid: f587e2c05feb85945b1e041a773914df,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323954957264946598, guid: f587e2c05feb85945b1e041a773914df,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323954957264946598, guid: f587e2c05feb85945b1e041a773914df,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323954957264946598, guid: f587e2c05feb85945b1e041a773914df,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323954957264946598, guid: f587e2c05feb85945b1e041a773914df,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2999223986466795090, guid: f587e2c05feb85945b1e041a773914df,
         type: 3}
       propertyPath: m_Pivot.x
