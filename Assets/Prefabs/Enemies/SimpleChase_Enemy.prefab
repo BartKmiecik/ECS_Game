@@ -42,7 +42,7 @@ Transform:
   m_Children:
   - {fileID: 3494262040270740571}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3330227125232909673
 MeshFilter:
@@ -144,35 +144,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b275e5f92732148048d7b77e264ac30e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShapeType: 0
+  m_ShapeType: 3
   m_PrimitiveCenter:
     x: 0
     y: 0
     z: 0
   m_PrimitiveSize:
     x: 1
-    y: 2
-    z: 1
+    y: 1
+    z: 2
   m_PrimitiveOrientation:
     Value:
-      x: -0
+      x: -90
       y: 0
       z: 0
     RotationOrder: 4
   m_Capsule:
     Height: 2
     Radius: 0.5
-    Axis: 1
+    Axis: 2
   m_Cylinder:
     Height: 2
     Radius: 0.5
-    Axis: 1
+    Axis: 2
   m_CylinderSideCount: 20
   m_SphereRadius: 1
   m_MinimumSkinnedVertexWeight: 0.1
   m_ConvexHullGenerationParameters:
     m_SimplificationTolerance: 0.015
-    m_BevelRadius: 0.05
+    m_BevelRadius: 0
     m_MinimumAngle: 2.5000002
   m_CustomMesh: {fileID: 0}
   m_ForceUnique: 0
@@ -378,6 +378,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackValue: 5
+  attackVfx: {fileID: 2290757822676591185, guid: bdb3e4d6bf3fc0247ba0870f2ad92053,
+    type: 3}
 --- !u!114 &-1686959725150753791
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Physics;
 using Unity.Physics.Systems;
+using Unity.Transforms;
 using UnityEngine;
 
 [BurstCompile]
@@ -11,16 +12,10 @@ using UnityEngine;
 [UpdateAfter(typeof(PhysicsSimulationGroup))]
 public partial struct DamagePlayerSystem : ISystem
 {
-    private float playerInvincibilityTime;
     public bool paused;
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<SimulationSingleton>();
-        foreach (RefRO<Player> player in SystemAPI.Query<RefRO<Player>>())
-        {
-            playerInvincibilityTime = player.ValueRO.playerInvincibilityTime;
-            break;
-        }
     }
 
     public void OnUpdate(ref SystemState state)
@@ -35,11 +30,12 @@ public partial struct DamagePlayerSystem : ISystem
             }
             break;
         }
-
+        var physicsWorldSingleton = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
         state.Dependency = new EnemyCollideWithPlayer
         {
             player = SystemAPI.GetComponentLookup<Player>(),
             enemy = SystemAPI.GetComponentLookup<EnemyTag>(),
+            physicsWorldSingleton = physicsWorldSingleton,
         }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
     }
 
@@ -47,6 +43,7 @@ public partial struct DamagePlayerSystem : ISystem
     {
         public ComponentLookup<Player> player;
         public ComponentLookup<EnemyTag> enemy;
+        public PhysicsWorldSingleton physicsWorldSingleton;
 
         public void Execute(CollisionEvent collisionEvent)
         {
@@ -78,6 +75,9 @@ public partial struct DamagePlayerSystem : ISystem
 
             if (isAPlayer && isBEnemy)
             {
+                var collisionDetails = collisionEvent.CalculateDetails(ref physicsWorldSingleton.PhysicsWorld);
+                var avgContactPointPosition = collisionDetails.AverageContactPointPosition;
+                enemy.GetRefRW(entityB).ValueRW.conntactPoint = avgContactPointPosition;
                 if (player.GetRefRO(entityA).ValueRO.timer > 0)
                     return;
                 player.GetRefRW(entityA).ValueRW.timer = player.GetRefRO(entityA).ValueRO.playerInvincibilityTime;
@@ -86,6 +86,9 @@ public partial struct DamagePlayerSystem : ISystem
             }
             if (isBPlayer && isAEnemy)
             {
+                var collisionDetails = collisionEvent.CalculateDetails(ref physicsWorldSingleton.PhysicsWorld);
+                var avgContactPointPosition = collisionDetails.AverageContactPointPosition;
+                enemy.GetRefRW(entityB).ValueRW.conntactPoint = avgContactPointPosition;
                 if (player.GetRefRO(entityB).ValueRO.timer > 0)
                     return;
                 player.GetRefRW(entityB).ValueRW.timer = player.GetRefRO(entityB).ValueRO.playerInvincibilityTime;

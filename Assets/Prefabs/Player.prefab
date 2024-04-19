@@ -41,7 +41,7 @@ Transform:
   m_Children:
   - {fileID: 4133654177530490601}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6407496475579266889
 MeshFilter:
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fdd06807ec58414aae6eec9fcd49f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 1000
   playerInvincibilityTime: 0.1
 --- !u!114 &5283258826852244282
 MonoBehaviour:
@@ -135,7 +135,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2277423017147235066, guid: 7976da43d02e2684e81bb71700e2c49d,
     type: 3}
-  cooldown: 0.25
+  cooldown: 0.5
+  maxAmo: 10
+  maxReloadSpeed: 1
 --- !u!114 &-8683009451078825120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,7 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8c09296f2ef6343909bf2c6ecfeb61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 3
+  distance: 50
 --- !u!114 &5002229146560756486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,8 +372,11 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2277423017147235066, guid: a7ab868df384b644b877c814de5ccdc6,
     type: 3}
   force: 20
-  damage: 1
+  damage: 15
   cooldown: 1
+  maxAmo: 5
+  maxReloadSpeed: 2
+  enabledByDefault: 0
 --- !u!114 &8469989942956654783
 MonoBehaviour:
   m_ObjectHideFlags: 0

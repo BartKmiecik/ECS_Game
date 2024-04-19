@@ -340,10 +340,10 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 1, y: 0, z: 0.03915453, w: 1}
+      - m_Value: {x: 16, y: 0, z: 0.6264725, w: 1}
         m_Name: TrailColor
         m_Overridden: 1
-      - m_Value: {x: 3.9999995, y: 0.15194388, z: 0, w: 1}
+      - m_Value: {x: 31.999996, y: 1.215551, z: 0, w: 1}
         m_Name: Color
         m_Overridden: 1
     m_Uint:

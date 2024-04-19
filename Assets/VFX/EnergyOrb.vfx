@@ -75,10 +75,10 @@ MonoBehaviour:
   - title: Beam
     position:
       serializedVersion: 2
-      x: 2711
+      x: 2660
       y: 249
-      width: 893
-      height: 1640
+      width: 944
+      height: 1757
     contents:
     - model: {fileID: 8926484042661614788}
       id: 3
@@ -4874,7 +4874,7 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 0
+  m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots:
@@ -6619,7 +6619,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 3155, y: 1079}
+  m_UIPosition: {x: 3155, y: 1126}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -6658,7 +6658,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614898}
   - {fileID: 8926484042661614864}
   - {fileID: 8926484042661615135}
-  m_UIPosition: {x: 3155, y: 1315}
+  m_UIPosition: {x: 3155, y: 1322}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -6945,7 +6945,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 3
+      m_SerializableObject: 3.5
     m_Space: 2147483647
   m_Property:
     name: b
