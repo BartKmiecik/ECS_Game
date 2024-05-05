@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabKindsToSpawne:
-  - {fileID: 6423908751162866428, guid: 1d399f4c0d5f5e84d8350864e56bfa67, type: 3}
+  - {fileID: 5886525647350713084, guid: 0a8af726f37482342a4dffa9a93813d6, type: 3}
   maxPrefabSpawn: 8
   spawningType: 1
   radius: 20
@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77406283d6dee0d4cb2667c541bdcfe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 8996411086569399096, guid: 2e7c61ce60ebc1045b98cf525253b2a9,
+  prefabToSpawn: {fileID: 5886525647350713084, guid: 0a8af726f37482342a4dffa9a93813d6,
     type: 3}
   amount: 20
 --- !u!1 &7602348518454116156

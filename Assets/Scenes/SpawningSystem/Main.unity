@@ -411,6 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 1299848958}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Entries: []
 --- !u!4 &705866478
 Transform:
   m_ObjectHideFlags: 19
