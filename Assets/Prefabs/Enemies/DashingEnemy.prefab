@@ -54,7 +54,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackValue: 5
-  attackVfx: {fileID: 0}
+  attackVfx: {fileID: 2290757822676591185, guid: bdb3e4d6bf3fc0247ba0870f2ad92053,
+    type: 3}
 --- !u!114 &5003681755062988325
 MonoBehaviour:
   m_ObjectHideFlags: 0

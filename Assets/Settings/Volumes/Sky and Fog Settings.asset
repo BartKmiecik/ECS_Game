@@ -438,7 +438,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.248
+    m_Value: 0.24
   smoothness:
     m_OverrideState: 1
     m_Value: 0.483
@@ -447,7 +447,7 @@ MonoBehaviour:
     m_Value: 1
   rounded:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   mask:
     m_OverrideState: 1
     m_Value: {fileID: 0}
@@ -508,7 +508,7 @@ MonoBehaviour:
     m_Value: 1
   albedo:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 0, b: 0, a: 1}
+    m_Value: {r: 0, g: 0.0044177854, b: 0.009433985, a: 1}
   globalLightProbeDimmer:
     m_OverrideState: 1
     m_Value: 1

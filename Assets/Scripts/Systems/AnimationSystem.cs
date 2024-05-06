@@ -26,12 +26,17 @@ public partial struct AnimationSystem : ISystem
             ecb.AddComponent(entity, newAnimatorReference);
         }
 
+        foreach (var (transform, animatorReference) in
+                 SystemAPI.Query<LocalTransform, PlayerAnimatorReference>())
+        {
+            animatorReference.Value.transform.position = transform.Position;
+            animatorReference.Value.transform.rotation = transform.Rotation;
+        }
+
         foreach (var (transform, animatorReference, dashingEnemy) in
                  SystemAPI.Query<LocalTransform, PlayerAnimatorReference, DashingEnemy>())
         {
             animatorReference.Value.SetBool("IsMoving", dashingEnemy.currentCooldown <= .1f);
-            animatorReference.Value.transform.position = transform.Position;
-            animatorReference.Value.transform.rotation = transform.Rotation;
         }
 
         foreach (var (animatorReference, entity) in
