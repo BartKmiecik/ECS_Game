@@ -5,13 +5,14 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Physics.Systems;
 using Unity.Transforms;
-using Unity.VisualScripting;
 using UnityEngine;
 using RaycastHit = Unity.Physics.RaycastHit;
 
 [BurstCompile]
-public partial struct BetterSpawnSystem : ISystem
+[UpdateInGroup(typeof(SimulationSystemGroup))]
+public partial struct PeriodicSpawnSystem : ISystem
 {
     public bool paused;
     private int counter;
@@ -27,7 +28,7 @@ public partial struct BetterSpawnSystem : ISystem
         SpawningType spawningType = SpawningType.Line;
         float radius = 10;
         float rotOffset = 0;
-        foreach ((RefRW<BetterSpawner> spawner, Entity entity) in SystemAPI.Query<RefRW<BetterSpawner>>().WithEntityAccess())
+        foreach ((RefRW<PeriodicSpawner> spawner, Entity entity) in SystemAPI.Query<RefRW<PeriodicSpawner>>().WithEntityAccess())
         {
             amount = spawner.ValueRO.maxEntitesToSpawn;
             dynamicBuffer = manager.GetBuffer<Spawnable>(entity);
@@ -153,7 +154,7 @@ public partial struct BetterSpawnSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         if (paused) return;
-        foreach (RefRW<BetterSpawner> spawner in SystemAPI.Query<RefRW<BetterSpawner>>())
+        foreach (RefRW<PeriodicSpawner> spawner in SystemAPI.Query<RefRW<PeriodicSpawner>>())
         {
             isAutomatic = spawner.ValueRO.automaticSpawn;
             if (isAutomatic)

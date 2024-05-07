@@ -7,22 +7,28 @@ using Unity.Transforms;
 using Unity.Physics;
 using Unity.Mathematics;
 
-[UpdateInGroup(typeof(PresentationSystemGroup), OrderFirst = true)]
+[UpdateAfter(typeof(SimulationSystemGroup))]
 public partial struct AnimationSystem : ISystem
 {
+    public void OnCreation(ref SystemState state)
+    {
+        state.RequireForUpdate<PlayerAnimatorReference>();
+    }
 
     public void OnUpdate(ref SystemState state)
     {
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
-        foreach (var (playerGameObjectPrefab, entity) in
-                 SystemAPI.Query<PlayerGameObjectPrefab>().WithNone<PlayerAnimatorReference>().WithEntityAccess())
+        foreach (var (playerGameObjectPrefab, transform, entity) in
+                 SystemAPI.Query<PlayerGameObjectPrefab, LocalTransform>().WithNone<PlayerAnimatorReference>().WithEntityAccess())
         {
             var newCompanionGameObject = Object.Instantiate(playerGameObjectPrefab.Value);
             var newAnimatorReference = new PlayerAnimatorReference
             {
                 Value = newCompanionGameObject.GetComponent<Animator>()
             };
+            newAnimatorReference.Value.transform.position = transform.Position;
+            newAnimatorReference.Value.transform.rotation = transform.Rotation;
             ecb.AddComponent(entity, newAnimatorReference);
         }
 

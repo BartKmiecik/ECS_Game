@@ -5,35 +5,24 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-public enum SpawningType
-{
-    Line,
-    Circle
-}
-public class BetterSpawnerAuthoring: MonoBehaviour
+public class ContinousSpawningAuthoring : MonoBehaviour
 {
     public List<GameObject> prefabKindsToSpawne = new List<GameObject>();
-    public int maxPrefabSpawn;
-    public SpawningType spawningType;
     public float radius;
-    public bool automaticSpawn;
     public float cooldown;
     public float rotOffset;
 
-    public class Baker : Baker<BetterSpawnerAuthoring>
+    public class Baker : Baker<ContinousSpawningAuthoring>
     {
-        public override void Bake(BetterSpawnerAuthoring authoring)
+        public override void Bake(ContinousSpawningAuthoring authoring)
         {
             var buffer = AddBuffer<Spawnable>().Reinterpret<Entity>();
             foreach (var prefab in authoring.prefabKindsToSpawne)
                 buffer.Add(GetEntity(prefab, TransformUsageFlags.Dynamic));
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
-            AddComponent(entity, new BetterSpawner
+            AddComponent(entity, new ContinousSpawn
             {
-                maxEntitesToSpawn = authoring.maxPrefabSpawn,
-                spawningType = authoring.spawningType,
                 radius = authoring.radius,
-                automaticSpawn = authoring.automaticSpawn,
                 cooldown = authoring.cooldown,
                 currentCooldown = 0,
                 rotOffset = authoring.rotOffset,
@@ -43,17 +32,9 @@ public class BetterSpawnerAuthoring: MonoBehaviour
     }
 }
 
-public struct Spawnable : IBufferElementData
+public partial struct ContinousSpawn : IComponentData
 {
-    public Entity prefab;
-}
-
-public partial struct BetterSpawner : IComponentData
-{
-    public int maxEntitesToSpawn;
-    public SpawningType spawningType;
     public float radius;
-    public bool automaticSpawn;
     public float cooldown;
     public float currentCooldown;
     public float rotOffset;
