@@ -33,7 +33,7 @@ public partial struct AutoTargetingSystem : ISystem
     {
         state.RequireForUpdate<PhysicsWorldSingleton>();
         zeros = new float3(0, 0, 0);
-        radius = 15;
+        radius = 25;
     }
 
     public void OnUpdate(ref SystemState state)

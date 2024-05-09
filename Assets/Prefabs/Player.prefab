@@ -150,7 +150,7 @@ Transform:
   m_Children:
   - {fileID: 4171423203768607444}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2228187491790034583
 MonoBehaviour:
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_Smoothing: 1
   m_Mass: 5
   m_LinearDamping: 5
-  m_AngularDamping: 2
+  m_AngularDamping: 1
   m_InitialLinearVelocity:
     x: 0
     y: 0

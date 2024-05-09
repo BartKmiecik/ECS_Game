@@ -26,7 +26,7 @@ public partial struct PlayerShootingSystemV2 : ISystem
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         _cd = 0;
         _damage = 0;
-        automatic = false;
+        automatic = true;
         foreach (RefRO<PlayerShootingV2> player in SystemAPI.Query<RefRO<PlayerShootingV2>>())
         {
             _weaponEnabled = player.ValueRO.enabled;
@@ -88,8 +88,8 @@ public partial struct PlayerShootingSystemV2 : ISystem
                                 return;
                             player.ValueRW.currentAmo -= 1;
                             Entity spawnedEntity = manager.Instantiate(_bulletPrefab);
+                            closestTarget.y = localTransform.ValueRO.Position.y;
                             Quaternion rot = Quaternion.LookRotation(math.normalize(closestTarget - localTransform.ValueRO.Position), math.up());
-
                             LocalTransform tmp = new LocalTransform
                             {
                                 Position = temp.Translation(),

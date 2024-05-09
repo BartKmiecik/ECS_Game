@@ -27,7 +27,7 @@ public partial struct ShotingSystem : ISystem
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         _cd = 0;
         _extraDamage = 0;
-        automatic = false;
+        automatic = true;
     }
 
     public void UpdateCoolDown(float cooldown)
@@ -70,6 +70,7 @@ public partial struct ShotingSystem : ISystem
                             Entity prefab = player.ValueRO.buletPrefab;
                             var temp = localTransform.ValueRO.Value;
                             Entity spawnedEntity = manager.Instantiate(prefab);
+                            closestTarget.y = localTransform.ValueRO.Position.y;
                             Quaternion rot = Quaternion.LookRotation(math.normalize(closestTarget - localTransform.ValueRO.Position), math.up());
 
                             LocalTransform tmp = new LocalTransform

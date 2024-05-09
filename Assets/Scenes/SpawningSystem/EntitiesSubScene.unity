@@ -192,21 +192,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6189260997883471953, guid: 2b3f38ef5f1431148b0b3a28c955a921,
-        type: 3}
-      propertyPath: m_GravityFactor
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189260997883471953, guid: 2b3f38ef5f1431148b0b3a28c955a921,
-        type: 3}
-      propertyPath: m_LinearDamping
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189260997883471953, guid: 2b3f38ef5f1431148b0b3a28c955a921,
-        type: 3}
-      propertyPath: m_AngularDamping
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -414,7 +399,7 @@ MonoBehaviour:
   - {fileID: 6423908751162866428, guid: 1d399f4c0d5f5e84d8350864e56bfa67, type: 3}
   maxPrefabSpawn: 8
   spawningType: 1
-  radius: 20
+  radius: 50
   automaticSpawn: 1
   cooldown: 5
   rotOffset: 15
