@@ -67,11 +67,12 @@ public partial struct PlayerBulletsDestrutableTriggerSystem : ISystem
             {
                 return;
             }
-
             if (hasAHealth && isBBullet)
             {
                 int damage_recived = bullet.GetRefRW(entityB).ValueRW.damage_value;
                 health.GetRefRW(entityA).ValueRW.currentHealth -= damage_recived;
+                health.GetRefRW(entityA).ValueRW.showPopup = true;
+                health.GetRefRW(entityA).ValueRW.lastRecievedHit = damage_recived;
                 if (destructable.HasComponent(entityB))
                 {
                     destructable.GetRefRW(entityB).ValueRW.shouldBeDestroyed = true;
@@ -87,6 +88,8 @@ public partial struct PlayerBulletsDestrutableTriggerSystem : ISystem
             {
                 int damage_recived = bullet.GetRefRW(entityA).ValueRW.damage_value;
                 health.GetRefRW(entityB).ValueRW.currentHealth -= damage_recived;
+                health.GetRefRW(entityB).ValueRW.showPopup = true;
+                health.GetRefRW(entityA).ValueRW.lastRecievedHit = damage_recived;
                 if (destructable.HasComponent(entityA))
                 {
                     destructable.GetRefRW(entityA).ValueRW.shouldBeDestroyed = true;
