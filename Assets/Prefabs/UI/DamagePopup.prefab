@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7637047324241395960}
   - component: {fileID: 2151012462336946785}
   - component: {fileID: 3466546272961267800}
+  - component: {fileID: 2941640567290634642}
   m_Layer: 0
   m_Name: DamagePopup
   m_TagString: Untagged
@@ -31,7 +32,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -175,3 +176,17 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2151012462336946785}
   m_maskType: 0
+--- !u!114 &2941640567290634642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7709355304897490620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51f1943883a1be3479c85f2c0d94fb09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectSpeed: 0.75
+  animEndPos: {x: 0, y: 0, z: 0}

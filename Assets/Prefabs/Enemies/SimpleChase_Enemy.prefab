@@ -451,6 +451,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
+  healthChangePopup: {fileID: 7709355304897490620, guid: abf04976ddbe78940bb65c93adad9f5f,
+    type: 3}
 --- !u!114 &-3332084486287682817
 MonoBehaviour:
   m_ObjectHideFlags: 0
