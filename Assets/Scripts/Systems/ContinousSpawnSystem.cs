@@ -21,10 +21,12 @@ public partial struct ContinousSpawnSystem : ISystem
     float space;
     int rotationCounter;
     DynamicBuffer<Spawnable> dynamicBuffer;
+    float timer;
 
 
     public void OnCreate(ref SystemState state)
     {
+        timer = 0;
         state.RequireForUpdate<ContinousSpawn>();
         prefabCounter = 0;
         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
@@ -37,6 +39,7 @@ public partial struct ContinousSpawnSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
+        timer += SystemAPI.Time.DeltaTime;
         foreach ((RefRW<ContinousSpawn> spawner, Entity entity) in SystemAPI.Query<RefRW<ContinousSpawn>>().WithEntityAccess())
         {
             if (spawner.ValueRO.currentCooldown > spawner.ValueRO.cooldown)
@@ -88,6 +91,12 @@ public partial struct ContinousSpawnSystem : ISystem
                     {
                         prefabCounter = 0;
                     }
+                }
+
+                if(timer >= spawner.ValueRO.reduceStep)
+                {
+                    timer = 0;
+                    spawner.ValueRW.cooldown -= spawner.ValueRO.reduceCooldown;
                 }
             }
             spawner.ValueRW.currentCooldown += SystemAPI.Time.DeltaTime;

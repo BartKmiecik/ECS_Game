@@ -8,6 +8,7 @@ using Unity.Transforms;
 using UnityEngine;
 
 [BurstCompile]
+[UpdateAfter(typeof(PopupSystem))]
 public partial struct DestructableSystem : ISystem
 {
     EntityManager entityManager;

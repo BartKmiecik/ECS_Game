@@ -20,6 +20,7 @@ public class PlayerAuthoring : MonoBehaviour
                 currentHealth = authoring.maxHealth,
                 playerInvincibilityTime = authoring.playerInvincibilityTime,
                 timer = 0f,
+                showPopup = false,
             });
         }
     }
@@ -32,4 +33,6 @@ public struct Player : IComponentData
     public int currentHealth;
     public float playerInvincibilityTime;
     public float timer;
+    public bool showPopup;
+    public int lastRecievedHit;
 }

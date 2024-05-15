@@ -18,5 +18,14 @@ public partial struct PopupSystem : ISystem
                 SpawnPopupDamage.INSTANCE.CreatePopUp(health.ValueRO.lastRecievedHit, localTransform.ValueRO.Position);
             }
         }
+        foreach ((RefRW<Player> player, RefRO<LocalTransform> localTransform) in SystemAPI.Query<RefRW<Player>, RefRO<LocalTransform>>())
+        {
+            if (player.ValueRO.showPopup)
+            {
+                player.ValueRW.showPopup = false;
+                SpawnPopupDamage.INSTANCE.CreatePlayerPopUp(player.ValueRO.lastRecievedHit, localTransform.ValueRO.Position);
+                Debug.Log("Player take damage");
+            }
+        }
     }
 }
