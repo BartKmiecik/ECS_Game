@@ -9,6 +9,7 @@ public class PointOfInterest : MonoBehaviour
     private float currentTimer;
     private bool playerInside = false;
     private Vector3 vectorOne = new Vector3(1, 1, 1);
+    private bool isActive = true;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -28,11 +29,12 @@ public class PointOfInterest : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (playerInside)
+        if (playerInside && isActive)
         {
             if (currentTimer <= maxTimer) {
                 currentTimer += Time.deltaTime;
                 spriteRenderer.transform.localScale = vectorOne * (maxTimer - currentTimer) / maxTimer;
+                isActive = false;
             }
         }
     }
