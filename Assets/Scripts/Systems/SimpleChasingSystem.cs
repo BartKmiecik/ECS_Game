@@ -49,9 +49,7 @@ public partial struct SimpleChasingSystem : ISystem
             curentPos.y = localTransform.Position.y;
             curentPos.z = localTransform.Position.z;
 
-            float3 relativePos = targetPos - curentPos;
-
-            //Like not normalized relativePos, giving nice feature that enemies slowing down close to player and speed up otherwise
+            float3 relativePos = math.normalize(targetPos - curentPos);
             localTransform.Position = curentPos + (relativePos * movementSpeed.speed * deltaTime);
         }
     }
