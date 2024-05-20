@@ -12,7 +12,14 @@ public class MeshMerger : MonoBehaviour
     public bool shouldSaveOnDisk;
     void Start()
     {
+        //MeshMerger();
+    }
+
+    public void MeshMerge()
+    {
         MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
+        Material material = transform.GetChild(0).GetComponent<MeshRenderer>().material;
+        GetComponent<MeshRenderer>().material = material;
         CombineInstance[] combine = new CombineInstance[meshFilters.Length];
 
         int i = 0;
@@ -30,11 +37,18 @@ public class MeshMerger : MonoBehaviour
         mesh.CombineMeshes(combine);
         transform.GetComponent<MeshFilter>().sharedMesh = mesh;
         transform.gameObject.SetActive(true);
+
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         if (shouldSaveOnDisk)
         {
             CreateAndSaveFile();
         }
     }
+
 
     private void CreateAndSaveFile()
     {

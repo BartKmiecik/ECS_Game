@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,11 +22,16 @@ public class CellularAutomataMapGenerator : MonoBehaviour
     GameObject[,,] cubes;
 
     public List<Material> levelMaterials;
+    private GameObject mapParent;
+    private GameObject[] mapObjects;
+    public GameObject primitivePrefab;
 
     private void Start()
     {
+        mapObjects = new GameObject[2];
         map = new int[width, height, maxDepth];
         cubes = new GameObject[width, height, maxDepth];
+        GenerateEmptyMapHolders();
         SpawnCubes();
         GenerateMap();
     }
@@ -44,6 +50,22 @@ public class CellularAutomataMapGenerator : MonoBehaviour
             SmoothMap();
             UpdateCubeStatus();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            mapObjects[1].GetComponent<MeshMerger>().MeshMerge();
+            Array.Clear(cubes, 0, cubes.Length);    
+        }
+    }
+
+    private void GenerateEmptyMapHolders()
+    {
+        mapParent = new GameObject("MapParent"); 
+        mapObjects[0] = new GameObject("MapDestructable");
+        mapObjects[0].transform.parent = mapParent.transform;
+        mapObjects[1] = new GameObject("MapBase");
+        mapObjects[1].transform.parent = mapParent.transform;
+        mapObjects[1].AddComponent<MeshMerger>();
     }
 
     private void SpawnCubes()
@@ -54,8 +76,9 @@ public class CellularAutomataMapGenerator : MonoBehaviour
             {
                 for(int d = 0; d < maxDepth; d++)
                 {
-                    cubes[w, h, d] = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    cubes[w, h, d] = Instantiate(primitivePrefab);
                     cubes[w, h, d].transform.position = new Vector3(w, h, d);
+                    cubes[w, h, d].transform.parent = mapObjects[d].transform;
                     cubes[w, h, d].GetComponent<MeshRenderer>().material = levelMaterials[d];
                 }
             }
