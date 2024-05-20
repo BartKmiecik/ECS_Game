@@ -244,10 +244,20 @@ PrefabInstance:
       propertyPath: speed
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2315826971766817537, guid: 1d399f4c0d5f5e84d8350864e56bfa67,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6423908751162866428, guid: 1d399f4c0d5f5e84d8350864e56bfa67,
         type: 3}
       propertyPath: m_Name
       value: SimpleChase_Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423908751162866428, guid: 1d399f4c0d5f5e84d8350864e56bfa67,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7086472033461842387, guid: 1d399f4c0d5f5e84d8350864e56bfa67,
         type: 3}

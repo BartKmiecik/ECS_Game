@@ -6,22 +6,26 @@ public class CellularAutomataMapGenerator : MonoBehaviour
 {
     public int width;
     public int height;
+    private int maxDepth = 2;
 
     public string seed;
     public bool useRandom;
 
-    [Range(0, 100)]
-    public int randomFillPercent;
+    public int[] randomFillPercent;
 
     public int smoothinNeighbour;
+    public int smoothinNeighbour2ndLevel;
     public bool invert;
-    int[,] map;
-    GameObject[,] cubes;
+    public bool invert2;
+    int[,,] map;
+    GameObject[,,] cubes;
+
+    public List<Material> levelMaterials;
 
     private void Start()
     {
-        map = new int[width, height];
-        cubes = new GameObject[width, height];
+        map = new int[width, height, maxDepth];
+        cubes = new GameObject[width, height, maxDepth];
         SpawnCubes();
         GenerateMap();
     }
@@ -48,8 +52,12 @@ public class CellularAutomataMapGenerator : MonoBehaviour
         {
             for (int h = 0; h < height; h++)
             {
-                cubes[w, h] = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                cubes[w, h].transform.position = new Vector3(w, h, 0);
+                for(int d = 0; d < maxDepth; d++)
+                {
+                    cubes[w, h, d] = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    cubes[w, h, d].transform.position = new Vector3(w, h, d);
+                    cubes[w, h, d].GetComponent<MeshRenderer>().material = levelMaterials[d];
+                }
             }
         }
     }
@@ -61,12 +69,16 @@ public class CellularAutomataMapGenerator : MonoBehaviour
         {
             for (int h = 0; h < height; h++)
             {
-                if (map[w, h] == 1) {
-                    cubes[w,h].SetActive(shuldActive);
-                }
-                else
+                for (int d = 0; d < maxDepth; d++)
                 {
-                    cubes[w, h].SetActive(!shuldActive);
+                    if (map[w, h, d] == 1)
+                    {
+                        cubes[w, h, d].SetActive(shuldActive);
+                    }
+                    else
+                    {
+                        cubes[w, h, d].SetActive(!shuldActive);
+                    }
                 }
             }
         }
@@ -90,13 +102,16 @@ public class CellularAutomataMapGenerator : MonoBehaviour
         {
             for(int h = 0; h < height; h++)
             {
-                if(w == 0 || w == width -1 || h == 0 || h == height -1)
+                for (int d = 0; d < maxDepth; d++)
                 {
-                    map[w, h] = 1;
-                }
-                else
-                {
-                    map[w, h] = rand.Next(0, 100) < randomFillPercent ? 1 : 0;
+                    if (w == 0 || w == width - 1 || h == 0 || h == height - 1)
+                    {
+                        map[w, h, d] = 1;
+                    }
+                    else
+                    {
+                        map[w, h, d] = rand.Next(0, 100) < randomFillPercent[d] ? 1 : 0;
+                    }
                 }
             }
         }
@@ -108,32 +123,57 @@ public class CellularAutomataMapGenerator : MonoBehaviour
         {
             for(int h = 0; h < height; h++)
             {
-                int nearbyWalls = GetSurrounderWallCount(w, h);
+                for (int d = 0; d < maxDepth; d++)
+                {
+                    int nearbyWalls = GetSurrounderWallCount(w, h, d);
 
-                if(nearbyWalls > smoothinNeighbour)
-                {
-                    map[w, h] = 1;
-                }
-                else if (nearbyWalls < smoothinNeighbour)
-                {
-                    map[w,h] = 0;
-                }
+                    if (d == 1)
+                    {
+                        if (map[w, h, 0] == 0)
+                        {
+                            map[w, h, d] = 0;
+                        }
+                        else
+                        {
+                            if (nearbyWalls > smoothinNeighbour)
+                            {
+                                map[w, h, d] = 1;
+                            }
+                            else if (nearbyWalls < smoothinNeighbour)
+                            {
+                                map[w, h, d] = 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (nearbyWalls > smoothinNeighbour2ndLevel)
+                        {
+                            map[w, h, d] = 1;
+                        }
+                        else if (nearbyWalls < smoothinNeighbour2ndLevel)
+                        {
+                            map[w, h, d] = 0;
+                        }
+                    }
+
+                }    
             }
         }
     }
 
-    private int GetSurrounderWallCount(int gridX, int gridY)
+    private int GetSurrounderWallCount(int gridX, int gridY, int gridD)
     {
         int wallCount = 0;
         for(int x = gridX -1; x <= gridX + 1; x++)
         {
             for(int y = gridY -1; y <= gridY + 1; y++)
             {
-                if(x >= 0 && x < width && y >= 0 && y < height)
+                if (x >= 0 && x < width && y >= 0 && y < height)
                 {
-                    if(x != gridX || y != gridY)
+                    if (x != gridX || y != gridY)
                     {
-                        wallCount += map[x, y];
+                        wallCount += map[x, y, gridD];
                     }
                 }
                 else
@@ -142,6 +182,7 @@ public class CellularAutomataMapGenerator : MonoBehaviour
                 }
             }
         }
+
 
         return wallCount;
     }
