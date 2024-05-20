@@ -17,7 +17,6 @@ public class CellularAutomataMapGenerator : MonoBehaviour
     public int smoothinNeighbour;
     public int smoothinNeighbour2ndLevel;
     public bool invert;
-    public bool invert2;
     int[,,] map;
     GameObject[,,] cubes;
 
@@ -61,11 +60,12 @@ public class CellularAutomataMapGenerator : MonoBehaviour
     private void GenerateEmptyMapHolders()
     {
         mapParent = new GameObject("MapParent"); 
-        mapObjects[0] = new GameObject("MapDestructable");
+        mapObjects[0] = new GameObject("MapBase");
         mapObjects[0].transform.parent = mapParent.transform;
-        mapObjects[1] = new GameObject("MapBase");
+        mapObjects[0].AddComponent<MeshMerger>();
+        mapObjects[1] = new GameObject("MapDestructable"); 
         mapObjects[1].transform.parent = mapParent.transform;
-        mapObjects[1].AddComponent<MeshMerger>();
+
     }
 
     private void SpawnCubes()
@@ -77,7 +77,7 @@ public class CellularAutomataMapGenerator : MonoBehaviour
                 for(int d = 0; d < maxDepth; d++)
                 {
                     cubes[w, h, d] = Instantiate(primitivePrefab);
-                    cubes[w, h, d].transform.position = new Vector3(w, h, d);
+                    cubes[w, h, d].transform.position = new Vector3(w, d, h);
                     cubes[w, h, d].transform.parent = mapObjects[d].transform;
                     cubes[w, h, d].GetComponent<MeshRenderer>().material = levelMaterials[d];
                 }
@@ -88,6 +88,7 @@ public class CellularAutomataMapGenerator : MonoBehaviour
     private void UpdateCubeStatus()
     {
         bool shuldActive = invert ? false : true;
+
         for (int w = 0; w < width; w++)
         {
             for (int h = 0; h < height; h++)
@@ -152,19 +153,42 @@ public class CellularAutomataMapGenerator : MonoBehaviour
 
                     if (d == 1)
                     {
-                        if (map[w, h, 0] == 0)
+                        if (invert)
                         {
-                            map[w, h, d] = 0;
-                        }
-                        else
-                        {
-                            if (nearbyWalls > smoothinNeighbour)
+                            if (map[w, h, 0] == 1)
                             {
                                 map[w, h, d] = 1;
                             }
-                            else if (nearbyWalls < smoothinNeighbour)
+                            else
+                            {
+                                if (nearbyWalls > smoothinNeighbour)
+                                {
+                                    map[w, h, d] = 1;
+
+                                }
+                                else if (nearbyWalls < smoothinNeighbour)
+                                {
+                                    map[w, h, d] = 0;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (map[w, h, 0] == 0)
                             {
                                 map[w, h, d] = 0;
+                            }
+                            else
+                            {
+                                if (nearbyWalls > smoothinNeighbour)
+                                {
+                                    map[w, h, d] = 1;
+
+                                }
+                                else if (nearbyWalls < smoothinNeighbour)
+                                {
+                                    map[w, h, d] = 0;
+                                }
                             }
                         }
                     }
