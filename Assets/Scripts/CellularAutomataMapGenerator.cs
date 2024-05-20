@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Entities;
 
 public class CellularAutomataMapGenerator : MonoBehaviour
 {
@@ -52,19 +53,24 @@ public class CellularAutomataMapGenerator : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            mapObjects[1].GetComponent<MeshMerger>().MeshMerge();
-            Array.Clear(cubes, 0, cubes.Length);    
+            mapObjects[0].GetComponent<MeshMerger>().MeshMerge();
+            Array.Clear(cubes, 0, cubes.Length);
+
+            World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<MapCollisionSystem>().CreateCollisionMap(map, invert);
         }
     }
 
     private void GenerateEmptyMapHolders()
     {
-        mapParent = new GameObject("MapParent"); 
+        mapParent = new GameObject("MapParent");
+        mapParent.layer = LayerMask.NameToLayer("Map");
         mapObjects[0] = new GameObject("MapBase");
         mapObjects[0].transform.parent = mapParent.transform;
+        mapObjects[0].layer = LayerMask.NameToLayer("Map");
         mapObjects[0].AddComponent<MeshMerger>();
         mapObjects[1] = new GameObject("MapDestructable"); 
         mapObjects[1].transform.parent = mapParent.transform;
+        mapObjects[1].layer = LayerMask.NameToLayer("Map");
 
     }
 
@@ -77,9 +83,11 @@ public class CellularAutomataMapGenerator : MonoBehaviour
                 for(int d = 0; d < maxDepth; d++)
                 {
                     cubes[w, h, d] = Instantiate(primitivePrefab);
-                    cubes[w, h, d].transform.position = new Vector3(w, d, h);
+                    cubes[w, h, d].transform.position = new Vector3(w, (d * 2), h);
                     cubes[w, h, d].transform.parent = mapObjects[d].transform;
+                    cubes[w, h, d].transform.localScale = new Vector3(1, 1 + (d * 2), 1) ;
                     cubes[w, h, d].GetComponent<MeshRenderer>().material = levelMaterials[d];
+                    cubes[w, h, d].layer = LayerMask.NameToLayer("Map");
                 }
             }
         }
@@ -118,7 +126,7 @@ public class CellularAutomataMapGenerator : MonoBehaviour
     {
         if (useRandom)
         {
-            seed = Time.time.ToString();
+            seed = UnityEngine.Random.Range(0, 100000).ToString();
         }
         System.Random rand = new System.Random(seed.GetHashCode());
 
@@ -203,7 +211,6 @@ public class CellularAutomataMapGenerator : MonoBehaviour
                             map[w, h, d] = 0;
                         }
                     }
-
                 }    
             }
         }
@@ -229,8 +236,6 @@ public class CellularAutomataMapGenerator : MonoBehaviour
                 }
             }
         }
-
-
         return wallCount;
     }
 }
