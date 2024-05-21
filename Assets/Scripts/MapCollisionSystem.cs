@@ -113,7 +113,7 @@ public partial class MapCollisionSystem : SystemBase
     {
         LocalTransform entPos = manager.GetComponentData<LocalTransform>(block);
         destructable.GetRefRW(block).ValueRW.shouldBeDestroyed = true;
-        cellularAutomataMapGenerator.RemoveWall((int)entPos.Position.x, (int)entPos.Position.y);
+        cellularAutomataMapGenerator.RemoveWall((int)entPos.Position.x, (int)entPos.Position.z);
     }
 
     protected override void OnUpdate()
