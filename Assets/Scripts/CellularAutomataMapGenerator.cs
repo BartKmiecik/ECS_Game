@@ -18,7 +18,8 @@ public class CellularAutomataMapGenerator : MonoBehaviour
     public int smoothinNeighbour;
     public int smoothinNeighbour2ndLevel;
     public bool invert;
-    int[,,] map;
+    private int[,,] map;
+    public int[,,] Map { get { return map; } }
     GameObject[,,] cubes;
 
     public List<Material> levelMaterials;
