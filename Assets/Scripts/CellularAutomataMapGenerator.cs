@@ -54,9 +54,9 @@ public class CellularAutomataMapGenerator : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             mapObjects[0].GetComponent<MeshMerger>().MeshMerge();
-            Array.Clear(cubes, 0, cubes.Length);
+            //Array.Clear(cubes, 0, cubes.Length);
 
-            World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<MapCollisionSystem>().CreateCollisionMap(map, invert);
+            World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<MapCollisionSystem>().CreateCollisionMap(map, invert, this);
         }
     }
 
@@ -237,5 +237,16 @@ public class CellularAutomataMapGenerator : MonoBehaviour
             }
         }
         return wallCount;
+    }
+
+    public void RemoveWall(int w, int h)
+    {
+        Debug.Log($"cubes[{w}, {h}, 1] is active {cubes[w,h,1].active}");
+        Debug.Log($"cubes[{w}, {h}, 1] position {cubes[w, h, 1].transform.position}");
+        cubes[w, h, 1].SetActive(false);
+        cubes[w, h, 0].SetActive(false);
+        cubes[h, w, 1].SetActive(false);
+        cubes[h, w, 0].SetActive(false);
+        //Debug.Log($"cubes[{w}, {h}, 1] is active {cubes[w, h, 1].active}");
     }
 }

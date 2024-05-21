@@ -19,7 +19,7 @@ using RaycastHit = Unity.Physics.RaycastHit;
 [BurstCompile]
 public partial struct Raycasttest : ISystem
 {
-   /* PhysicsWorldSingleton world;
+    PhysicsWorldSingleton world;
     float3 zeros;
     float radius;
     float offset;
@@ -30,51 +30,57 @@ public partial struct Raycasttest : ISystem
     {
         state.RequireForUpdate<PhysicsWorldSingleton>();
         zeros = new float3(0, 0, 0);
-        radius = 15;
+        radius = 1;
         offset = 15;
         currentOffset = 0;
     }
 
     public void OnUpdate(ref SystemState state)
     {
-        foreach ((RefRO<Player> player, RefRO<LocalTransform> LocalTransform) in SystemAPI.Query<RefRO<Player>, RefRO<LocalTransform>>())
+        if(Input.GetMouseButtonDown(0))
         {
-            //NativeList<ColliderCastHit> hits = new NativeList<ColliderCastHit>(Allocator.Temp);
-            world = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
-            *//*            world.SphereCastAll(LocalTransform.ValueRO.Position, radius, zeros, 1, ref hits, new CollisionFilter
-                        {
-                            BelongsTo = (uint)CollisionLayers.Player,
-                            CollidesWith = (uint)CollisionLayers.Enemies,
-                        });*//*
-            RaycastInput rayInput = new RaycastInput {
-                Start = LocalTransform.ValueRO.Position,
-                End = LocalTransform.ValueRO.Forward() * radius,
-                Filter = new CollisionFilter()
-                {
-                    BelongsTo = 1 << 1,
-                    CollidesWith = 1 << 2, 
-                    GroupIndex = 0
-                }
-
-            };
-
-            tz = LocalTransform.ValueRO.Position;
-
-            RaycastHit hit = new RaycastHit();
-            bool haveHit = world.CastRay(rayInput, out hit);
-
-            List<float3> targetsList = new List<float3>();
-            if (haveHit)
+            foreach ((RefRO<Player> player, RefRO<LocalTransform> LocalTransform) in SystemAPI.Query<RefRO<Player>, RefRO<LocalTransform>>())
             {
-                ComponentLookup<LocalTransform> localTransform = SystemAPI.GetComponentLookup<LocalTransform>();
-                float3 enemyPos = new float3(localTransform.GetRefRW(hit.Entity).ValueRO.Position);
-                Debug.Log($"Target at {localTransform}");
+                NativeList<ColliderCastHit> hits = new NativeList<ColliderCastHit>(Allocator.Temp);
+                world = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
+                world.SphereCastAll(LocalTransform.ValueRO.Position, radius, zeros, 1, ref hits, new CollisionFilter
+                {
+                    BelongsTo = (uint)CollisionLayers.Player,
+                    CollidesWith = (uint)CollisionLayers.Enemies,
+                });
+                RaycastInput rayInput = new RaycastInput
+                {
+                    Start = LocalTransform.ValueRO.Position,
+                    End = LocalTransform.ValueRO.Position + LocalTransform.ValueRO.Forward() * radius,
+                    Filter = new CollisionFilter()
+                    {
+                        BelongsTo = 1 << 1,
+                        CollidesWith = 1 << 10,
+                        GroupIndex = 0
+                    }
+
+                };
+
+                tz = LocalTransform.ValueRO.Position;
+
+                RaycastHit hit = new RaycastHit();
+                bool haveHit = world.CastRay(rayInput, out hit);
+
+                List<float3> targetsList = new List<float3>();
+                if (haveHit)
+                {
+                    ComponentLookup<LocalTransform> localTransform = SystemAPI.GetComponentLookup<LocalTransform>();
+                    float3 enemyPos = new float3(localTransform.GetRefRO(hit.Entity).ValueRO.Position);
+                    Debug.Log($"Target at {enemyPos}");
+                    ComponentLookup<Destructable> destructable = SystemAPI.GetComponentLookup<Destructable>();
+                    World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<MapCollisionSystem>().DestroyBlock(hit.Entity, destructable);
+                }
+                break;
             }
-            break;
         }
     }
 
-    private void OnDrawGizmos()
+/*    private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         float spacing = 360 / 16;
