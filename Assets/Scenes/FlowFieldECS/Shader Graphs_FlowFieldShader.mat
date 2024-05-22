@@ -53,7 +53,7 @@ Material:
     - _AlphaSrcBlend: 1
     - _BlendMode: 0
     - _ConservativeDepthOffsetEnable: 0
-    - _Cost: 0
+    - _Cost: -2.64
     - _CullMode: 2
     - _CullModeForward: 2
     - _DepthOffsetEnable: 0

@@ -16,12 +16,6 @@ public class ChangeShaderVariableFromScryptTest : MonoBehaviour
         player = FindObjectOfType<FollowEntity>().transform;
     }
 
-    private void Update()
-    {
-        float tmp = math.round(Vector3.Distance(transform.position, player.position));
-        SetCost(tmp);
-    }
-
 
     public void SetCost(float cost)
     {
